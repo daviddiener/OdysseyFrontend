@@ -4,6 +4,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import {  throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { environment } from './../environments/environment';
+import { Game } from './game/game';
 
 @Injectable({
   providedIn: 'root'
@@ -32,16 +33,16 @@ export class DataService {
   }
 
   public getGame(id: string) {
-    return this.httpClient.get(this.REST_API_SERVER + '/api/game' + '/' + id).pipe(catchError(this.handleError));
+    return this.httpClient.get(this.REST_API_SERVER + '/api/game/' + id).pipe(catchError(this.handleError));
   }
 
-  public createGame(titleValue: string, textValue: string) {
+  public createGame(newGame: Game) {
     return this.httpClient.post(this.REST_API_SERVER + '/api/game',
-      {title: titleValue, text: textValue}).pipe(catchError(this.handleError));
+      {title: newGame.title, seed: newGame.seed, mapsize: newGame.mapsize}).pipe(catchError(this.handleError));
   }
 
   public deleteGame(id: string) {
-    return this.httpClient.delete(this.REST_API_SERVER + '/' + id).pipe(catchError(this.handleError));
+    return this.httpClient.delete(this.REST_API_SERVER + '/api/game/' + id).pipe(catchError(this.handleError));
   }
 
 }

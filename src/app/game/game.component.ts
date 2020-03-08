@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
+import { Game } from './game';
 
 @Component({
   selector: 'app-game',
@@ -9,8 +10,7 @@ import { DataService } from '../data.service';
 export class GameComponent implements OnInit {
 
   games = [];
-  title = '';
-  text = '';
+  newGame = new Game();
 
   constructor(private dataService: DataService) { }
 
@@ -21,7 +21,7 @@ export class GameComponent implements OnInit {
   }
 
   createGame() {
-    this.dataService.createGame(this.title, this.text).subscribe((data: any[]) => {
+    this.dataService.createGame(this.newGame).subscribe((data: any[]) => {
       this.ngOnInit();
     });
   }
