@@ -1,4 +1,4 @@
 export const environment = {
-  apiUrl: 'https://dialogai.de',
+  apiUrl: 'http://dialogai.de',
   production: true
 };
