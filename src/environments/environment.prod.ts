@@ -1,4 +1,4 @@
 export const environment = {
-  apiUrl: 'https://rtsfullweb.herokuapp.com',
+  apiUrl: 'https://dialogai.de',
   production: true
 };
