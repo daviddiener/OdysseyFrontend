@@ -1,13 +1,13 @@
-<h1> Game # {{game?._id}}</h1>
-<p>
-    Title: {{game?.title}} 
-</p>
-<p>
-    Seed: {{game?.seed}}
-</p>
-<p>
-    Size: {{game?.mapsize}}
-</p>
-<p>
-    Date: {{game?.date}}
-</p>
+<div>
+    <button mat-icon-button	routerLink="/">
+        <fa-icon [icon]="faArrowLeft" size="2x"></fa-icon>
+    </button>
+    <h1> Game # {{game?._id}}</h1>
+</div>
+
+<mat-list role="list">
+        <mat-list-item role="listitem">Title: {{game?.title}}</mat-list-item>
+        <mat-list-item role="listitem">Seed: {{game?.seed}}</mat-list-item>
+        <mat-list-item role="listitem">Size: {{game?.mapsize}} </mat-list-item>
+        <mat-list-item role="listitem">Date: {{game?.date}}</mat-list-item>
+</mat-list>

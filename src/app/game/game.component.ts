@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import { Game } from './game';
+import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
 
 @Component({
   selector: 'app-game',
@@ -8,7 +9,7 @@ import { Game } from './game';
   styleUrls: ['./game.component.css']
 })
 export class GameComponent implements OnInit {
-
+  faTrash = faTrash;
   games = [];
   newGame = new Game();
 

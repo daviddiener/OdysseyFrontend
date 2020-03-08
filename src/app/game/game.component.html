@@ -14,7 +14,7 @@
     <button mat-button (click)='createGame()'>Create New Game</button>
 </div>
 
-<div style="padding: 13px;">
+<div>
     <mat-card *ngFor="let game of games" style="margin-top:10px;">
         <mat-card-header>
             <mat-card-title>Title: {{game.title}}</mat-card-title>
@@ -22,7 +22,9 @@
         </mat-card-header>
         <mat-card-actions>
             <button mat-button [routerLink]="['/game', game._id]">Play</button>
-            <button mat-button (click)='deleteGame(game._id)'>Delete</button>
+            <button mat-icon-button	(click)='deleteGame(game._id)'>
+                <fa-icon [icon]="faTrash" size="lg"></fa-icon>
+            </button>
         </mat-card-actions>
     </mat-card>
 </div>
