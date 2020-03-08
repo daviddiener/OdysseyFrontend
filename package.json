@@ -8,9 +8,10 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "purge": "if exist ..\\RTSBackend\\public\\ del ..\\RTSBackend\\public\\*.* /Q rd /s /q ..\\RTSBackend\\public\\",
+    "purge": "if exist ..\\RTSBackend\\public\\ del /q ..\\RTSBackend\\public\\RTSFrontend\\*",
     "copy": "xcopy /r /s /q .\\dist ..\\RTSBackend\\public\\"
   },
+
   "private": true,
   "dependencies": {
     "@angular/animations": "~9.0.5",
