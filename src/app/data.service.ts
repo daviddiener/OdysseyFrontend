@@ -28,16 +28,21 @@ export class DataService {
     return throwError(errorMessage);
   }
 
+  public getGameById(id: string) {
+    return this.httpClient.get(this.REST_API_SERVER + 'games/' + id).pipe(catchError(this.handleError));
+  }
+
   public getAllGames() {
     return this.httpClient.get(this.REST_API_SERVER + 'games/').pipe(catchError(this.handleError));
   }
 
-  public getGame(id: string) {
-    return this.httpClient.get(this.REST_API_SERVER + 'games/' + id).pipe(catchError(this.handleError));
-  }
-
   public createGame(newGame: Game) {
     return this.httpClient.post(this.REST_API_SERVER + 'games/',
+      {title: newGame.title, seed: newGame.seed, mapsize: newGame.mapsize}).pipe(catchError(this.handleError));
+  }
+
+  public updateGame(newGame: Game, id: string) {
+    return this.httpClient.post(this.REST_API_SERVER + 'games/' + id,
       {title: newGame.title, seed: newGame.seed, mapsize: newGame.mapsize}).pipe(catchError(this.handleError));
   }
 

@@ -5,10 +5,10 @@ import { AboutComponent } from './about/about.component';
 import { GameDetailComponent } from './game-detail/game-detail.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'game', pathMatch: 'full'},
+  { path: '', redirectTo: 'games', pathMatch: 'full'},
   { path: 'about', component: AboutComponent },
-  { path: 'game', component: GameComponent },
-  {path: 'game/:id' , component: GameDetailComponent}
+  { path: 'games', component: GameComponent },
+  {path: 'games/:id' , component: GameDetailComponent}
 
 ];
 

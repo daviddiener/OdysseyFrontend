@@ -16,7 +16,7 @@ export class GameDetailComponent implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      this.dataService.getGame(params.get('id')).subscribe((c: Game) => {
+      this.dataService.getGameById(params.get('id')).subscribe((c: Game) => {
           this.game = c;
       });
     });
