@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-
-import {  throwError } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators';
-import { environment } from './../environments/environment';
-import { Game } from './game/game';
+import { throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
+import { Game } from '../game/game';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DataService {
+export class GameService {
 
   private REST_API_SERVER = environment.apiUrl;
 

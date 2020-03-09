@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DataService } from '../data.service';
+import { GameService } from '../services/game.service';
 import { Game } from '../game/game';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons/faArrowLeft';
 
@@ -12,11 +12,11 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons/faArrowLeft';
 export class GameDetailComponent implements OnInit {
   faArrowLeft = faArrowLeft;
   game: Game;
-  constructor(private dataService: DataService, private route: ActivatedRoute) { }
+  constructor(private gameService: GameService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      this.dataService.getGameById(params.get('id')).subscribe((c: Game) => {
+      this.gameService.getGameById(params.get('id')).subscribe((c: Game) => {
           this.game = c;
       });
     });

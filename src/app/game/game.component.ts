@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../data.service';
+import { GameService } from '../services/game.service';
 import { Game } from './game';
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
 
@@ -13,22 +13,22 @@ export class GameComponent implements OnInit {
   games = [];
   newGame = new Game();
 
-  constructor(private dataService: DataService) { }
+  constructor(private gameService: GameService) { }
 
   ngOnInit() {
-    this.dataService.getAllGames().subscribe((data: any[]) => {
+    this.gameService.getAllGames().subscribe((data: any[]) => {
       this.games = data;
     });
   }
 
   createGame() {
-    this.dataService.createGame(this.newGame).subscribe((data: any[]) => {
+    this.gameService.createGame(this.newGame).subscribe((data: any[]) => {
       this.ngOnInit();
     });
   }
 
   deleteGame(id: any) {
-    this.dataService.deleteGame(id).subscribe((data: any[]) => {
+    this.gameService.deleteGame(id).subscribe((data: any[]) => {
       this.ngOnInit();
     });
   }
