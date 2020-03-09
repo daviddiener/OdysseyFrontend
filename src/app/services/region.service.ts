@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
-import { Region } from '../region/region';
 
 interface TokenResponse {
   token: string;
@@ -32,25 +31,14 @@ export class RegionService {
     return this.token;
   }
 
-  private request(method: 'post'|'get'|'getById'|'put'|'delete', parentId: string, id?: string, region?: Region): Observable<any> {
+  private request(method: 'get'|'getById', parentId: string, id?: string): Observable<any> {
     let base;
 
-    if (method === 'post') {
-      base = this.http.post(this.REST_API_SERVER + 'games/' + parentId + 'regions/',
-      {name: region.name, description: region.description, gameId: region.gameId, type: region.type, owner: region.owner},
-      { headers: { Authorization: `Bearer ${this.getToken()}` }});
-    } else if (method === 'get') {
+    if (method === 'get') {
       base = this.http.get(this.REST_API_SERVER + 'games/' + parentId + '/regions/',
       { headers: { Authorization: `Bearer ${this.getToken()}` }});
     } else if (method === 'getById') {
       base = this.http.get(this.REST_API_SERVER + 'games/' + parentId + 'regions/' + id,
-      { headers: { Authorization: `Bearer ${this.getToken()}` }});
-    } else if (method === 'put') {
-      base = this.http.put(this.REST_API_SERVER + 'games/' + parentId + 'regions/' + id,
-      {name: region.name, description: region.description, gameId: region.gameId, type: region.type, owner: region.owner},
-      { headers: { Authorization: `Bearer ${this.getToken()}` }});
-    } else if (method === 'delete') {
-      base = this.http.delete(this.REST_API_SERVER + 'games/' + parentId + 'regions/' + id,
       { headers: { Authorization: `Bearer ${this.getToken()}` }});
     }
 
@@ -66,23 +54,11 @@ export class RegionService {
     return request;
   }
 
-  public createRegion(parentId: string, region: Region): Observable<any> {
-    return this.request('post', parentId, null, region);
-  }
-
   public getAllRegions(parentId: string): Observable<any> {
     return this.request('get', parentId);
   }
 
   public getRegionById(parentId: string, id: string): Observable<any> {
     return this.request('getById', parentId, id);
-  }
-
-  public updateRegion(parentId: string, region: Region, id: string): Observable<any> {
-    return this.request('put', parentId, id, region);
-  }
-
-  public deleteRegion(parentId: string, id: string): Observable<any> {
-    return this.request('delete', parentId, id);
   }
 }

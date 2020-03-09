@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { Game } from '../game/game';
+import { AuthenticationService } from './authentication.service';
 
 interface TokenResponse {
   token: string;
@@ -18,7 +19,7 @@ export class GameService {
   private token: string;
   private REST_API_SERVER = environment.apiUrl;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private auth: AuthenticationService) {}
 
   private saveToken(token: string): void {
     localStorage.setItem('mean-token', token);
@@ -36,7 +37,8 @@ export class GameService {
     let base;
 
     if (method === 'post') {
-      base = this.http.post(this.REST_API_SERVER + 'games/', {title: game.title, seed: game.seed, mapsize: game.mapsize},
+      base = this.http.post(this.REST_API_SERVER + 'games/',
+      {title: game.title, seed: game.seed, mapsize: game.mapsize, players: [this.auth.getUserDetails().email]},
       { headers: { Authorization: `Bearer ${this.getToken()}` }});
     } else if (method === 'get') {
       base = this.http.get(this.REST_API_SERVER + 'games/', { headers: { Authorization: `Bearer ${this.getToken()}` }});

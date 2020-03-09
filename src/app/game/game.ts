@@ -4,5 +4,6 @@ export class Game {
     title: string;
     seed: number;
     mapsize: number;
+    players: [string];
     date: Date;
   }

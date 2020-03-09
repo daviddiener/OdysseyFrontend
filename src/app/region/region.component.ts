@@ -3,7 +3,6 @@ import { RegionService } from '../services/region.service';
 import { ActivatedRoute } from '@angular/router';
 import { Region } from './region';
 
-
 @Component({
   selector: 'app-region',
   templateUrl: './region.component.html',
