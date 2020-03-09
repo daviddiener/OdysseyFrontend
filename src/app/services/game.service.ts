@@ -1,52 +1,84 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { Game } from '../game/game';
+
+interface TokenResponse {
+  token: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
-export class GameService {
 
+export class GameService {
+  private token: string;
   private REST_API_SERVER = environment.apiUrl;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) {}
 
-  handleError(error: HttpErrorResponse) {
-    let errorMessage = 'Unknown error!';
-    if (error.error instanceof ErrorEvent) {
-      // Client-side errors
-      errorMessage = `Error: ${error.error.message}`;
-    } else {
-      // Server-side errors
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+  private saveToken(token: string): void {
+    localStorage.setItem('mean-token', token);
+    this.token = token;
+  }
+
+  private getToken(): string {
+    if (!this.token) {
+      this.token = localStorage.getItem('mean-token');
     }
-    window.alert(errorMessage);
-    return throwError(errorMessage);
+    return this.token;
   }
 
-  public getGameById(id: string) {
-    return this.httpClient.get(this.REST_API_SERVER + 'games/' + id).pipe(catchError(this.handleError));
+  private request(method: 'post'|'get'|'getById'|'put'|'delete', game?: Game, id?: string): Observable<any> {
+    let base;
+
+    if (method === 'post') {
+      base = this.http.post(this.REST_API_SERVER + 'games/', {title: game.title, seed: game.seed, mapsize: game.mapsize},
+      { headers: { Authorization: `Bearer ${this.getToken()}` }});
+    } else if (method === 'get') {
+      base = this.http.get(this.REST_API_SERVER + 'games/', { headers: { Authorization: `Bearer ${this.getToken()}` }});
+    } else if (method === 'getById') {
+      base = this.http.get(this.REST_API_SERVER + 'games/' + id, { headers: { Authorization: `Bearer ${this.getToken()}` }});
+    } else if (method === 'put') {
+      base = this.http.put(this.REST_API_SERVER + 'games/' + id, {title: game.title, seed: game.seed, mapsize: game.mapsize},
+      { headers: { Authorization: `Bearer ${this.getToken()}` }});
+    } else if (method === 'delete') {
+      base = this.http.delete(this.REST_API_SERVER + 'games/' + id, { headers: { Authorization: `Bearer ${this.getToken()}` }});
+    }
+
+    const request = base.pipe(
+      map((data: TokenResponse) => {
+        if (data.token) {
+          this.saveToken(data.token);
+        }
+        return data;
+      })
+    );
+
+    return request;
   }
 
-  public getAllGames() {
-    return this.httpClient.get(this.REST_API_SERVER + 'games/').pipe(catchError(this.handleError));
+  public createGame(newGame: Game): Observable<any> {
+    return this.request('post', newGame);
   }
 
-  public createGame(newGame: Game) {
-    return this.httpClient.post(this.REST_API_SERVER + 'games/',
-      {title: newGame.title, seed: newGame.seed, mapsize: newGame.mapsize}).pipe(catchError(this.handleError));
+  public getAllGames(): Observable<any> {
+    return this.request('get');
   }
 
-  public updateGame(newGame: Game, id: string) {
-    return this.httpClient.post(this.REST_API_SERVER + 'games/' + id,
-      {title: newGame.title, seed: newGame.seed, mapsize: newGame.mapsize}).pipe(catchError(this.handleError));
+  public getGameById(id: string): Observable<any> {
+    return this.request('getById', null, id);
   }
 
-  public deleteGame(id: string) {
-    return this.httpClient.delete(this.REST_API_SERVER + 'games/' + id).pipe(catchError(this.handleError));
+  public updateGame(newGame: Game, id: string): Observable<any> {
+    return this.request('put', newGame, id);
+  }
+
+  public deleteGame(id: string): Observable<any> {
+    return this.request('delete', null, id);
   }
 
 }

@@ -12,6 +12,7 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons/faArrowLeft';
 export class GameDetailComponent implements OnInit {
   faArrowLeft = faArrowLeft;
   game: Game;
+
   constructor(private gameService: GameService, private route: ActivatedRoute) { }
 
   ngOnInit() {

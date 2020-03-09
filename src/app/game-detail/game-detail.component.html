@@ -1,5 +1,5 @@
 <div>
-    <button mat-icon-button	routerLink="/">
+    <button mat-icon-button	routerLink="/games">
         <fa-icon [icon]="faArrowLeft" size="2x"></fa-icon>
     </button>
     <h1> Game # {{game?._id}}</h1>
@@ -11,3 +11,7 @@
         <mat-list-item role="listitem">Size: {{game?.mapsize}} </mat-list-item>
         <mat-list-item role="listitem">Date: {{game?.date}}</mat-list-item>
 </mat-list>
+
+<button mat-button [routerLink]="['regions']">Show Regions</button>
+
+<router-outlet></router-outlet>

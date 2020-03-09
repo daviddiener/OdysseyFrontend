@@ -10,25 +10,25 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
 })
 export class GameComponent implements OnInit {
   faTrash = faTrash;
-  games = [];
+  games: Game[] = [];
   newGame = new Game();
 
   constructor(private gameService: GameService) { }
 
   ngOnInit() {
-    this.gameService.getAllGames().subscribe((data: any[]) => {
+    this.gameService.getAllGames().subscribe((data: Game[]) => {
       this.games = data;
     });
   }
 
   createGame() {
-    this.gameService.createGame(this.newGame).subscribe((data: any[]) => {
+    this.gameService.createGame(this.newGame).subscribe(() => {
       this.ngOnInit();
     });
   }
 
   deleteGame(id: any) {
-    this.gameService.deleteGame(id).subscribe((data: any[]) => {
+    this.gameService.deleteGame(id).subscribe(() => {
       this.ngOnInit();
     });
   }
