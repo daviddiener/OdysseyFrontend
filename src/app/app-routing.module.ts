@@ -9,6 +9,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { AboutComponent } from './about/about.component';
 import { RegionDetailComponent } from './region-detail/region-detail.component';
 import { CityComponent } from './city/city.component';
+import { CharacterComponent } from './character/character.component';
+import { CharacterDetailComponent } from './character-detail/character-detail.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -16,8 +18,16 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService] },
   { path: 'about', component: AboutComponent, canActivate: [AuthGuardService] },
-  { path: 'regions', component: RegionComponent, canActivate: [AuthGuardService] },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuardService] },
+  { path: 'characters', component: CharacterComponent, canActivate: [AuthGuardService] },
+  { path: 'characters/:id', component: CharacterDetailComponent, canActivate: [AuthGuardService],
+        children: [
+          { path: 'regions/:id' , component: RegionDetailComponent, canActivate: [AuthGuardService],
+          children: [
+            { path: 'cities', component: CityComponent, canActivate: [AuthGuardService]}
+        ]},
+  ]},
+  { path: 'regions', component: RegionComponent, canActivate: [AuthGuardService] },
   { path: 'regions/:id' , component: RegionDetailComponent, canActivate: [AuthGuardService],
     children: [
       { path: 'cities', component: CityComponent, canActivate: [AuthGuardService]}

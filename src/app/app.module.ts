@@ -7,6 +7,7 @@ import { MatCardModule} from '@angular/material/card';
 import { MatButtonModule} from '@angular/material/button';
 import { MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 
@@ -25,6 +26,8 @@ import { AuthenticationService } from './services/authentication.service';
 import { AuthGuardService } from './services/auth-guard.service';
 import { ProfileComponent } from './profile/profile.component';
 import { HomeComponent } from './home/home.component';
+import { CharacterComponent } from './character/character.component';
+import { CharacterDetailComponent } from './character-detail/character-detail.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,9 @@ import { HomeComponent } from './home/home.component';
     RegisterComponent,
     LoginComponent,
     ProfileComponent,
-    HomeComponent
+    HomeComponent,
+    CharacterComponent,
+    CharacterDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -50,6 +55,7 @@ import { HomeComponent } from './home/home.component';
     MatCardModule,
     MatProgressSpinnerModule,
     MatFormFieldModule,
+    MatSelectModule,
     MatInputModule,
     MatListModule,
     FontAwesomeModule

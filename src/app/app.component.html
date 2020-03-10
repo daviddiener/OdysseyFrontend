@@ -3,7 +3,8 @@
     TBS WebEnd 
   </h1>
   <button mat-button routerLink="/home">Home</button>
-  <button mat-button routerLink="/regions">Regions</button>
+  <button mat-button routerLink="/characters">Characters</button>
+  <button mat-button routerLink="/regions">Regions (Deprecated)</button>
   <button mat-button routerLink="/about">About</button>
   <button mat-button *ngIf="!auth.isLoggedIn()" routerLink="/login">Sign in</button>
   <button mat-button *ngIf="auth.isLoggedIn()" routerLink="/profile">{{ auth.getUserDetails()?.name }}</button>

@@ -1,0 +1,21 @@
+<div>
+    <button mat-icon-button	routerLink="/characters">
+        <fa-icon [icon]="faArrowLeft" size="2x"></fa-icon>
+    </button>
+    <h1> Character # {{character?._id}}</h1>
+</div>
+
+<mat-list role="list">
+        <mat-list-item role="listitem">Name: {{character?.name}}</mat-list-item>
+        <mat-list-item role="listitem">Gender: {{character?.gender}}</mat-list-item>
+        <mat-list-item role="listitem">RegionId: {{character?.regionId}} </mat-list-item>
+        <mat-list-item role="listitem">HP: {{character?.hp}}</mat-list-item>   
+        <mat-list-item role="listitem">Strength: {{character?.strength}}</mat-list-item>   
+        <mat-list-item role="listitem">Agility: {{character?.agility}}</mat-list-item>   
+        <mat-list-item role="listitem">Intelligence: {{character?.intelligence}}</mat-list-item>   
+        <mat-list-item role="listitem">UserId: {{character?.userId}}</mat-list-item>   
+</mat-list>
+
+<button mat-button [routerLink]="['regions', character?.regionId]">Show current region</button>
+
+<router-outlet></router-outlet>

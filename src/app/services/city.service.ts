@@ -25,9 +25,7 @@ export class CityService {
   }
 
   private getToken(): string {
-    if (!this.token) {
-      this.token = localStorage.getItem('mean-token');
-    }
+    this.token = localStorage.getItem('mean-token');
     return this.token;
   }
 

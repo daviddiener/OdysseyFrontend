@@ -16,7 +16,7 @@ export class RegisterComponent {
 
   register() {
     this.auth.register(this.credentials).subscribe(() => {
-      this.router.navigateByUrl('/regions');
+      this.router.navigateByUrl('/home');
     }, (err) => {
       console.error(err);
     });

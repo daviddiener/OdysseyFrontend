@@ -1,0 +1,33 @@
+<div>
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput type="text" [(ngModel)]="newCharacter.name">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Gender</mat-label>
+        <input matInput type="number" [(ngModel)]="newCharacter.gender">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Region</mat-label>
+        <mat-select [(ngModel)]="newCharacter.regionId">
+            <mat-option *ngFor="let region of regions" [value]="region._id">
+              {{ region.title }}
+            </mat-option>
+          </mat-select>
+    </mat-form-field>
+    <button mat-button (click)='createCharacter()'>Create New Character</button>
+</div>
+
+<div>
+    <mat-card *ngFor="let character of characters" style="margin-top:10px;">
+        <mat-card-header>
+            <mat-card-title>Name: {{character.name}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-actions>
+            <button mat-button [routerLink]="['/characters', character._id]">Play</button>
+            <button mat-icon-button	(click)='deleteCharacter(character._id)'>
+                <fa-icon [icon]="faTrash" size="lg"></fa-icon>
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</div>
