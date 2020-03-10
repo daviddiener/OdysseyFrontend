@@ -8,7 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AboutComponent } from './about/about.component';
 import { GameDetailComponent } from './game-detail/game-detail.component';
-import { RegionComponent } from './region/region.component';
+import { CityComponent } from './city/city.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuardService] },
   { path: 'games/:id' , component: GameDetailComponent, canActivate: [AuthGuardService],
     children: [
-      { path: 'regions', component: RegionComponent, canActivate: [AuthGuardService]}
+      { path: 'cities', component: CityComponent, canActivate: [AuthGuardService]}
   ]},
   { path: '**', redirectTo: 'home'}
 ];

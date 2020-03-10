@@ -13,7 +13,7 @@ interface TokenResponse {
   providedIn: 'root'
 })
 
-export class RegionService {
+export class CityService {
   private token: string;
   private REST_API_SERVER = environment.apiUrl;
 
@@ -35,10 +35,10 @@ export class RegionService {
     let base;
 
     if (method === 'get') {
-      base = this.http.get(this.REST_API_SERVER + 'games/' + parentId + '/regions/',
+      base = this.http.get(this.REST_API_SERVER + 'games/' + parentId + '/cities/',
       { headers: { Authorization: `Bearer ${this.getToken()}` }});
     } else if (method === 'getById') {
-      base = this.http.get(this.REST_API_SERVER + 'games/' + parentId + 'regions/' + id,
+      base = this.http.get(this.REST_API_SERVER + 'games/' + parentId + '/cities/' + id,
       { headers: { Authorization: `Bearer ${this.getToken()}` }});
     }
 
@@ -54,11 +54,11 @@ export class RegionService {
     return request;
   }
 
-  public getAllRegions(parentId: string): Observable<any> {
+  public getAllCities(parentId: string): Observable<any> {
     return this.request('get', parentId);
   }
 
-  public getRegionById(parentId: string, id: string): Observable<any> {
+  public getCityById(parentId: string, id: string): Observable<any> {
     return this.request('getById', parentId, id);
   }
 }

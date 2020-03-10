@@ -18,7 +18,7 @@ import { AboutComponent } from './about/about.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { RegionComponent } from './region/region.component';
+import { CityComponent } from './city/city.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { AuthenticationService } from './services/authentication.service';
@@ -32,7 +32,7 @@ import { HomeComponent } from './home/home.component';
     GameDetailComponent,
     AboutComponent,
     GameComponent,
-    RegionComponent,
+    CityComponent,
     RegisterComponent,
     LoginComponent,
     ProfileComponent,

@@ -1,4 +1,4 @@
-export class Region {
+export class City {
     // tslint:disable-next-line:variable-name
     _id?: string;
     name: string;
