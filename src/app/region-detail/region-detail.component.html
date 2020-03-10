@@ -1,0 +1,21 @@
+<div>
+    <button mat-icon-button	routerLink="/regions">
+        <fa-icon [icon]="faArrowLeft" size="2x"></fa-icon>
+    </button>
+    <h1> Region # {{region?._id}}</h1>
+</div>
+
+<mat-list role="list">
+        <mat-list-item role="listitem">Title: {{region?.title}}</mat-list-item>
+        <mat-list-item role="listitem">Seed: {{region?.seed}}</mat-list-item>
+        <mat-list-item role="listitem">Size: {{region?.mapsize}} </mat-list-item>
+        <mat-list-item role="listitem">Date: {{region?.date}}</mat-list-item>   
+</mat-list>
+
+<mat-list *ngFor="let player of region?.players">
+    <mat-list-item>Spieler: {{player}}</mat-list-item>
+</mat-list>
+
+<button mat-button [routerLink]="['cities']">Show Cities</button>
+
+<router-outlet></router-outlet>

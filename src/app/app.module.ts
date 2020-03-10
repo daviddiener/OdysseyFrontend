@@ -12,8 +12,8 @@ import { MatListModule } from '@angular/material/list';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { GameComponent } from './game/game.component';
-import { GameDetailComponent } from './game-detail/game-detail.component';
+import { RegionComponent } from './region/region.component';
+import { RegionDetailComponent } from './region-detail/region-detail.component';
 import { AboutComponent } from './about/about.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
@@ -29,9 +29,9 @@ import { HomeComponent } from './home/home.component';
 @NgModule({
   declarations: [
     AppComponent,
-    GameDetailComponent,
+    RegionDetailComponent,
     AboutComponent,
-    GameComponent,
+    RegionComponent,
     CityComponent,
     RegisterComponent,
     LoginComponent,

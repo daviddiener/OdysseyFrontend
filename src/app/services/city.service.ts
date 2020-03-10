@@ -35,10 +35,10 @@ export class CityService {
     let base;
 
     if (method === 'get') {
-      base = this.http.get(this.REST_API_SERVER + 'games/' + parentId + '/cities/',
+      base = this.http.get(this.REST_API_SERVER + 'regions/' + parentId + '/cities/',
       { headers: { Authorization: `Bearer ${this.getToken()}` }});
     } else if (method === 'getById') {
-      base = this.http.get(this.REST_API_SERVER + 'games/' + parentId + '/cities/' + id,
+      base = this.http.get(this.REST_API_SERVER + 'regions/' + parentId + '/cities/' + id,
       { headers: { Authorization: `Bearer ${this.getToken()}` }});
     }
 

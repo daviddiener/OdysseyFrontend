@@ -1,0 +1,30 @@
+<div>
+    <mat-form-field appearance="outline">
+      <mat-label>Title</mat-label>
+      <input matInput type="text" [(ngModel)]="newRegion.title">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Seed</mat-label>
+        <input matInput type="number" [(ngModel)]="newRegion.seed">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Map Size</mat-label>
+        <input matInput type="number" [(ngModel)]="newRegion.mapsize">
+    </mat-form-field>
+    <button mat-button (click)='createRegion()'>Create New Region</button>
+</div>
+
+<div>
+    <mat-card *ngFor="let region of regions" style="margin-top:10px;">
+        <mat-card-header>
+            <mat-card-title>Title: {{region.title}}</mat-card-title>
+            <mat-card-subtitle>Seed: {{region.seed}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-actions>
+            <button mat-button [routerLink]="['/regions', region._id]">Play</button>
+            <button mat-icon-button	(click)='deleteRegion(region._id)'>
+                <fa-icon [icon]="faTrash" size="lg"></fa-icon>
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</div>

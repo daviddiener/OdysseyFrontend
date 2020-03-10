@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
-import { Game } from '../game/game';
+import { Region } from '../region/region';
 import { AuthenticationService } from './authentication.service';
 
 interface TokenResponse {
@@ -15,7 +15,7 @@ interface TokenResponse {
   providedIn: 'root'
 })
 
-export class GameService {
+export class RegionService {
   private token: string;
   private REST_API_SERVER = environment.apiUrl;
 
@@ -33,22 +33,22 @@ export class GameService {
     return this.token;
   }
 
-  private request(method: 'post'|'get'|'getById'|'put'|'delete', game?: Game, id?: string): Observable<any> {
+  private request(method: 'post'|'get'|'getById'|'put'|'delete', region?: Region, id?: string): Observable<any> {
     let base;
 
     if (method === 'post') {
-      base = this.http.post(this.REST_API_SERVER + 'games/',
-      {title: game.title, seed: game.seed, mapsize: game.mapsize, players: [this.auth.getUserDetails().email]},
+      base = this.http.post(this.REST_API_SERVER + 'regions/',
+      {title: region.title, seed: region.seed, mapsize: region.mapsize, players: [this.auth.getUserDetails().email]},
       { headers: { Authorization: `Bearer ${this.getToken()}` }});
     } else if (method === 'get') {
-      base = this.http.get(this.REST_API_SERVER + 'games/', { headers: { Authorization: `Bearer ${this.getToken()}` }});
+      base = this.http.get(this.REST_API_SERVER + 'regions/', { headers: { Authorization: `Bearer ${this.getToken()}` }});
     } else if (method === 'getById') {
-      base = this.http.get(this.REST_API_SERVER + 'games/' + id, { headers: { Authorization: `Bearer ${this.getToken()}` }});
+      base = this.http.get(this.REST_API_SERVER + 'regions/' + id, { headers: { Authorization: `Bearer ${this.getToken()}` }});
     } else if (method === 'put') {
-      base = this.http.put(this.REST_API_SERVER + 'games/' + id, {title: game.title, seed: game.seed, mapsize: game.mapsize},
+      base = this.http.put(this.REST_API_SERVER + 'regions/' + id, {title: region.title, seed: region.seed, mapsize: region.mapsize},
       { headers: { Authorization: `Bearer ${this.getToken()}` }});
     } else if (method === 'delete') {
-      base = this.http.delete(this.REST_API_SERVER + 'games/' + id, { headers: { Authorization: `Bearer ${this.getToken()}` }});
+      base = this.http.delete(this.REST_API_SERVER + 'regions/' + id, { headers: { Authorization: `Bearer ${this.getToken()}` }});
     }
 
     const request = base.pipe(
@@ -63,23 +63,23 @@ export class GameService {
     return request;
   }
 
-  public createGame(newGame: Game): Observable<any> {
-    return this.request('post', newGame);
+  public createRegion(newRegion: Region): Observable<any> {
+    return this.request('post', newRegion);
   }
 
-  public getAllGames(): Observable<any> {
+  public getAllRegions(): Observable<any> {
     return this.request('get');
   }
 
-  public getGameById(id: string): Observable<any> {
+  public getRegionById(id: string): Observable<any> {
     return this.request('getById', null, id);
   }
 
-  public updateGame(newGame: Game, id: string): Observable<any> {
-    return this.request('put', newGame, id);
+  public updateRegion(newRegion: Region, id: string): Observable<any> {
+    return this.request('put', newRegion, id);
   }
 
-  public deleteGame(id: string): Observable<any> {
+  public deleteRegion(id: string): Observable<any> {
     return this.request('delete', null, id);
   }
 

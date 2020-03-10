@@ -3,7 +3,7 @@ export class City {
     _id?: string;
     name: string;
     description: string;
-    gameId: string;
+    regionId: string;
     type: string;
     owner: string;
     date: Date;
