@@ -4,6 +4,5 @@ export class Region {
     title: string;
     seed: number;
     mapsize: number;
-    players: [string];
     date: Date;
   }

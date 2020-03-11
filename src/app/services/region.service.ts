@@ -38,7 +38,7 @@ export class RegionService {
 
     if (method === 'post') {
       base = this.http.post(this.REST_API_SERVER + 'regions/',
-      {title: region.title, seed: region.seed, mapsize: region.mapsize, players: [this.auth.getUserDetails().email]},
+      {title: region.title, seed: region.seed, mapsize: region.mapsize},
       { headers: { Authorization: `Bearer ${this.getToken()}` }});
     } else if (method === 'get') {
       base = this.http.get(this.REST_API_SERVER + 'regions/', { headers: { Authorization: `Bearer ${this.getToken()}` }});
