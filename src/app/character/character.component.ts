@@ -37,7 +37,6 @@ export class CharacterComponent implements OnInit {
   }
 
   createCharacter() {
-    console.log(this.newCharacter);
     this.characterService.createCharacter(this.newCharacter).subscribe(() => {
       this.characterService.getAllCharacters().subscribe((data: Character[]) => {
         this.characters = data;

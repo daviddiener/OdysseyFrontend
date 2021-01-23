@@ -63,7 +63,6 @@ export class CharacterService {
   }
 
   public createCharacter(newCharacter: Character): Observable<any> {
-    console.log(newCharacter);
     return this.request('post', newCharacter);
   }
 
