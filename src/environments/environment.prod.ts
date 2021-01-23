@@ -1,4 +1,4 @@
 export const environment = {
-  apiUrl: 'http://www.dialogai.de/api/',
+  apiUrl: 'http://localhost:3000/api/',
   production: true
 };

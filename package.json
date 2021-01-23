@@ -1,5 +1,5 @@
 {
-  "name": "rtsfrontend",
+  "name": "tbsfrontend",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -8,10 +8,9 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "purge": "if exist ..\\RTSBackend\\public\\ del /q ..\\RTSBackend\\public\\RTSFrontend\\*",
-    "copy": "xcopy /r /s /q .\\dist ..\\RTSBackend\\public\\"
+    "purge": "if exist ..\\TBSBackend\\public\\ del /q ..\\TBSBackend\\public\\TBSFrontend\\*",
+    "copy": "xcopy /r /s /q .\\dist ..\\TBSBackend\\public\\"
   },
-
   "private": true,
   "dependencies": {
     "@angular/animations": "~9.0.5",
@@ -33,7 +32,7 @@
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.900.5",
+    "@angular-devkit/build-angular": "^0.1001.1",
     "@angular/cli": "~9.0.5",
     "@angular/compiler-cli": "~9.0.5",
     "@angular/language-service": "~9.0.5",
