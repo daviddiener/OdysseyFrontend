@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
+import { MatRadioModule } from '@angular/material/radio';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -58,7 +59,8 @@ import { CharacterDetailComponent } from './character-detail/character-detail.co
     MatSelectModule,
     MatInputModule,
     MatListModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    MatRadioModule
   ],
   providers: [
     AuthenticationService,

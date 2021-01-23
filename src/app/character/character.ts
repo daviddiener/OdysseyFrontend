@@ -4,6 +4,7 @@ export class Character {
     name: string;
     gender: boolean;
     regionId: string;
+    cityId: string;
     hp: number;
     strength: number;
     agility: number;

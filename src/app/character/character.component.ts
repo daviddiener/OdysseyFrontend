@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CharacterService } from '../services/character.service';
 import { RegionService } from '../services/region.service';
+import { CityService } from '../services/city.service';
 import { Character } from './character';
 import { Region } from './../region/region';
+import { City } from './../city/city';
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
 
 @Component({
@@ -14,9 +16,10 @@ export class CharacterComponent implements OnInit {
   faTrash = faTrash;
   characters: Character[] = [];
   regions: Region[];
+  cities: City[];
   newCharacter = new Character();
 
-  constructor(private characterService: CharacterService, private regionService: RegionService) { }
+  constructor(private characterService: CharacterService, private regionService: RegionService, private cityService: CityService) { }
 
   ngOnInit() {
     this.characterService.getAllCharacters().subscribe((data: Character[]) => {
@@ -27,15 +30,26 @@ export class CharacterComponent implements OnInit {
     });
   }
 
+  updateCities(value) {
+    this.cityService.getAllCities(value).subscribe((data: City[]) => {
+      this.cities = data;
+  });
+  }
+
   createCharacter() {
+    console.log(this.newCharacter);
     this.characterService.createCharacter(this.newCharacter).subscribe(() => {
-      this.ngOnInit();
+      this.characterService.getAllCharacters().subscribe((data: Character[]) => {
+        this.characters = data;
+      });
     });
   }
 
   deleteCharacter(id: any) {
     this.characterService.deleteCharacter(id).subscribe(() => {
-      this.ngOnInit();
+      this.characterService.getAllCharacters().subscribe((data: Character[]) => {
+        this.characters = data;
+      });
     });
   }
 

@@ -36,7 +36,7 @@ export class CharacterService {
 
     if (method === 'post') {
       base = this.http.post(this.REST_API_SERVER + 'characters/',
-      {name: character.name, gender: character.gender, regionId: character.regionId},
+      {name: character.name, gender: character.gender, regionId: character.regionId, cityId: character.cityId},
       { headers: { Authorization: `Bearer ${this.getToken()}` }});
     } else if (method === 'get') {
       base = this.http.get(this.REST_API_SERVER + 'characters/', { headers: { Authorization: `Bearer ${this.getToken()}` }});
@@ -63,6 +63,7 @@ export class CharacterService {
   }
 
   public createCharacter(newCharacter: Character): Observable<any> {
+    console.log(newCharacter);
     return this.request('post', newCharacter);
   }
 
