@@ -12,6 +12,7 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons/faArrowLeft';
 export class RegionDetailComponent implements OnInit {
   faArrowLeft = faArrowLeft;
   region: Region;
+  showOutlet = false;
 
   constructor(private regionService: RegionService, private route: ActivatedRoute) { }
 
@@ -21,6 +22,14 @@ export class RegionDetailComponent implements OnInit {
           this.region = c;
       });
     });
+  }
+
+  onActivate() {
+    this.showOutlet = true;
+  }
+
+  onDeactivate() {
+    this.showOutlet = false;
   }
 
 }

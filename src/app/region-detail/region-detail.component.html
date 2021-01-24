@@ -13,6 +13,11 @@
     World Map
 </div>
 
-<button mat-button [routerLink]="['cities']">Show Cities</button>
+<button mat-button [routerLink]="['cities']" [style.display]="!showOutlet ? 'block' : 'none'">Show Cities</button>
+<button mat-button [routerLink]="['.']" [style.display]="showOutlet ? 'block' : 'none'">Close Cities</button>
 
-<router-outlet></router-outlet>
+<div [hidden]="!showOutlet">
+    <router-outlet
+        (activate)="onActivate()"
+        (deactivate)="onDeactivate()"></router-outlet>
+  </div>

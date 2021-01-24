@@ -31,7 +31,8 @@ export class CharacterService {
     return this.token;
   }
 
-  private request(method: 'post'|'get'|'getById'|'put'|'delete', character?: Character, id?: string): Observable<any> {
+  private request(method: 'post'|'get'|'getById'|'getByCityId'|'put'|'delete', 
+                  character?: Character, id?: string, cityid?: string): Observable<any> {
     let base;
 
     if (method === 'post') {
@@ -42,6 +43,10 @@ export class CharacterService {
       base = this.http.get(this.REST_API_SERVER + 'characters/', { headers: { Authorization: `Bearer ${this.getToken()}` }});
     } else if (method === 'getById') {
       base = this.http.get(this.REST_API_SERVER + 'characters/' + id, { headers: { Authorization: `Bearer ${this.getToken()}` }});
+    }  else if (method === 'getByCityId') {
+      base = this.http.get(this.REST_API_SERVER + 'characters/', {
+        params: {cityId: cityid},
+        headers: { Authorization: `Bearer ${this.getToken()}` }});
     } else if (method === 'put') {
       base = this.http.put(this.REST_API_SERVER + 'characters/' + id,
       {name: character.name, gender: character.gender, regionId: character.regionId},
@@ -70,8 +75,13 @@ export class CharacterService {
     return this.request('get');
   }
 
+ 
   public getCharacterById(id: string): Observable<any> {
     return this.request('getById', null, id);
+  }
+
+  public getAllCharactersByCityId(cityid: string): Observable<any> {
+    return this.request('getByCityId', null, null, cityid);
   }
 
   public updateCharacter(newCharacter: Character, id: string): Observable<any> {

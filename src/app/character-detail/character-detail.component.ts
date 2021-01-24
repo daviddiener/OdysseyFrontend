@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { CharacterService } from '../services/character.service';
 import { CityService } from '../services/city.service';
 import { Character } from '../character/character';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons/faArrowLeft';
 import { City } from '../city/city';
 
 @Component({
@@ -12,7 +11,6 @@ import { City } from '../city/city';
   styleUrls: ['./character-detail.component.css']
 })
 export class CharacterDetailComponent implements OnInit {
-  faArrowLeft = faArrowLeft;
   character: Character;
   city: City;
 

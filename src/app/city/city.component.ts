@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CityService } from '../services/city.service';
+import { CharacterService } from '../services/character.service';
 import { ActivatedRoute } from '@angular/router';
 import { City } from './city';
+import { Character } from '../character/character';
 
 @Component({
   selector: 'app-city',
@@ -10,16 +12,22 @@ import { City } from './city';
 })
 export class CityComponent implements OnInit {
 
-  cities: City[] = [];
+  cities = [];
 
-  constructor(private cityService: CityService, private route: ActivatedRoute) { }
+  constructor(private cityService: CityService, private characterService: CharacterService, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.cities.map(obj => ({ ...obj, Active: 'false' }));
+
+
     this.route.parent.paramMap.subscribe(params => {
       this.cityService.getAllCities(params.get('id')).subscribe((data: City[]) => {
-          this.cities = data;
+          data.forEach(element => {
+            this.characterService.getAllCharactersByCityId(element._id).subscribe((chars: Character[]) => {
+              this.cities.push({element, chars});
+            });
+          });
       });
     });
   }
-
 }
