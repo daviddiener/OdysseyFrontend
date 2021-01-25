@@ -20,13 +20,7 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent, canActivate: [AuthGuardService] },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuardService] },
   { path: 'characters', component: CharacterComponent, canActivate: [AuthGuardService] },
-  { path: 'characters/:id', component: CharacterDetailComponent, canActivate: [AuthGuardService],
-        children: [
-          { path: 'regions/:id' , component: RegionDetailComponent, canActivate: [AuthGuardService],
-          children: [
-            { path: 'cities', component: CityComponent, canActivate: [AuthGuardService]}
-        ]},
-  ]},
+  { path: 'characters/:id', component: CharacterDetailComponent, canActivate: [AuthGuardService] },
   { path: 'regions', component: RegionComponent, canActivate: [AuthGuardService] },
   { path: 'regions/:id' , component: RegionDetailComponent, canActivate: [AuthGuardService],
     children: [

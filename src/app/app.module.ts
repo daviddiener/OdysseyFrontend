@@ -1,6 +1,9 @@
+// Angular
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+
+// Material Design
 import { MatToolbarModule} from '@angular/material/toolbar';
 import { MatIconModule} from '@angular/material/icon';
 import { MatCardModule} from '@angular/material/card';
@@ -11,7 +14,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatRadioModule } from '@angular/material/radio';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
+// Components
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RegionComponent } from './region/region.component';
@@ -42,9 +47,10 @@ import { CharacterDetailComponent } from './character-detail/character-detail.co
     ProfileComponent,
     HomeComponent,
     CharacterComponent,
-    CharacterDetailComponent
+    CharacterDetailComponent,
   ],
   imports: [
+    NgbModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -60,11 +66,12 @@ import { CharacterDetailComponent } from './character-detail/character-detail.co
     MatInputModule,
     MatListModule,
     FontAwesomeModule,
-    MatRadioModule
+    MatRadioModule,
+    NgbModule,
   ],
   providers: [
     AuthenticationService,
-    AuthGuardService
+    AuthGuardService,
   ],
   bootstrap: [AppComponent]
 })
