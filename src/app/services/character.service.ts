@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { Character } from '../character/character';
 import { AuthenticationService } from './authentication.service';
+import { WINDOW } from './window.provider';
 
 interface TokenResponse {
   token: string;
@@ -15,11 +16,15 @@ interface TokenResponse {
   providedIn: 'root'
 })
 
+@Injectable()
 export class CharacterService {
   private token: string;
-  private REST_API_SERVER = environment.apiUrl;
+  private REST_API_SERVER = this.window.location.protocol + '//' + this.window.location.hostname + ':3000/api/';
 
-  constructor(private http: HttpClient, private router: Router, private auth: AuthenticationService) {}
+  constructor(private http: HttpClient,
+              private router: Router,
+              private auth: AuthenticationService,
+              @Inject(WINDOW) private window: Window) {}
 
   private saveToken(token: string): void {
     localStorage.setItem('mean-token', token);
@@ -31,7 +36,7 @@ export class CharacterService {
     return this.token;
   }
 
-  private request(method: 'post'|'get'|'getById'|'getByCityId'|'put'|'delete', 
+  private request(method: 'post'|'get'|'getById'|'getByCityId'|'put'|'delete',
                   character?: Character, id?: string, cityid?: string): Observable<any> {
     let base;
 
@@ -75,7 +80,6 @@ export class CharacterService {
     return this.request('get');
   }
 
- 
   public getCharacterById(id: string): Observable<any> {
     return this.request('getById', null, id);
   }

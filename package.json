@@ -5,13 +5,13 @@
     "ng": "ng",
     "start": "ng serve",
     "start:prod": "ng serve --prod",
-    "start:pwa": "ng build --prod && http-server -p 4200 -c-1 dist/TBSFrontend",
-    "build": "ng build --prod && npm run purge && npm run copy",
+    "start:pwa": "ng build --prod --output-hashing none && http-server -p 4200 -c-1 dist/TBSFrontend",
+    "build": "ng build --prod --output-hashing none && npm run purge && npm run copy",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "purge": "if exist ..\\TBSBackend\\public\\ del /q ..\\TBSBackend\\public\\TBSFrontend\\*",
-    "copy": "xcopy /r /s /q .\\dist ..\\TBSBackend\\public\\"
+    "copy": "xcopy /R /S /Q /Y .\\dist ..\\TBSBackend\\public\\"
   },
   "private": true,
   "dependencies": {

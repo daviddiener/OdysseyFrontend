@@ -36,6 +36,7 @@ import { CharacterComponent } from './character/character.component';
 import { CharacterDetailComponent } from './character-detail/character-detail.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { WINDOW_PROVIDERS } from './services/window.provider';
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { environment } from '../environments/environment';
   providers: [
     AuthenticationService,
     AuthGuardService,
+    WINDOW_PROVIDERS
   ],
   bootstrap: [AppComponent]
 })

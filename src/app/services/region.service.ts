@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { Region } from '../region/region';
 import { AuthenticationService } from './authentication.service';
+import { WINDOW } from './window.provider';
 
 interface TokenResponse {
   token: string;
@@ -17,9 +18,12 @@ interface TokenResponse {
 
 export class RegionService {
   private token: string;
-  private REST_API_SERVER = environment.apiUrl;
+  private REST_API_SERVER = this.window.location.protocol + '//' + this.window.location.hostname + ':3000/api/';
 
-  constructor(private http: HttpClient, private router: Router, private auth: AuthenticationService) {}
+  constructor(private http: HttpClient,
+              private router: Router,
+              private auth: AuthenticationService,
+              @Inject(WINDOW) private window: Window) {}
 
   private saveToken(token: string): void {
     localStorage.setItem('mean-token', token);
