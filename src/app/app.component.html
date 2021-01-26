@@ -20,6 +20,9 @@
       </li>
     </ul>
     <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+      <span class="navbar-text">
+        Version: {{version}}
+      </span>
       <li class="nav-item">
         <a class="nav-link" *ngIf="!auth.isLoggedIn()" routerLink="/login">Sign in</a>
       </li>
@@ -31,3 +34,15 @@
 </nav>
 
 <router-outlet></router-outlet>
+
+<!-- Footer -->
+<footer class="page-footer font-small blue">
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">© 2021 Copyright:
+    <a href="https://olympus-studios.com/"> Olympus-Studios.com</a>
+  </div>
+  <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
