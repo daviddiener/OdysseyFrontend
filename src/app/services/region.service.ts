@@ -22,7 +22,7 @@ export class RegionService {
 
   private getURL(): string {
     let port = '';
-    if (this.window.location.port != null) {
+    if (!environment.production) {
       port = ':3000';
     }
     return this.window.location.protocol + '//' + this.window.location.hostname + port + '/api/';
