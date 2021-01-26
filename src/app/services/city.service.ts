@@ -16,7 +16,15 @@ interface TokenResponse {
 
 export class CityService {
   private token: string;
-  private REST_API_SERVER = this.window.location.protocol + '//' + this.window.location.hostname + ':3000/api/';
+  private REST_API_SERVER = this.getURL();
+
+  private getURL(): string {
+    let port = '';
+    if (this.window.location.port != null) {
+      port = ':3000';
+    }
+    return this.window.location.protocol + '//' + this.window.location.hostname + port + '/api/';
+  }
 
   constructor(private http: HttpClient,
               private router: Router,
