@@ -1,41 +1,58 @@
-<div>
-    <mat-form-field appearance="outline">
-      <mat-label>Name</mat-label>
-      <input matInput type="text" [(ngModel)]="newCharacter.name">
-    </mat-form-field>
-    <mat-radio-group aria-label="Gender" [(ngModel)]="newCharacter.gender">
-        <mat-radio-button value="0">Male</mat-radio-button>
-        <mat-radio-button value="1">Female</mat-radio-button>
-    </mat-radio-group>
-    <mat-form-field appearance="outline">
-        <mat-label>Region</mat-label>
-        <mat-select [(ngModel)]="newCharacter.regionId" (selectionChange)="updateCities($event.value)">
-            <mat-option *ngFor="let region of regions" [value]="region._id">
-              {{ region.title }}
-            </mat-option>
-          </mat-select>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-        <mat-label>City</mat-label>
-        <mat-select [(ngModel)]="newCharacter.cityId">
-            <mat-option *ngFor="let city of cities" [value]="city._id">
-              {{ city.name }}
-            </mat-option>
-          </mat-select>
-    </mat-form-field>
-    <button mat-button (click)='createCharacter()'>Create New Character</button>
-</div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col my-auto">
+            <mat-form-field appearance="outline">
+                    <mat-label>Name</mat-label>
+                    <input matInput type="text" [(ngModel)]="newCharacter.name">                
+            </mat-form-field>
+        </div>
+        <div class="col my-auto">
+            <mat-radio-group aria-label="Gender" [(ngModel)]="newCharacter.gender">
+                <div class="row">
+                    <mat-radio-button value="0">Male</mat-radio-button>
+                </div>
+                <div class="row">
+                    <mat-radio-button value="1">Female</mat-radio-button>
+                </div>
+            </mat-radio-group>
+        </div>
+        <div class="col my-auto">
+            <mat-form-field appearance="outline">
+                    <mat-label>Region</mat-label>
+                    <mat-select [(ngModel)]="newCharacter.regionId" (selectionChange)="updateCities($event.value)">
+                        <mat-option *ngFor="let region of regions" [value]="region._id">
+                        {{ region.title }}
+                        </mat-option>
+                    </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col my-auto">
+            <mat-form-field appearance="outline">
+                <mat-label>City</mat-label>
+                <mat-select [(ngModel)]="newCharacter.cityId">
+                    <mat-option *ngFor="let city of cities" [value]="city._id">
+                    {{ city.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col my-auto">
+            <button mat-raised-button color="primary" mat-button (click)='createCharacter()'>Create New Character</button>
+        </div>
+    </div>
 
-<div>
     <mat-card *ngFor="let character of characters" style="margin-top:10px;">
-        <mat-card-header>
-            <mat-card-title>Name: {{character.name}}</mat-card-title>
-        </mat-card-header>
-        <mat-card-actions>
-            <button mat-button [routerLink]="['/characters', character._id]">Play</button>
-            <button mat-icon-button	(click)='deleteCharacter(character._id)'>
-                <fa-icon [icon]="faTrash" size="lg"></fa-icon>
-            </button>
-        </mat-card-actions>
+        <div class="row">
+            <mat-card-header>
+                <mat-card-title>Name: {{character.name}}</mat-card-title>
+            </mat-card-header>
+            <mat-card-actions>
+                <button mat-button [routerLink]="['/characters', character._id]">Play</button>
+                <button mat-icon-button	(click)='deleteCharacter(character._id)'>
+                    <fa-icon [icon]="faTrash" size="lg"></fa-icon>
+                </button>
+            </mat-card-actions>
+        </div>
     </mat-card>
+
 </div>

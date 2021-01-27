@@ -1,23 +1,23 @@
-<div>
-    <h1> Region # {{region?._id}}</h1>
+<div class="container">
+    <div class="row justify-content-center">
+        <h1 class="text-center"> Region: {{region?.title}}</h1>
+    </div>
+    <div class="row justify-content-center">
+        <mat-list role="list">
+                <mat-list-item role="listitem">ID: {{region?._id}}</mat-list-item>
+                <mat-list-item role="listitem">Seed: {{region?.seed}}</mat-list-item>
+                <mat-list-item role="listitem">Size: {{region?.mapsize}} </mat-list-item>
+                <mat-list-item role="listitem">Create date: {{region?.date}}</mat-list-item>   
+        </mat-list>
+    </div>
+    <hr>
+    <div class="row justify-content-center">
+        <button mat-button [routerLink]="['cities']" [style.display]="!showOutlet ? 'block' : 'none'">Show Cities</button>
+        <button mat-button [routerLink]="['.']" [style.display]="showOutlet ? 'block' : 'none'">Close Cities</button>
+    </div>
+    <div class="row justify-content-center" [hidden]="!showOutlet">
+        <router-outlet
+            (activate)="onActivate()"
+            (deactivate)="onDeactivate()"></router-outlet>
+    </div>
 </div>
-
-<mat-list role="list">
-        <mat-list-item role="listitem">Title: {{region?.title}}</mat-list-item>
-        <mat-list-item role="listitem">Seed: {{region?.seed}}</mat-list-item>
-        <mat-list-item role="listitem">Size: {{region?.mapsize}} </mat-list-item>
-        <mat-list-item role="listitem">Date: {{region?.date}}</mat-list-item>   
-</mat-list>
-
-<div>
-    World Map
-</div>
-
-<button mat-button [routerLink]="['cities']" [style.display]="!showOutlet ? 'block' : 'none'">Show Cities</button>
-<button mat-button [routerLink]="['.']" [style.display]="showOutlet ? 'block' : 'none'">Close Cities</button>
-
-<div [hidden]="!showOutlet">
-    <router-outlet
-        (activate)="onActivate()"
-        (deactivate)="onDeactivate()"></router-outlet>
-  </div>
