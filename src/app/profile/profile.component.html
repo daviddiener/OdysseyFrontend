@@ -1,8 +1,8 @@
 <div class="container">
   <div class="row justify-content-center"> 
-      <label class="control-label">Full name: {{ details?.name }}</label>
-  </div>
-  <div class="row justify-content-center"> 
-    <label class="control-label">Email: {{ details?.email }}</label>
+      <mat-list role="list">
+        <mat-list-item role="listitem">Name: {{ details?.name }}</mat-list-item>   
+        <mat-list-item role="listitem">Email: {{ details?.email }}</mat-list-item>
+      </mat-list>
   </div>
 </div>

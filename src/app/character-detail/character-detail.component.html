@@ -1,11 +1,11 @@
 <div class="container">
     <div class="row justify-content-center"> 
-        <h1> Character # {{character?._id}}</h1>
+        <h2>{{character?.name}}</h2>
     </div>
     <div class="row justify-content-center">    
         <mat-list role="list">
                 <mat-list-item role="listitem">UserId: {{character?.userId}}</mat-list-item>   
-                <mat-list-item role="listitem">Name: {{character?.name}}</mat-list-item>
+                <mat-list-item role="listitem">CharacterId: {{character?._id}}</mat-list-item>
                 <mat-list-item role="listitem">Gender: {{character?.gender}}</mat-list-item>
                 <mat-list-item role="listitem">Region Id: {{character?.regionId}} </mat-list-item>
                 <mat-list-item role="listitem">City Id: {{character?.cityId}} </mat-list-item>

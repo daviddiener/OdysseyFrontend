@@ -12,8 +12,8 @@
     </div>
     <hr>
     <div class="row justify-content-center">
-        <button mat-button [routerLink]="['cities']" [style.display]="!showOutlet ? 'block' : 'none'">Show Cities</button>
-        <button mat-button [routerLink]="['.']" [style.display]="showOutlet ? 'block' : 'none'">Close Cities</button>
+        <button mat-raised-button color="primary" [routerLink]="['cities']" [style.display]="!showOutlet ? 'block' : 'none'">Show Cities</button>
+        <button mat-raised-button color="primary" [routerLink]="['.']" [style.display]="showOutlet ? 'block' : 'none'">Close Cities</button>
     </div>
     <div class="row justify-content-center" [hidden]="!showOutlet">
         <router-outlet

@@ -19,27 +19,29 @@
             </mat-form-field>
         </div>
         <div class="col my-auto">
-            <button  mat-raised-button color="primary" (click)='createRegion()'>Create New Region</button>
+            <button mat-raised-button color="primary" (click)='createRegion()'>Create New Region</button>
         </div>
     </div>
 
     <div class="row justify-content-center">
         World Map
     </div>
-    <div class="row justify-content-center">
-        <mat-card *ngFor="let region of regions" style="margin-top:10px;">
-            <div class="row">
+    <mat-card *ngFor="let region of regions" style="margin-top:10px;">
+        <div class="row">
+            <div class="col">
                 <mat-card-header>
                     <mat-card-title>Title: {{region.title}}</mat-card-title>
                     <mat-card-subtitle>Seed: {{region.seed}}</mat-card-subtitle>
                 </mat-card-header>
+            </div>
+            <div class="col text-right">
                 <mat-card-actions>
-                    <button mat-button [routerLink]="['/regions', region._id]">Go to Region</button>
-                    <button mat-icon-button	(click)='deleteRegion(region._id)'>
+                    <button mat-raised-button color="primary" [routerLink]="['/regions', region._id]">Go to Region</button>
+                    <button mat-icon-button color="secondary" (click)='deleteRegion(region._id)'>
                         <fa-icon [icon]="faTrash" size="lg"></fa-icon>
                     </button>
                 </mat-card-actions>
             </div>
-        </mat-card>
-    </div>
+        </div>
+    </mat-card>
 </div>
