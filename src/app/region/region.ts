@@ -4,5 +4,7 @@ export class Region {
     title: string;
     seed: number;
     mapsize: number;
+    x: number;
+    y: number;
     date: Date;
   }
