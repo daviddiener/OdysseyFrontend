@@ -6,5 +6,6 @@ export class Region {
     mapsize: number;
     x: number;
     y: number;
+    noise: number;
     date: Date;
   }
