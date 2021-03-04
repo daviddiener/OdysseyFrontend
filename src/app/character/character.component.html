@@ -23,6 +23,7 @@
                         <mat-option *ngFor="let region of regions" [value]="region._id">
                         {{ region.title }}
                         </mat-option>
+                        <button mat-raised-button color="secondary" (click)='loadNextPage()'>Load more</button>
                     </mat-select>
             </mat-form-field>
         </div>

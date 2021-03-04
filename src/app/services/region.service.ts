@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpParams, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -45,15 +45,23 @@ export class RegionService {
     return this.token;
   }
 
-  private request(method: 'post'|'get'|'getById'|'put'|'delete', region?: Region, id?: string): Observable<any> {
+  private request(method: 'post'|'get'|'getById'|'put'|'delete', region?: Region, id?: string, pageNum?: number): Observable<any> {
     let base;
+    let paginatorParams = new HttpParams();
+
+    if (pageNum != null) {
+      paginatorParams = paginatorParams.append('pageNum', pageNum.toString());
+    }
 
     if (method === 'post') {
       base = this.http.post(this.REST_API_SERVER + 'regions/',
       {title: region.title, seed: region.seed, mapsize: region.mapsize},
       { headers: { Authorization: `Bearer ${this.getToken()}` }});
     } else if (method === 'get') {
-      base = this.http.get(this.REST_API_SERVER + 'regions/', { headers: { Authorization: `Bearer ${this.getToken()}` }});
+      base = this.http.get(this.REST_API_SERVER + 'regions/', {
+        params: paginatorParams,
+        headers: { Authorization: `Bearer ${this.getToken()}`
+      }});
     } else if (method === 'getById') {
       base = this.http.get(this.REST_API_SERVER + 'regions/' + id, { headers: { Authorization: `Bearer ${this.getToken()}` }});
     } else if (method === 'put') {
@@ -81,6 +89,10 @@ export class RegionService {
 
   public getAllRegions(): Observable<any> {
     return this.request('get');
+  }
+
+  public getPartRegions(pageNum: number): Observable<any> {
+    return this.request('get', null, null, pageNum);
   }
 
   public getRegionById(id: string): Observable<any> {

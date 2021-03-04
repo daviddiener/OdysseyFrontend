@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { RegionService } from '../services/region.service';
 import { Region } from './region';
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
@@ -12,13 +12,26 @@ export class RegionComponent implements OnInit {
   faTrash = faTrash;
   regions: Region[] = [];
   newRegion = new Region();
+  currentPage = 1;
+
+  @ViewChild('canvas', { static: true })
+  canvas: ElementRef<HTMLCanvasElement>;
+  private ctx: CanvasRenderingContext2D;
 
   constructor(private regionService: RegionService) { }
 
   ngOnInit() {
-    this.regionService.getAllRegions().subscribe((data: Region[]) => {
-      this.regions = data;
+    this.regionService.getPartRegions(this.currentPage).subscribe((data: Region[]) => {
+      this.regions = this.regions.concat(data);
     });
+    this.currentPage++;
+  }
+
+  loadNextPage() {
+    this.regionService.getPartRegions(this.currentPage).subscribe((data: Region[]) => {
+      this.regions = this.regions.concat(data);
+    });
+    this.currentPage++;
   }
 
   createRegion() {

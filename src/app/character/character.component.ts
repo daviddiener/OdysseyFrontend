@@ -15,9 +15,10 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
 export class CharacterComponent implements OnInit {
   faTrash = faTrash;
   characters: Character[] = [];
-  regions: Region[];
+  regions: Region[] = [];
   cities: City[];
   newCharacter = new Character();
+  currentPage = 1;
 
   constructor(private characterService: CharacterService, private regionService: RegionService, private cityService: CityService) { }
 
@@ -25,9 +26,17 @@ export class CharacterComponent implements OnInit {
     this.characterService.getAllCharacters().subscribe((data: Character[]) => {
       this.characters = data;
     });
-    this.regionService.getAllRegions().subscribe((data: Region[]) => {
-      this.regions = data;
+    this.regionService.getPartRegions(this.currentPage).subscribe((data: Region[]) => {
+      this.regions = this.regions.concat(data);
     });
+    this.currentPage++;
+  }
+
+  loadNextPage() {
+    this.regionService.getPartRegions(this.currentPage).subscribe((data: Region[]) => {
+      this.regions = this.regions.concat(data);
+    });
+    this.currentPage++;
   }
 
   updateCities(value) {

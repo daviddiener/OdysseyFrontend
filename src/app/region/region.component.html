@@ -26,6 +26,7 @@
     <div class="row justify-content-center">
         World Map
     </div>
+    
     <mat-card *ngFor="let region of regions" style="margin-top:10px;">
         <div class="row">
             <div class="col">
@@ -44,4 +45,9 @@
             </div>
         </div>
     </mat-card>
+
+    <div class="row justify-content-center">
+        <button mat-raised-button color="secondary" (click)='loadNextPage()'>Load more</button>
+    </div>
+
 </div>
