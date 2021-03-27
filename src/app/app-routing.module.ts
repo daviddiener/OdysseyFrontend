@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuardService } from './services/auth-guard.service';
 import { HomeComponent } from './home/home.component';
 import { RegionComponent } from './region/region.component';
+import { WorldmapComponent } from './worldmap/worldmap.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuardService] },
   { path: 'characters', component: CharacterComponent, canActivate: [AuthGuardService] },
   { path: 'characters/:id', component: CharacterDetailComponent, canActivate: [AuthGuardService] },
+  { path: 'worldmap', component: WorldmapComponent, canActivate: [AuthGuardService] },
   { path: 'regions', component: RegionComponent, canActivate: [AuthGuardService] },
   { path: 'regions/:id' , component: RegionDetailComponent, canActivate: [AuthGuardService],
     children: [

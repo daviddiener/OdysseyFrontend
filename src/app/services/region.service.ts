@@ -45,12 +45,17 @@ export class RegionService {
     return this.token;
   }
 
-  private request(method: 'post'|'get'|'getById'|'put'|'delete', region?: Region, id?: string, pageNum?: number): Observable<any> {
+  private request(method: 'post'|'get'|'getById'|'put'|'delete', region?: Region, id?: string,
+                  pageNum?: number, x?: number, y?: number, range?: number): Observable<any> {
     let base;
     let paginatorParams = new HttpParams();
 
     if (pageNum != null) {
       paginatorParams = paginatorParams.append('pageNum', pageNum.toString());
+    } else if (x != null && y != null && range != null){
+      paginatorParams = paginatorParams.append('x', x.toString());
+      paginatorParams = paginatorParams.append('y', y.toString());
+      paginatorParams = paginatorParams.append('range', range.toString());
     }
 
     if (method === 'post') {
@@ -93,6 +98,10 @@ export class RegionService {
 
   public getPartRegions(pageNum: number): Observable<any> {
     return this.request('get', null, null, pageNum);
+  }
+
+  public getRegionChunk(x: number, y: number, range: number): Observable<any> {
+    return this.request('get', null, null, null, x, y, range);
   }
 
   public getRegionById(id: string): Observable<any> {

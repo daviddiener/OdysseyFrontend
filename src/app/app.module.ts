@@ -37,6 +37,7 @@ import { CharacterDetailComponent } from './character-detail/character-detail.co
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { WINDOW_PROVIDERS } from './services/window.provider';
+import { WorldmapComponent } from './worldmap/worldmap.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { WINDOW_PROVIDERS } from './services/window.provider';
     HomeComponent,
     CharacterComponent,
     CharacterDetailComponent,
+    WorldmapComponent,
   ],
   imports: [
     NgbModule,
