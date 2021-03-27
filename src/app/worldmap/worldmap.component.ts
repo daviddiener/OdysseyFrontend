@@ -17,15 +17,19 @@ export class WorldmapComponent implements OnInit {
   constructor(private regionService: RegionService) {
     this.config = {
       type: Phaser.AUTO,
-      height: 600,
-      width: 800,
-      parent: 'gameContainer',
       physics: {
         default: 'arcade',
         arcade: {
           gravity: { x: 0, y: 0 }
         }
-      }
+      },
+      scale: {
+        parent: 'gameContainer',
+        mode: Phaser.Scale.RESIZE,
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+        width: 800,
+        height: 600
+    }
     };
   }
 
