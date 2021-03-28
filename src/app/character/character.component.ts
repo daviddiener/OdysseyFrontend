@@ -19,6 +19,7 @@ export class CharacterComponent implements OnInit {
   cities: City[];
   newCharacter = new Character();
   currentPage = 1;
+  pageLimit = 10;
 
   constructor(private characterService: CharacterService, private regionService: RegionService, private cityService: CityService) { }
 
@@ -26,14 +27,14 @@ export class CharacterComponent implements OnInit {
     this.characterService.getAllCharacters().subscribe((data: Character[]) => {
       this.characters = data;
     });
-    this.regionService.getPartRegions(this.currentPage).subscribe((data: Region[]) => {
+    this.regionService.getPartRegions(this.currentPage, this.pageLimit).subscribe((data: Region[]) => {
       this.regions = this.regions.concat(data);
     });
     this.currentPage++;
   }
 
   loadNextPage() {
-    this.regionService.getPartRegions(this.currentPage).subscribe((data: Region[]) => {
+    this.regionService.getPartRegions(this.currentPage, this.pageLimit).subscribe((data: Region[]) => {
       this.regions = this.regions.concat(data);
     });
     this.currentPage++;
@@ -59,6 +60,14 @@ export class CharacterComponent implements OnInit {
         this.characters = data;
       });
     });
+  }
+
+  deleteAllCharacters() {
+    if (confirm('Are you sure to delete all characters?')) {
+      this.characterService.deleteAllCharacters().subscribe(() => {
+        this.ngOnInit();
+      });
+    }
   }
 
 }

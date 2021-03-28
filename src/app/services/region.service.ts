@@ -46,12 +46,13 @@ export class RegionService {
   }
 
   private request(method: 'post'|'get'|'getById'|'put'|'delete'|'deleteById', region?: Region, id?: string,
-                  pageNum?: number, x?: number, y?: number, range?: number): Observable<any> {
+                  pageNum?: number, pageLimit?: number, x?: number, y?: number, range?: number): Observable<any> {
     let base;
     let paginatorParams = new HttpParams();
 
-    if (pageNum != null) {
+    if (pageNum != null && pageLimit != null) {
       paginatorParams = paginatorParams.append('pageNum', pageNum.toString());
+      paginatorParams = paginatorParams.append('pageLimit', pageLimit.toString());
     } else if (x != null && y != null && range != null){
       paginatorParams = paginatorParams.append('x', x.toString());
       paginatorParams = paginatorParams.append('y', y.toString());
@@ -98,12 +99,12 @@ export class RegionService {
     return this.request('get');
   }
 
-  public getPartRegions(pageNum: number): Observable<any> {
-    return this.request('get', null, null, pageNum);
+  public getPartRegions(pageNum: number, pageLimit: number): Observable<any> {
+    return this.request('get', null, null, pageNum, pageLimit);
   }
 
   public getRegionChunk(x: number, y: number, range: number): Observable<any> {
-    return this.request('get', null, null, null, x, y, range);
+    return this.request('get', null, null, null, null, x, y, range);
   }
 
   public getRegionById(id: string): Observable<any> {

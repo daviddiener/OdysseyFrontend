@@ -44,7 +44,7 @@ export class CharacterService {
     return this.token;
   }
 
-  private request(method: 'post'|'get'|'getById'|'getByCityId'|'put'|'delete',
+  private request(method: 'post'|'get'|'getById'|'getByCityId'|'put'|'delete'|'deleteById',
                   character?: Character, id?: string, cityid?: string): Observable<any> {
     let base;
 
@@ -64,8 +64,10 @@ export class CharacterService {
       base = this.http.put(this.REST_API_SERVER + 'characters/' + id,
       {name: character.name, gender: character.gender, regionId: character.regionId},
       { headers: { Authorization: `Bearer ${this.getToken()}` }});
-    } else if (method === 'delete') {
+    } else if (method === 'deleteById') {
       base = this.http.delete(this.REST_API_SERVER + 'characters/' + id, { headers: { Authorization: `Bearer ${this.getToken()}` }});
+    } else if (method === 'delete') {
+      base = this.http.delete(this.REST_API_SERVER + 'characters/', { headers: { Authorization: `Bearer ${this.getToken()}` }});
     }
 
     const request = base.pipe(
@@ -101,7 +103,11 @@ export class CharacterService {
   }
 
   public deleteCharacter(id: string): Observable<any> {
-    return this.request('delete', null, id);
+    return this.request('deleteById', null, id);
+  }
+
+  public deleteAllCharacters(): Observable<any> {
+    return this.request('delete');
   }
 
 }

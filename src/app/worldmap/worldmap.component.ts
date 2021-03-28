@@ -63,7 +63,6 @@ class MainScene extends Phaser.Scene {
       if (!p.isDown){
         return;
       }
-
       this.cam.scrollX -= (p.x - p.prevPosition.x) / this.cam.zoom;
       this.cam.scrollY -= (p.y - p.prevPosition.y) / this.cam.zoom;
     });
@@ -73,12 +72,15 @@ class MainScene extends Phaser.Scene {
     this.regionService.getRegionChunk(x, y, 10).subscribe((data: RegionLite[]) => {
       data.forEach(element => {
         if (element.noise < 0.4){
-          this.add.tileSprite(element.x * this.tileSize, element.y * this.tileSize, this.tileSize, this.tileSize, 'worldTiles', 2);
+          this.add.tileSprite(element.x * this.tileSize, element.y * this.tileSize, this.tileSize, this.tileSize, 'worldTiles', 2)
+          .depth = 10;
         } else if (element.noise < 0.6) {
-          this.add.tileSprite(element.x * this.tileSize, element.y * this.tileSize, this.tileSize, this.tileSize, 'worldTiles', 1);
+          this.add.tileSprite(element.x * this.tileSize, element.y * this.tileSize, this.tileSize, this.tileSize, 'worldTiles', 1)
+          .depth = 10;
         }
         else {
-          this.add.tileSprite(element.x * this.tileSize, element.y * this.tileSize, this.tileSize, this.tileSize, 'worldTiles', 3);
+          this.add.tileSprite(element.x * this.tileSize, element.y * this.tileSize, this.tileSize, this.tileSize, 'worldTiles', 3)
+          .depth = 10;
         }
       });
     });
