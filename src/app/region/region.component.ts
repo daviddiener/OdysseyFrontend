@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RegionService } from '../services/region.service';
 import { Region } from './region';
-import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
 
 @Component({
   selector: 'app-region',
@@ -9,7 +8,6 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
   styleUrls: ['./region.component.css']
 })
 export class RegionComponent implements OnInit {
-  faTrash = faTrash;
   regions: Region[] = [];
   newRegion = new Region();
   currentPage = 1;
@@ -36,9 +34,11 @@ export class RegionComponent implements OnInit {
     });
   }
 
-  deleteRegion(id: any) {
-    this.regionService.deleteRegion(id).subscribe(() => {
-      this.ngOnInit();
-    });
+  deleteAllRegions() {
+    if (confirm('Are you sure to delete all regions?')) {
+      this.regionService.deleteAllRegions().subscribe(() => {
+        this.ngOnInit();
+      });
+    }
   }
 }

@@ -34,9 +34,6 @@
             <div class="col text-right">
                 <mat-card-actions>
                     <button mat-raised-button color="primary" [routerLink]="['/regions', region._id]">Go to Region</button>
-                    <button mat-icon-button color="secondary" (click)='deleteRegion(region._id)'>
-                        <fa-icon [icon]="faTrash" size="lg"></fa-icon>
-                    </button>
                 </mat-card-actions>
             </div>
         </div>
@@ -44,5 +41,9 @@
 
     <div class="row justify-content-center">
         <button mat-raised-button color="secondary" (click)='loadNextPage()'>Load more</button>
+    </div>
+
+    <div class="row justify-content-center">
+        <button mat-raised-button color="warn" (click)='deleteAllRegions()'>Delete all regions</button>
     </div>
 </div>

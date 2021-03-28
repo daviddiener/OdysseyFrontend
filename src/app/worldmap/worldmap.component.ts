@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RegionService } from '../services/region.service';
-import { Region } from '../region/region';
-import Phaser from 'phaser';
+import { RegionLite } from '../region/region_lite';
+import Phaser, { Cameras } from 'phaser';
+import { Chunk } from './Chunk';
 
 @Component({
   selector: 'app-worldmap',
@@ -9,10 +10,9 @@ import Phaser from 'phaser';
   styleUrls: ['./worldmap.component.css']
 })
 export class WorldmapComponent implements OnInit {
-  regions: Region[] = [];
   phaserGame: Phaser.Game;
   config: Phaser.Types.Core.GameConfig;
-  msc: MainScene = null;
+  msc: MainScene;
 
   constructor(private regionService: RegionService) {
     this.config = {
@@ -34,23 +34,22 @@ export class WorldmapComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.regionService.getRegionChunk(0, 0, 10).subscribe((data: Region[]) => {
-      this.regions = this.regions.concat(data);
-      this.msc =  new MainScene(this.regions);
-      this.config.scene = this.msc;
-      this.phaserGame = new Phaser.Game(this.config);
-    });
+    this.msc = new MainScene(this.regionService);
+    this.config.scene = this.msc;
+    this.phaserGame = new Phaser.Game(this.config);
   }
 }
 
 class MainScene extends Phaser.Scene {
-  regions: Region[] = [];
-  tileSize = 64;
-  cam: any;
+  regions: RegionLite[] = [];
+  tileSize = 32;
+  chunkSize = 8;
+  cam: Cameras.Scene2D.Camera;
+  cameraCursor: Phaser.GameObjects.Arc;
+  loadedChunks: Chunk[] = [];
 
-  constructor(regions: Region[]) {
+  constructor(private regionService: RegionService) {
     super({ key: 'main' });
-    this.regions = regions;
   }
 
   preload() {
@@ -58,11 +57,28 @@ class MainScene extends Phaser.Scene {
   }
 
   create() {
-    this.DrawRegions();
+    this.FetchChunk(0, 0);
+    this.FetchChunk(-1, 0);
+    this.FetchChunk(1, 0);
+    this.FetchChunk(0, 1);
+    this.FetchChunk(-1, 1);
+    this.FetchChunk(1, 1);
+    this.FetchChunk(0, -1);
+    this.FetchChunk(-1, -1);
+    this.FetchChunk(1, -1);
+
+    this.loadedChunks.push(new Chunk(0, 0, true));
+    this.loadedChunks.push(new Chunk(-1, 0, true));
+    this.loadedChunks.push(new Chunk(1, 0, true));
+    this.loadedChunks.push(new Chunk(0, 1, true));
+    this.loadedChunks.push(new Chunk(-1, 1, true));
+    this.loadedChunks.push(new Chunk(1, 1, true));
+    this.loadedChunks.push(new Chunk(0, -1, true));
+    this.loadedChunks.push(new Chunk(-1, -1, true));
+    this.loadedChunks.push(new Chunk(1, -1, true));
 
     this.cam = this.cameras.main;
-    // this.cam.setBounds(0, 0, map.displayWidth, map.displayHeight);
-    this.cam.setZoom(1);
+    this.cam.setZoom(2);
     this.cam.scrollX = 0 - this.cam.width / 2;
     this.cam.scrollY = 0 - this.cam.height / 2;
     this.input.on('pointermove', (p: any) => {
@@ -73,6 +89,40 @@ class MainScene extends Phaser.Scene {
       this.cam.scrollX -= (p.x - p.prevPosition.x) / this.cam.zoom;
       this.cam.scrollY -= (p.y - p.prevPosition.y) / this.cam.zoom;
     });
+
+    this.cameraCursor = this.add.circle((this.cam.scrollX + this.cam.width / 2), (this.cam.scrollY + this.cam.height / 2), 4, 0xff0000);
+    this.cameraCursor.depth = 10;
+  }
+
+  update() {
+    this.cameraCursor.x = this.cam.scrollX + this.cam.width / 2;
+    this.cameraCursor.y = this.cam.scrollY + this.cam.height / 2;
+
+    // if (this.loadedChunks.find(c => c.x === Math.floor((this.cam.scrollX + this.cam.width / 2) / (this.tileSize * this.chunkSize)) &&
+    // c.y === Math.floor((this.cam.scrollY + this.cam.height / 2) / (this.tileSize * this.chunkSize)) &&
+    // c.loaded === true) == null) {
+    //     this.FetchChunk(Math.floor((this.cam.scrollX + this.cam.width / 2) / (this.tileSize * this.chunkSize)),
+    //                     Math.floor((this.cam.scrollY + this.cam.height / 2) / (this.tileSize * this.chunkSize)));
+    //     this.loadedChunks.push(new Chunk(Math.floor((this.cam.scrollX + this.cam.width / 2) / (this.tileSize * this.chunkSize)),
+    //     Math.floor((this.cam.scrollY + this.cam.height / 2) / (this.tileSize * this.chunkSize)),
+    //     true));
+    // }
+  }
+
+  FetchChunk(x: number, y: number){
+    this.regionService.getRegionChunk(x * this.chunkSize + (this.chunkSize / 2),
+                                      y * this.chunkSize + (this.chunkSize / 2),
+                                      (this.chunkSize / 2) + 1).subscribe((data: RegionLite[]) => {
+      this.regions = this.regions.concat(data);
+      this.DrawRegions();
+    });
+
+    // Mark the middle of the chunk
+    const tmp = this.add.circle(
+      (x * this.chunkSize + (this.chunkSize / 2)) * this.tileSize,
+      (y * this.chunkSize + (this.chunkSize / 2)) * this.tileSize,
+      4, 0x00ff00);
+    tmp.depth = 10;
   }
 
   DrawRegions(){

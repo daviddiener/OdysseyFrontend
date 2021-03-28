@@ -45,7 +45,7 @@ export class RegionService {
     return this.token;
   }
 
-  private request(method: 'post'|'get'|'getById'|'put'|'delete', region?: Region, id?: string,
+  private request(method: 'post'|'get'|'getById'|'put'|'delete'|'deleteById', region?: Region, id?: string,
                   pageNum?: number, x?: number, y?: number, range?: number): Observable<any> {
     let base;
     let paginatorParams = new HttpParams();
@@ -72,8 +72,10 @@ export class RegionService {
     } else if (method === 'put') {
       base = this.http.put(this.REST_API_SERVER + 'regions/' + id, {title: region.title, seed: region.seed, mapsize: region.mapsize},
       { headers: { Authorization: `Bearer ${this.getToken()}` }});
-    } else if (method === 'delete') {
+    } else if (method === 'deleteById') {
       base = this.http.delete(this.REST_API_SERVER + 'regions/' + id, { headers: { Authorization: `Bearer ${this.getToken()}` }});
+    } else if (method === 'delete') {
+      base = this.http.delete(this.REST_API_SERVER + 'regions/', { headers: { Authorization: `Bearer ${this.getToken()}` }});
     }
 
     const request = base.pipe(
@@ -113,7 +115,11 @@ export class RegionService {
   }
 
   public deleteRegion(id: string): Observable<any> {
-    return this.request('delete', null, id);
+    return this.request('deleteById', null, id);
+  }
+
+  public deleteAllRegions(): Observable<any> {
+    return this.request('delete');
   }
 
 }
