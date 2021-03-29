@@ -3,8 +3,8 @@
   "version": "0.0.3",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "start:prod": "ng serve --prod",
+    "start": "ng serve --host 0.0.0.0 --disableHostCheck",
+    "start:prod": "ng serve --prod --host 0.0.0.0 --disableHostCheck",
     "start:pwa": "ng build --prod --output-hashing none && http-server -p 4200 -c-1 dist/TBSFrontend",
     "build": "ng build --prod --output-hashing none && npm run purge && npm run copy",
     "build:push": "npm run build && cd ..\\TBSBackend && npm run push",
