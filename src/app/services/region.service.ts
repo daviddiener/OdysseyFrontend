@@ -60,9 +60,7 @@ export class RegionService {
     }
 
     if (method === 'post') {
-      base = this.http.post(this.REST_API_SERVER + 'regions/',
-      {title: region.title, seed: region.seed, mapsize: region.mapsize},
-      { headers: { Authorization: `Bearer ${this.getToken()}` }});
+      base = this.http.post(this.REST_API_SERVER + 'regions/', {}, { headers: { Authorization: `Bearer ${this.getToken()}` }});
     } else if (method === 'get') {
       base = this.http.get(this.REST_API_SERVER + 'regions/', {
         params: paginatorParams,
@@ -71,8 +69,7 @@ export class RegionService {
     } else if (method === 'getById') {
       base = this.http.get(this.REST_API_SERVER + 'regions/' + id, { headers: { Authorization: `Bearer ${this.getToken()}` }});
     } else if (method === 'put') {
-      base = this.http.put(this.REST_API_SERVER + 'regions/' + id, {title: region.title, seed: region.seed, mapsize: region.mapsize},
-      { headers: { Authorization: `Bearer ${this.getToken()}` }});
+      base = this.http.put(this.REST_API_SERVER + 'regions/' + id, {}, { headers: { Authorization: `Bearer ${this.getToken()}` }});
     } else if (method === 'deleteById') {
       base = this.http.delete(this.REST_API_SERVER + 'regions/' + id, { headers: { Authorization: `Bearer ${this.getToken()}` }});
     } else if (method === 'delete') {

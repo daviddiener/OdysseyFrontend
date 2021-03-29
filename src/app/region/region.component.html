@@ -1,33 +1,13 @@
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col my-auto">
-            <mat-form-field appearance="outline">
-            <mat-label>Title</mat-label>
-            <input matInput type="text" [(ngModel)]="newRegion.title">
-            </mat-form-field>
-        </div>
-        <div class="col my-auto">
-            <mat-form-field appearance="outline">
-                <mat-label>Seed</mat-label>
-                <input matInput type="number" [(ngModel)]="newRegion.seed">
-            </mat-form-field>
-        </div>
-        <div class="col my-auto">
-            <mat-form-field appearance="outline">
-                <mat-label>Map Size</mat-label>
-                <input matInput type="number" [(ngModel)]="newRegion.mapsize">
-            </mat-form-field>
-        </div>
-        <div class="col my-auto">
-            <button mat-raised-button color="primary" (click)='createRegion()'>Create New Region</button>
-        </div>
+        <button mat-raised-button color="primary" (click)='createRegion()'>Create New Region</button>
     </div>
 
     <mat-card *ngFor="let region of regions" style="margin-top:10px;">
         <div class="row">
             <div class="col">
                 <mat-card-header>
-                    <mat-card-title>Title: {{region.title}}</mat-card-title>
+                    <mat-card-title>Title: {{region.name}}</mat-card-title>
                     <mat-card-subtitle>Seed: {{region.seed}}</mat-card-subtitle>
                 </mat-card-header>
             </div>

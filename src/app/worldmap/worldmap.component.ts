@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RegionService } from '../services/region.service';
-import { RegionLite } from '../region/region_lite';
+import { Region, Type } from '../region/region';
 import Phaser, { Cameras } from 'phaser';
 
 @Component({
@@ -70,16 +70,18 @@ class MainScene extends Phaser.Scene {
   }
 
   FetchRegions(x: number, y: number){
-    this.regionService.getRegionChunk(x, y, 10).subscribe((data: RegionLite[]) => {
+    this.regionService.getRegionChunk(x, y, 10).subscribe((data: Region[]) => {
       data.forEach(element => {
-        if (element.noise < 0.4){
+        if (element.type === Type.water){
           this.add.sprite(element.x * this.tileSize, element.y * this.tileSize, 'worldTiles', 2)
           .depth = 10;
-        } else if (element.noise < 0.6) {
+        } else if (element.type === Type.sand) {
           this.add.sprite(element.x * this.tileSize, element.y * this.tileSize, 'worldTiles', 1)
           .depth = 10;
-        }
-        else {
+        } else if (element.type === Type.grass || element.type === Type.snow) {
+          this.add.sprite(element.x * this.tileSize, element.y * this.tileSize, 'worldTiles', 0)
+          .depth = 10;
+        } else {
           this.add.sprite(element.x * this.tileSize, element.y * this.tileSize, 'worldTiles', 3)
           .depth = 10;
         }

@@ -1,11 +1,20 @@
+export enum Type {
+  water = 'water',
+  sand = 'sand',
+  grass = 'grass',
+  snow = 'snow',
+  mountain = 'mountain',
+  mountainpeak = 'mountainpeak'
+}
+
 export class Region {
     // tslint:disable-next-line:variable-name
     _id?: string;
-    title: string;
+    name: string;
     seed: number;
-    mapsize: number;
     x: number;
     y: number;
     noise: number;
-    date: Date;
+    type: Type;
+    createDate: Date;
   }

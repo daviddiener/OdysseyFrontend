@@ -41,9 +41,7 @@ export class RegionComponent implements OnInit {
   deleteAllRegions() {
     if (confirm('Are you sure to delete all regions?')) {
       this.regionService.deleteAllRegions().subscribe(() => {
-        if (this.regions.length < this.pageLimit){
-          this.ngOnInit();
-        }
+        this.ngOnInit();
       });
     }
   }
