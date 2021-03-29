@@ -21,7 +21,7 @@
                     <mat-label>Region</mat-label>
                     <mat-select [(ngModel)]="newCharacter.regionId" (selectionChange)="updateCities($event.value)">
                         <mat-option *ngFor="let region of regions" [value]="region._id">
-                        {{ region.title }}
+                        {{ region.name }}
                         </mat-option>
                         <button mat-raised-button color="secondary" (click)='loadNextPage()'>Load more</button>
                     </mat-select>
