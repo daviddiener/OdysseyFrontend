@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { RegionService } from '../services/region.service';
 import { Region, Type } from '../region/region';
 import Phaser, { Cameras } from 'phaser';
+import { FormControl, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-worldmap',
@@ -9,6 +11,12 @@ import Phaser, { Cameras } from 'phaser';
   styleUrls: ['./worldmap.component.css']
 })
 export class WorldmapComponent implements OnInit {
+  regions: Region[] = [];
+  regionId: number = null;
+  currentPage = 1;
+  pageLimit = 10;
+  range = new FormControl(15, [Validators.max(30), Validators.min(5)]);
+
   phaserGame: Phaser.Game;
   config: Phaser.Types.Core.GameConfig;
   msc: MainScene;
@@ -34,13 +42,31 @@ export class WorldmapComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.regionService.getPartRegions(this.currentPage, this.pageLimit).subscribe((data: Region[]) => {
+      this.regions = this.regions.concat(data);
+    });
+    this.currentPage++;
+
     this.msc = new MainScene(this.regionService);
     this.config.scene = this.msc;
     this.phaserGame = new Phaser.Game(this.config);
   }
+
+  loadNextPage() {
+    this.regionService.getPartRegions(this.currentPage, this.pageLimit).subscribe((data: Region[]) => {
+      this.regions = this.regions.concat(data);
+    });
+    this.currentPage++;
+  }
+
+  goToRegion(region: Region){
+    this.msc.FetchRegions(region.x, region.y, this.range.value);
+  }
 }
 
 class MainScene extends Phaser.Scene {
+  sprites: Phaser.GameObjects.Sprite[] = [];
+  markerBox: Phaser.GameObjects.Rectangle;
   tileSize = 32;
   cam: Cameras.Scene2D.Camera;
   cameraCursor: Phaser.GameObjects.Arc;
@@ -54,12 +80,10 @@ class MainScene extends Phaser.Scene {
   }
 
   create() {
-    this.FetchRegions(0, 0);
-
     this.cam = this.cameras.main;
     this.cam.setZoom(2);
-    this.cam.scrollX = 0 - this.cam.width / 2;
-    this.cam.scrollY = 0 - this.cam.height / 2;
+    // this.cam.scrollX = 0 - this.cam.width / 2;
+    // this.cam.scrollY = 0 - this.cam.height / 2;
     this.input.on('pointermove', (p: any) => {
       if (!p.isDown){
         return;
@@ -69,21 +93,30 @@ class MainScene extends Phaser.Scene {
     });
   }
 
-  FetchRegions(x: number, y: number){
-    this.regionService.getRegionChunk(x, y, 10).subscribe((data: Region[]) => {
+  FetchRegions(x: number, y: number, range: number){
+    this.cam.scrollX = x * this.tileSize  - this.cam.width / 2;
+    this.cam.scrollY = y * this.tileSize - this.cam.height / 2;
+
+    this.sprites.forEach(element => {
+      element.destroy();
+    });
+
+    this.regionService.getRegionChunk(x, y, range).subscribe((data: Region[]) => {
+      if (this.markerBox !== undefined) {
+        this.markerBox.destroy();
+      }
+      this.markerBox = this.add.rectangle(x * this.tileSize, y * this.tileSize, this.tileSize, this.tileSize, 0xff0000);
+      this.markerBox.depth = 10;
+
       data.forEach(element => {
         if (element.type === Type.water){
-          this.add.sprite(element.x * this.tileSize, element.y * this.tileSize, 'worldTiles', 2)
-          .depth = 10;
+          this.sprites.push(this.add.sprite(element.x * this.tileSize, element.y * this.tileSize, 'worldTiles', 2));
         } else if (element.type === Type.sand) {
-          this.add.sprite(element.x * this.tileSize, element.y * this.tileSize, 'worldTiles', 1)
-          .depth = 10;
+          this.sprites.push(this.add.sprite(element.x * this.tileSize, element.y * this.tileSize, 'worldTiles', 1));
         } else if (element.type === Type.grass || element.type === Type.snow) {
-          this.add.sprite(element.x * this.tileSize, element.y * this.tileSize, 'worldTiles', 0)
-          .depth = 10;
+          this.sprites.push(this.add.sprite(element.x * this.tileSize, element.y * this.tileSize, 'worldTiles', 0));
         } else {
-          this.add.sprite(element.x * this.tileSize, element.y * this.tileSize, 'worldTiles', 3)
-          .depth = 10;
+          this.sprites.push(this.add.sprite(element.x * this.tileSize, element.y * this.tileSize, 'worldTiles', 3));
         }
       });
     });

@@ -1,13 +1,13 @@
 <div class="container">
     <div class="row justify-content-center">
-        <button mat-raised-button color="primary" (click)='createRegion()'>Create New Region</button>
+        <button class='btn-margin' mat-raised-button color="primary" (click)='createRegion()'>Create New Region</button>
     </div>
 
     <mat-card *ngFor="let region of regions" style="margin-top:10px;">
         <div class="row">
             <div class="col">
                 <mat-card-header>
-                    <mat-card-title>Title: {{region.name}}</mat-card-title>
+                    <mat-card-title>{{region.name}}</mat-card-title>
                     <mat-card-subtitle>Seed: {{region.seed}}</mat-card-subtitle>
                 </mat-card-header>
             </div>
@@ -20,10 +20,10 @@
     </mat-card>
 
     <div class="row justify-content-center">
-        <button mat-raised-button color="secondary" (click)='loadNextPage()'>Load more</button>
+        <button class='btn-margin' mat-raised-button color="secondary" (click)='loadNextPage()'>Load more</button>
     </div>
 
     <div class="row justify-content-center">
-        <button mat-raised-button color="warn" (click)='deleteAllRegions()'>Delete all regions</button>
+        <button class='btn-margin' mat-raised-button color="warn" (click)='deleteAllRegions()'>Delete all regions</button>
     </div>
 </div>

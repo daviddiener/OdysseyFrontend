@@ -44,12 +44,10 @@
 
     <mat-card *ngFor="let character of characters" style="margin-top:10px;">
         <div class="row">
-            <div class="col">
-                <mat-card-header>
-                    <mat-card-title>Name: {{character.name}}</mat-card-title>
-                </mat-card-header>
+            <div class="col my-auto">
+                <mat-card-title>Name: {{character.name}}</mat-card-title>
             </div>
-            <div class="col-4 text-right">
+            <div class="col-4 my-auto text-right">
                 <mat-card-actions>
                     <button mat-raised-button color="primary" [routerLink]="['/characters', character._id]">Play</button>
                     <button mat-icon-button	color="secondary" (click)='deleteCharacter(character._id)'>
@@ -61,6 +59,6 @@
     </mat-card>
 
     <div class="row justify-content-center">
-        <button mat-raised-button color="warn" (click)='deleteAllCharacters()'>Delete all characters</button>
+        <button class='btn-margin' mat-raised-button color="warn" (click)='deleteAllCharacters()'>Delete all characters</button>
     </div>
 </div>

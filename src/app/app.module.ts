@@ -23,7 +23,7 @@ import { RegionComponent } from './region/region.component';
 import { RegionDetailComponent } from './region-detail/region-detail.component';
 import { AboutComponent } from './about/about.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CityComponent } from './city/city.component';
 import { RegisterComponent } from './register/register.component';
@@ -38,6 +38,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { WINDOW_PROVIDERS } from './services/window.provider';
 import { WorldmapComponent } from './worldmap/worldmap.component';
+
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { WorldmapComponent } from './worldmap/worldmap.component';
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,

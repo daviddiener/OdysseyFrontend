@@ -10,3 +10,7 @@ hr {
     height: 1px; 
     background: black; 
 }
+
+.btn-margin{
+    margin: 10px !important;
+}
