@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RegionService } from '../services/region.service';
-import { Region } from '../region/region';
+import { Region } from '../_models/region';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons/faArrowLeft';
 
 @Component({

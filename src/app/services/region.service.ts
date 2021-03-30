@@ -1,23 +1,16 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpParams, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
-import { Region } from '../region/region';
+import { Region } from '../_models/region';
 import { AuthenticationService } from './authentication.service';
 import { WINDOW } from './window.provider';
-
-interface TokenResponse {
-  token: string;
-}
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class RegionService {
-  private token: string;
   private REST_API_SERVER = this.getURL();
 
   private getURL(): string {
@@ -29,25 +22,12 @@ export class RegionService {
   }
 
   constructor(private http: HttpClient,
-              private router: Router,
-              private auth: AuthenticationService,
+              private authenticationService: AuthenticationService,
               @Inject(WINDOW) private window: Window) {}
-
-  private saveToken(token: string): void {
-    localStorage.setItem('mean-token', token);
-    this.token = token;
-  }
-
-  private getToken(): string {
-    if (!this.token) {
-      this.token = localStorage.getItem('mean-token');
-    }
-    return this.token;
-  }
 
   private request(method: 'post'|'get'|'getById'|'put'|'delete'|'deleteById', region?: Region, id?: string,
                   pageNum?: number, pageLimit?: number, x?: number, y?: number, range?: number): Observable<any> {
-    let base;
+    let request;
     let paginatorParams = new HttpParams();
 
     if (pageNum != null && pageLimit != null) {
@@ -60,30 +40,21 @@ export class RegionService {
     }
 
     if (method === 'post') {
-      base = this.http.post(this.REST_API_SERVER + 'regions/', {}, { headers: { Authorization: `Bearer ${this.getToken()}` }});
+      request = this.http.post(this.REST_API_SERVER + 'regions/', {}, { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
     } else if (method === 'get') {
-      base = this.http.get(this.REST_API_SERVER + 'regions/', {
+      request = this.http.get(this.REST_API_SERVER + 'regions/', {
         params: paginatorParams,
-        headers: { Authorization: `Bearer ${this.getToken()}`
+        headers: { Authorization: `Bearer ${this.authenticationService.getToken()}`
       }});
     } else if (method === 'getById') {
-      base = this.http.get(this.REST_API_SERVER + 'regions/' + id, { headers: { Authorization: `Bearer ${this.getToken()}` }});
+      request = this.http.get(this.REST_API_SERVER + 'regions/' + id, { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
     } else if (method === 'put') {
-      base = this.http.put(this.REST_API_SERVER + 'regions/' + id, {}, { headers: { Authorization: `Bearer ${this.getToken()}` }});
+      request = this.http.put(this.REST_API_SERVER + 'regions/' + id, {}, { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
     } else if (method === 'deleteById') {
-      base = this.http.delete(this.REST_API_SERVER + 'regions/' + id, { headers: { Authorization: `Bearer ${this.getToken()}` }});
+      request = this.http.delete(this.REST_API_SERVER + 'regions/' + id, { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
     } else if (method === 'delete') {
-      base = this.http.delete(this.REST_API_SERVER + 'regions/', { headers: { Authorization: `Bearer ${this.getToken()}` }});
+      request = this.http.delete(this.REST_API_SERVER + 'regions/', { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
     }
-
-    const request = base.pipe(
-      map((data: TokenResponse) => {
-        if (data.token) {
-          this.saveToken(data.token);
-        }
-        return data;
-      })
-    );
 
     return request;
   }

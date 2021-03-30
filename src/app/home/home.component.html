@@ -1,5 +1,11 @@
 <div class="container">
     <div class="row justify-content-center"> 
-        <h1>Willkommen!</h1>
+        <h1>Welcome to TBS!</h1>
+    </div>  
+    <div class="row justify-content-center"> 
+        <button *ngIf="!auth.isLoggedIn()" class="btn-margin" mat-raised-button color="primary" routerLink="/register">Register</button>
+        <button *ngIf="!auth.isLoggedIn()" class="btn-margin" mat-raised-button color="primary" routerLink="/login">Login</button>
     </div>
 </div>
+
+

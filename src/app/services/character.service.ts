@@ -1,16 +1,10 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
-import { Character } from '../character/character';
+import { Character } from '../_models/character';
 import { AuthenticationService } from './authentication.service';
 import { WINDOW } from './window.provider';
-
-interface TokenResponse {
-  token: string;
-}
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +12,6 @@ interface TokenResponse {
 
 @Injectable()
 export class CharacterService {
-  private token: string;
   private REST_API_SERVER = this.getURL();
 
   private getURL(): string {
@@ -30,54 +23,34 @@ export class CharacterService {
   }
 
   constructor(private http: HttpClient,
-              private router: Router,
-              private auth: AuthenticationService,
+              private authenticationService: AuthenticationService,
               @Inject(WINDOW) private window: Window) {}
-
-  private saveToken(token: string): void {
-    localStorage.setItem('mean-token', token);
-    this.token = token;
-  }
-
-  private getToken(): string {
-    this.token = localStorage.getItem('mean-token');
-    return this.token;
-  }
 
   private request(method: 'post'|'get'|'getById'|'getByCityId'|'put'|'delete'|'deleteById',
                   character?: Character, id?: string, cityid?: string): Observable<any> {
-    let base;
+    let request;
 
     if (method === 'post') {
-      base = this.http.post(this.REST_API_SERVER + 'characters/',
+      request = this.http.post(this.REST_API_SERVER + 'characters/',
       {name: character.name, gender: character.gender, regionId: character.regionId, cityId: character.cityId},
-      { headers: { Authorization: `Bearer ${this.getToken()}` }});
+      { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
     } else if (method === 'get') {
-      base = this.http.get(this.REST_API_SERVER + 'characters/', { headers: { Authorization: `Bearer ${this.getToken()}` }});
+      request = this.http.get(this.REST_API_SERVER + 'characters/', { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
     } else if (method === 'getById') {
-      base = this.http.get(this.REST_API_SERVER + 'characters/' + id, { headers: { Authorization: `Bearer ${this.getToken()}` }});
+      request = this.http.get(this.REST_API_SERVER + 'characters/' + id, { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
     }  else if (method === 'getByCityId') {
-      base = this.http.get(this.REST_API_SERVER + 'characters/', {
+      request = this.http.get(this.REST_API_SERVER + 'characters/', {
         params: {cityId: cityid},
-        headers: { Authorization: `Bearer ${this.getToken()}` }});
+        headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
     } else if (method === 'put') {
-      base = this.http.put(this.REST_API_SERVER + 'characters/' + id,
+      request = this.http.put(this.REST_API_SERVER + 'characters/' + id,
       {name: character.name, gender: character.gender, regionId: character.regionId},
-      { headers: { Authorization: `Bearer ${this.getToken()}` }});
+      { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
     } else if (method === 'deleteById') {
-      base = this.http.delete(this.REST_API_SERVER + 'characters/' + id, { headers: { Authorization: `Bearer ${this.getToken()}` }});
+      request = this.http.delete(this.REST_API_SERVER + 'characters/' + id, { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
     } else if (method === 'delete') {
-      base = this.http.delete(this.REST_API_SERVER + 'characters/', { headers: { Authorization: `Bearer ${this.getToken()}` }});
+      request = this.http.delete(this.REST_API_SERVER + 'characters/', { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
     }
-
-    const request = base.pipe(
-      map((data: TokenResponse) => {
-        if (data.token) {
-          this.saveToken(data.token);
-        }
-        return data;
-      })
-    );
 
     return request;
   }

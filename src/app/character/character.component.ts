@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CharacterService } from '../services/character.service';
 import { RegionService } from '../services/region.service';
 import { CityService } from '../services/city.service';
-import { Character } from './character';
-import { Region } from './../region/region';
-import { City } from './../city/city';
+import { Character } from '../_models/character';
+import { Region } from '../_models/region';
+import { City } from '../_models/city';
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
 
 @Component({

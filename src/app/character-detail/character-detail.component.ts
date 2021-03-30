@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CharacterService } from '../services/character.service';
 import { CityService } from '../services/city.service';
-import { Character } from '../character/character';
-import { City } from '../city/city';
+import { Character } from '../_models/character';
+import { City } from '../_models/city';
 
 @Component({
   selector: 'app-character',

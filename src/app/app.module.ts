@@ -38,6 +38,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { WINDOW_PROVIDERS } from './services/window.provider';
 import { WorldmapComponent } from './worldmap/worldmap.component';
+import { AdministrationComponent } from './administration/administration.component';
 
 
 @NgModule({
@@ -54,6 +55,7 @@ import { WorldmapComponent } from './worldmap/worldmap.component';
     CharacterComponent,
     CharacterDetailComponent,
     WorldmapComponent,
+    AdministrationComponent,
   ],
   imports: [
     NgbModule,

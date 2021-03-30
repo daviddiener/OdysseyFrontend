@@ -1,6 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { RegionService } from '../services/region.service';
-import { Region, Type } from '../region/region';
+import { Region, Type } from '../_models/region';
 import Phaser, { Cameras } from 'phaser';
 import { FormControl, Validators } from '@angular/forms';
 
