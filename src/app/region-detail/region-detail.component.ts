@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RegionService } from '../services/region.service';
 import { Region } from '../_models/region';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons/faArrowLeft';
@@ -14,7 +14,7 @@ export class RegionDetailComponent implements OnInit {
   region: Region;
   showOutlet = false;
 
-  constructor(private regionService: RegionService, private route: ActivatedRoute) { }
+  constructor(private regionService: RegionService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -30,6 +30,10 @@ export class RegionDetailComponent implements OnInit {
 
   onDeactivate() {
     this.showOutlet = false;
+  }
+
+  goToMap() {
+    this.router.navigate(['/worldmap'], {queryParams: {id: this.region._id}});
   }
 
 }
