@@ -51,7 +51,15 @@ export class CharacterComponent implements OnInit {
   }
 
   createCharacter() {
-    this.characterService.createCharacter(this.newCharacter).subscribe(() => {
+    this.characterService.createCharacter(this.newCharacter).subscribe((error) => {
+      if (error){
+        if (error.code === 11000){
+          alert('Name is already taken');
+        } else {
+          alert(error._message);
+        }
+      }
+
       this.characterService.getAllCharactersByUserId(this.authenticationService.getUserDetails()._id).subscribe((data: Character[]) => {
         this.characters = data;
       });

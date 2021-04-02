@@ -1,12 +1,18 @@
 <div class="container">
     <div class="row justify-content-center">
+        <p class="display-4">Batch delete</p>
+    </div>
+    <div class="row justify-content-center">
         <button class='btn-margin' mat-raised-button color="warn" (click)='deleteAllCharacters()'>Delete all characters</button>
     </div>
-
     <div class="row justify-content-center">
         <button class='btn-margin' mat-raised-button color="warn" (click)='deleteAllRegions()'>Delete all regions</button>
     </div>
+    <hr>
 
+    <div class="row justify-content-center">
+        <p class="display-4">User Management</p>
+    </div>
     <mat-card *ngFor="let user of users" style="margin-top:10px;">
         <div class="row">
             <div class="col my-auto">
@@ -31,5 +37,6 @@
             </div>
         </div>
     </mat-card>
+    <hr>
 
 </div>
