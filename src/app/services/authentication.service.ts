@@ -86,27 +86,37 @@ export class AuthenticationService {
   }
 
   public register(user: RegistrationPayload): Observable<any> {
-    return this.http.post<any>(this.REST_API_SERVER + '/register', user);
+    return this.http.post<any>(this.REST_API_SERVER + '/register', user)
+      .pipe(map(data => {
+        // login successful if there's a jwt token in the response
+        if (data.token) {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            localStorage.setItem('mean-token', data.token);
+            this.token = data.token;
+            this.currentUserSubject.next(this.getUserDetails());
+        }
+
+        return data.user;
+    }));
   }
 
   public login(email: string, password: string) {
     return this.http.post<any>(this.REST_API_SERVER + '/login', { email, password })
-        .pipe(map(data => {
-            // login successful if there's a jwt token in the response
-            if (data.token) {
-                // store user details and jwt token in local storage to keep user logged in between page refreshes
-                localStorage.setItem('mean-token', data.token);
-                this.token = data.token;
-                this.currentUserSubject.next(this.getUserDetails());
-            }
+      .pipe(map(data => {
+          // login successful if there's a jwt token in the response
+          if (data.token) {
+              // store user details and jwt token in local storage to keep user logged in between page refreshes
+              localStorage.setItem('mean-token', data.token);
+              this.token = data.token;
+              this.currentUserSubject.next(this.getUserDetails());
+          }
 
-            return data.user;
-        }));
+          return data.user;
+      }));
   }
 
   public logout(): void {
     this.token = '';
-    console.log(this.token);
     window.localStorage.removeItem('mean-token');
     this.router.navigateByUrl('/login');
   }

@@ -1,1 +1,35 @@
-<p>administration works!</p>
+<div class="container">
+    <div class="row justify-content-center">
+        <button class='btn-margin' mat-raised-button color="warn" (click)='deleteAllCharacters()'>Delete all characters</button>
+    </div>
+
+    <div class="row justify-content-center">
+        <button class='btn-margin' mat-raised-button color="warn" (click)='deleteAllRegions()'>Delete all regions</button>
+    </div>
+
+    <mat-card *ngFor="let user of users" style="margin-top:10px;">
+        <div class="row">
+            <div class="col my-auto">
+                <mat-card-title>
+                    <fa-icon *ngIf="isAdmin(user.role)" [icon]="faUserTie" size="lg"></fa-icon>
+                    <fa-icon *ngIf="!isAdmin(user.role)" [icon]="faUser" size="lg"></fa-icon>
+                    Name: {{user.email}}
+                </mat-card-title>
+            </div>
+            <div class="col-4 my-auto text-right">
+                <mat-card-actions>
+                    <button mat-icon-button	color="secondary" *ngIf="isAdmin(user.role)" (click)='deopUser(user)'>
+                        <fa-icon [icon]="faArrowAltCircleDown" size="lg"></fa-icon>
+                    </button>
+                    <button mat-icon-button	color="secondary" *ngIf="!isAdmin(user.role)" (click)='opUser(user)'>
+                        <fa-icon [icon]="faArrowAltCircleUp" size="lg"></fa-icon>
+                    </button>
+                    <button mat-icon-button	color="secondary" (click)='deleteUser(user._id)'>
+                        <fa-icon [icon]="faTrash" size="lg"></fa-icon>
+                    </button>
+                </mat-card-actions>
+            </div>
+        </div>
+    </mat-card>
+
+</div>

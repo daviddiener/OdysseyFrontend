@@ -26,8 +26,8 @@ export class CharacterService {
               private authenticationService: AuthenticationService,
               @Inject(WINDOW) private window: Window) {}
 
-  private request(method: 'post'|'get'|'getById'|'getByCityId'|'put'|'delete'|'deleteById',
-                  character?: Character, id?: string, cityid?: string): Observable<any> {
+  private request(method: 'post'|'get'|'getById'|'getByCityId'|'getByUserId'|'put'|'delete'|'deleteById',
+                  character?: Character, id?: string, cityId?: string, userId?: string): Observable<any> {
     let request;
 
     if (method === 'post') {
@@ -40,7 +40,11 @@ export class CharacterService {
       request = this.http.get(this.REST_API_SERVER + 'characters/' + id, { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
     }  else if (method === 'getByCityId') {
       request = this.http.get(this.REST_API_SERVER + 'characters/', {
-        params: {cityId: cityid},
+        params: {cityId},
+        headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
+    }  else if (method === 'getByUserId') {
+      request = this.http.get(this.REST_API_SERVER + 'characters/', {
+        params: {userId},
         headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
     } else if (method === 'put') {
       request = this.http.put(this.REST_API_SERVER + 'characters/' + id,
@@ -67,8 +71,12 @@ export class CharacterService {
     return this.request('getById', null, id);
   }
 
-  public getAllCharactersByCityId(cityid: string): Observable<any> {
-    return this.request('getByCityId', null, null, cityid);
+  public getAllCharactersByCityId(userId: string): Observable<any> {
+    return this.request('getByCityId', null, null, userId);
+  }
+
+  public getAllCharactersByUserId(userId: string): Observable<any> {
+    return this.request('getByUserId', null, null, null, userId);
   }
 
   public updateCharacter(newCharacter: Character, id: string): Observable<any> {

@@ -6,6 +6,7 @@ import { Character } from '../_models/character';
 import { Region } from '../_models/region';
 import { City } from '../_models/city';
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-character',
@@ -21,10 +22,13 @@ export class CharacterComponent implements OnInit {
   currentPage = 1;
   pageLimit = 10;
 
-  constructor(private characterService: CharacterService, private regionService: RegionService, private cityService: CityService) { }
+  constructor(private characterService: CharacterService,
+              private regionService: RegionService,
+              private cityService: CityService,
+              private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
-    this.characterService.getAllCharacters().subscribe((data: Character[]) => {
+    this.characterService.getAllCharactersByUserId(this.authenticationService.getUserDetails()._id).subscribe((data: Character[]) => {
       this.characters = data;
     });
     this.regionService.getPartRegions(this.currentPage, this.pageLimit).subscribe((data: Region[]) => {
@@ -48,26 +52,17 @@ export class CharacterComponent implements OnInit {
 
   createCharacter() {
     this.characterService.createCharacter(this.newCharacter).subscribe(() => {
-      this.characterService.getAllCharacters().subscribe((data: Character[]) => {
+      this.characterService.getAllCharactersByUserId(this.authenticationService.getUserDetails()._id).subscribe((data: Character[]) => {
         this.characters = data;
       });
     });
   }
 
-  deleteCharacter(id: any) {
-    this.characterService.deleteCharacter(id).subscribe(() => {
-      this.characterService.getAllCharacters().subscribe((data: Character[]) => {
+  deleteCharacter(value){
+    this.characterService.deleteCharacter(value).subscribe(() => {
+      this.characterService.getAllCharactersByUserId(this.authenticationService.getUserDetails()._id).subscribe((data: Character[]) => {
         this.characters = data;
       });
     });
   }
-
-  deleteAllCharacters() {
-    if (confirm('Are you sure to delete all characters?')) {
-      this.characterService.deleteAllCharacters().subscribe(() => {
-        this.ngOnInit();
-      });
-    }
-  }
-
 }

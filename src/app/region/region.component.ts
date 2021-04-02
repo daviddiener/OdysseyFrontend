@@ -37,12 +37,4 @@ export class RegionComponent implements OnInit {
       }
     });
   }
-
-  deleteAllRegions() {
-    if (confirm('Are you sure to delete all regions?')) {
-      this.regionService.deleteAllRegions().subscribe(() => {
-        this.ngOnInit();
-      });
-    }
-  }
 }
