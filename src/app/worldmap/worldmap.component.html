@@ -1,23 +1,10 @@
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-xs-6">
-            <mat-form-field appearance="outline">
-                    <mat-label>Select a Region</mat-label>
-                    <mat-select [(ngModel)]="regionId" (selectionChange)="goToRegion($event.value)" [disabled]="this.range.invalid">
-                        <mat-option *ngFor="let region of regions" [value]="region">
-                        {{ region.name }}
-                        </mat-option>
-                        <button mat-raised-button color="secondary" (click)='loadNextPage()'>Load more</button>
-                    </mat-select>
-            </mat-form-field>
-        </div>
-        <div class="col-xs-6">
-            <mat-form-field appearance="outline">
-                <mat-label>Range</mat-label>
-                <input matInput type="number" required  min="5" max="30" [formControl]="range" (change)="goToRegionRangeTrigger()">
-                <mat-error>Please enter a value between 5 and 30</mat-error>
-            </mat-form-field>
-        </div>
+        <mat-form-field appearance="outline">
+            <mat-label>Range</mat-label>
+            <input matInput type="number" required  min="5" max="30" [formControl]="range" (change)="goToRegionRangeTrigger()">
+            <mat-error>Please enter a value between 5 and 30</mat-error>
+        </mat-form-field>
     </div>
 </div>
 <div id="gameContainer"></div>

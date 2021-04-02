@@ -11,11 +11,8 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./worldmap.component.css']
 })
 export class WorldmapComponent implements OnInit {
-  regions: Region[] = [];
   selectedRegion: Region;
   regionId: number = null;
-  currentPage = 1;
-  pageLimit = 10;
   range = new FormControl(15, [Validators.max(30), Validators.min(5)]);
 
   phaserGame: Phaser.Game;
@@ -48,28 +45,13 @@ export class WorldmapComponent implements OnInit {
       this.config.scene = this.msc;
       this.phaserGame = new Phaser.Game(this.config);
     });
-
-    this.regionService.getPartRegions(this.currentPage, this.pageLimit).subscribe((data: Region[]) => {
-      this.regions = this.regions.concat(data);
-    });
-    this.currentPage++;
-  }
-
-  loadNextPage() {
-    this.regionService.getPartRegions(this.currentPage, this.pageLimit).subscribe((data: Region[]) => {
-      this.regions = this.regions.concat(data);
-    });
-    this.currentPage++;
-  }
-
-  goToRegion(region: Region){
-    this.selectedRegion = region;
-    this.msc.FetchRegions(region.x, region.y, this.range.value, true);
   }
 
   goToRegionRangeTrigger(){
-    if (this.selectedRegion){
-      this.msc.FetchRegions(this.selectedRegion.x, this.selectedRegion.y, this.range.value, false);
+    if (this.msc.currentRegion){
+      this.msc.FetchRegions(this.msc.currentRegion.x, this.msc.currentRegion.y, this.range.value, false);
+    } else {
+      this.msc.FetchRegions(0, 0, this.range.value, false);
     }
   }
 }
@@ -86,6 +68,7 @@ class MainScene extends Phaser.Scene {
   pointerDownCoordinates: Phaser.Math.Vector2;
   startId: string;
   startRange: number;
+  currentRegion: Region;
 
   constructor(private regionService: RegionService, private router: Router, startId: string, startRange: number) {
     super({ key: 'main' });
@@ -111,7 +94,10 @@ class MainScene extends Phaser.Scene {
     if (this.startId) {
       this.regionService.getRegionById(this.startId).subscribe((region: Region) => {
         this.FetchRegions(region.x, region.y, this.startRange, true);
+        this.currentRegion = region;
       });
+    } else{
+      this.FetchRegions(0, 0 , this.startRange, true);
     }
   }
 
@@ -208,6 +194,7 @@ class MainScene extends Phaser.Scene {
       this.infoButton.setInteractive();
       this.infoButton.on('pointerup', (pointer) => {
         this.FetchRegions(region.x, region.y, fetchRange, true);
+        this.currentRegion = region;
       });
 
 
