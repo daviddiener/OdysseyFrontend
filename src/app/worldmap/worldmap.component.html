@@ -14,7 +14,7 @@
         <div class="col-xs-6">
             <mat-form-field appearance="outline">
                 <mat-label>Range</mat-label>
-                <input matInput type="number" required  min="5" max="30" [formControl]="range">
+                <input matInput type="number" required  min="5" max="30" [formControl]="range" (change)="goToRegionRangeTrigger()">
                 <mat-error>Please enter a value between 5 and 30</mat-error>
             </mat-form-field>
         </div>

@@ -12,6 +12,7 @@ import { FormControl, Validators } from '@angular/forms';
 })
 export class WorldmapComponent implements OnInit {
   regions: Region[] = [];
+  selectedRegion: Region;
   regionId: number = null;
   currentPage = 1;
   pageLimit = 10;
@@ -60,7 +61,14 @@ export class WorldmapComponent implements OnInit {
   }
 
   goToRegion(region: Region){
-    this.msc.FetchRegions(region.x, region.y, this.range.value);
+    this.selectedRegion = region;
+    this.msc.FetchRegions(region.x, region.y, this.range.value, true);
+  }
+
+  goToRegionRangeTrigger(){
+    if (this.selectedRegion){
+      this.msc.FetchRegions(this.selectedRegion.x, this.selectedRegion.y, this.range.value, false);
+    }
   }
 }
 
@@ -93,18 +101,21 @@ class MainScene extends Phaser.Scene {
     });
   }
 
-  FetchRegions(x: number, y: number, range: number){
-    this.cam.scrollX = x * this.tileSize  - this.cam.width / 2;
-    this.cam.scrollY = y * this.tileSize - this.cam.height / 2;
-
-    this.sprites.forEach(element => {
-      element.destroy();
-    });
+  FetchRegions(x: number, y: number, range: number, centerCamera: boolean){
+    if (centerCamera){
+      this.cam.scrollX = x * this.tileSize  - this.cam.width / 2;
+      this.cam.scrollY = y * this.tileSize - this.cam.height / 2;
+    }
 
     this.regionService.getRegionChunk(x, y, range).subscribe((data: Region[]) => {
+      this.sprites.forEach(element => {
+        element.destroy();
+      });
+
       if (this.markerBox !== undefined) {
         this.markerBox.destroy();
       }
+
       this.markerBox = this.add.rectangle(x * this.tileSize, y * this.tileSize, this.tileSize, this.tileSize, 0xff0000);
       this.markerBox.depth = 10;
 
