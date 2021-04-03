@@ -13,11 +13,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class WorldmapComponent implements OnInit {
   selectedRegion: Region;
   regionId: number = null;
-  range = new FormControl(15, [Validators.max(30), Validators.min(5)]);
+  range = new FormControl(15, [Validators.max(100), Validators.min(5)]);
 
   phaserGame: Phaser.Game;
   config: Phaser.Types.Core.GameConfig;
   msc: MainScene;
+  hud: HUD;
 
   constructor(private regionService: RegionService, private route: ActivatedRoute, private router: Router) {
     this.config = {
@@ -42,16 +43,19 @@ export class WorldmapComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe(data => {
       this.msc = new MainScene(this.regionService, this.router, data.id, this.range.value);
-      this.config.scene = this.msc;
+      this.hud = new HUD(this.msc);
+      this.config.scene = [this.msc, this.hud];
       this.phaserGame = new Phaser.Game(this.config);
     });
   }
 
   goToRegionRangeTrigger(){
-    if (this.msc.currentRegion){
-      this.msc.FetchRegions(this.msc.currentRegion.x, this.msc.currentRegion.y, this.range.value, false);
-    } else {
-      this.msc.FetchRegions(0, 0, this.range.value, false);
+    if (!this.range.invalid) {
+      if (this.msc.currentRegion){
+        this.msc.FetchRegions(this.msc.currentRegion.x, this.msc.currentRegion.y, this.range.value, false);
+      } else {
+        this.msc.FetchRegions(0, 0, this.range.value, false);
+      }
     }
   }
 }
@@ -77,12 +81,12 @@ class MainScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.spritesheet('worldTiles', 'assets/tiles/world_spritesheet.png', { frameWidth: 32, frameHeight: 32, endFrame: 3 });
+    this.load.spritesheet('worldTiles', 'assets/tiles/world_spritesheet.png', { frameWidth: 32, frameHeight: 32, endFrame: 5 });
   }
 
   create() {
     this.cam = this.cameras.main;
-    this.cam.setZoom(2);
+    this.cam.setZoom(1);
     this.input.on('pointermove', (p: any) => {
       if (!p.isDown){
         return;
@@ -117,13 +121,17 @@ class MainScene extends Phaser.Scene {
       data.forEach(element => {
         let tileType: number;
         if (element.type === Type.water){
-          tileType = 2;
+          tileType = 0;
         } else if (element.type === Type.sand) {
           tileType = 1;
-        } else if (element.type === Type.grass || element.type === Type.snow) {
-          tileType = 0;
-        } else {
+        } else if (element.type === Type.grass) {
+          tileType = 2;
+        } else if (element.type === Type.snow) {
           tileType = 3;
+        } else if (element.type === Type.mountain) {
+          tileType = 4;
+        } else if (element.type === Type.mountainpeak) {
+          tileType = 5;
         }
         const tmpSprite: Phaser.GameObjects.Sprite = this.add.sprite(element.x * this.tileSize,
                                                                     element.y * this.tileSize,
@@ -140,12 +148,14 @@ class MainScene extends Phaser.Scene {
           }
         });
 
-        tmpSprite.on('pointerover', (pointer) => {
-          tmpSprite.setTint(0xff0000);
-        });
-        tmpSprite.on('pointerout', (pointer) => {
-          tmpSprite.clearTint();
-        });
+        if (this.sys.game.device.os.desktop){
+          tmpSprite.on('pointerover', (pointer) => {
+            tmpSprite.setTint(0xff0000);
+          });
+          tmpSprite.on('pointerout', (pointer) => {
+            tmpSprite.clearTint();
+          });
+        }
 
         this.sprites.push(tmpSprite);
       });
@@ -210,8 +220,8 @@ class MainScene extends Phaser.Scene {
         this.infoBox.getTopLeft().y,
         bottomX,
         this.infoButton.getBottomRight().y - this.infoBox.getTopLeft().y,
-        0x87918e,
-        155
+        0x364038,
+        50
       );
       this.infoBackground.depth = 10;
       this.infoBackground.setOrigin(0);
@@ -225,5 +235,44 @@ class MainScene extends Phaser.Scene {
 
     this.markerBox = this.add.rectangle(x, y, this.tileSize, this.tileSize, 0xff0000);
     this.markerBox.depth = 9;
+  }
+}
+
+class HUD extends Phaser.Scene {
+  msc: MainScene;
+  zoomLevel = 2;
+  zoomSteps: number[] = [0.2, 0.5, 1, 2, 3];
+
+  constructor(mainScene: MainScene)
+  {
+      super({ key: 'UIScene', active: true });
+      this.msc = mainScene;
+  }
+
+  create()
+  {
+      const zoomButton1 = this.add.text(10, 10, 'Zoom in',
+      { font: '16px Arial', color: '#FFFFFF', backgroundColor: '#000000'});
+      zoomButton1.setInteractive();
+      zoomButton1.on('pointerup', () => {
+        this.zoomCamera(true);
+      });
+
+      const zoomButton2 = this.add.text(zoomButton1.getTopRight().x + 10, zoomButton1.getTopRight().y, 'Zoom out',
+      { font: '16px Arial', color: '#FFFFFF', backgroundColor: '#000000' });
+      zoomButton2.setInteractive();
+      zoomButton2.on('pointerup', () => {
+        this.zoomCamera(false);
+      });
+  }
+
+  zoomCamera(increase: boolean) {
+    if (increase) {
+      this.zoomLevel++;
+    } else {
+      this.zoomLevel--;
+    }
+    this.zoomLevel = Math.max(0, Math.min(this.zoomLevel, this.zoomSteps.length - 1));
+    this.msc.cam.zoom = this.zoomSteps[this.zoomLevel];
   }
 }
