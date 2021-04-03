@@ -16,5 +16,5 @@ export class Region {
     y: number;
     noise: number;
     type: Type;
-    createDate: Date;
+    createdDate: Date;
   }

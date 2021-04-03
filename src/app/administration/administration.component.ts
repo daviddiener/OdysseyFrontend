@@ -45,6 +45,10 @@ export class AdministrationComponent implements OnInit {
     }
   }
 
+  createRegion() {
+    this.regionService.createRegion().subscribe(() => {});
+  }
+
   deleteAllUsers() {
     if (confirm('Are you sure to delete all users?')) {
       this.userService.deleteAllUsers().subscribe(() => {

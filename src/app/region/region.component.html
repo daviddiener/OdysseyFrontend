@@ -1,6 +1,24 @@
 <div class="container">
-    <div class="row justify-content-center">
-        <button class='btn-margin' mat-raised-button color="primary" (click)='createRegion()'>Create New Region</button>
+    <div class="row justify-content-center align-items-center">
+        <div class="col-sm-3">
+            <mat-form-field appearance="outline">
+                    <mat-label>Name</mat-label>
+                    <input matInput type="text" [(ngModel)]="searchName">                
+            </mat-form-field>
+        </div>
+        <div class="col-sm-3">
+            <mat-form-field appearance="outline">
+                    <mat-label>Region Type</mat-label>
+                    <mat-select [(ngModel)]="searchType">
+                        <mat-option *ngFor="let type of typeSelection" [value]="type">
+                        {{ type }}
+                        </mat-option>
+                    </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-sm-6 ">
+            <button class="float-right" mat-raised-button color="primary" mat-button (click)='searchRegions()'>Search Regions</button>
+        </div>
     </div>
 
     <mat-card *ngFor="let region of regions" style="margin-top:10px;">
@@ -19,7 +37,7 @@
         </div>
     </mat-card>
 
-    <div class="row justify-content-center">
+    <div *ngIf="currentPage > 1" class="row justify-content-center">
         <button class='btn-margin' mat-raised-button color="secondary" (click)='loadNextPage()'>Load more</button>
     </div>
 </div>
