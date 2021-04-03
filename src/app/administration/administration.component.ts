@@ -29,15 +29,25 @@ export class AdministrationComponent implements OnInit {
 
   deleteAllCharacters() {
     if (confirm('Are you sure to delete all characters?')) {
-      this.characterService.deleteAllCharacters().subscribe(() => {
-        this.ngOnInit();
-      });
+      this.characterService.deleteAllCharacters().subscribe(() => {});
     }
   }
 
   deleteAllRegions() {
     if (confirm('Are you sure to delete all regions?')) {
-      this.regionService.deleteAllRegions().subscribe(() => {
+      this.regionService.deleteAllRegions().subscribe(() => {});
+    }
+  }
+
+  batchCreateRegions(value: number){
+    for (let i = 0; i < value; ++i){
+      this.regionService.createRegion().subscribe(() => {});
+    }
+  }
+
+  deleteAllUsers() {
+    if (confirm('Are you sure to delete all users?')) {
+      this.userService.deleteAllUsers().subscribe(() => {
         this.ngOnInit();
       });
     }

@@ -1,12 +1,18 @@
 <div class="container">
     <div class="row justify-content-center">
-        <p class="display-4">Batch delete</p>
+        <p class="display-4">Batch operations</p>
+    </div>
+    <div class="row justify-content-center">
+        <button class='btn-margin' mat-raised-button color="warn" (click)='deleteAllUsers()'>Delete all users</button>
     </div>
     <div class="row justify-content-center">
         <button class='btn-margin' mat-raised-button color="warn" (click)='deleteAllCharacters()'>Delete all characters</button>
     </div>
     <div class="row justify-content-center">
         <button class='btn-margin' mat-raised-button color="warn" (click)='deleteAllRegions()'>Delete all regions</button>
+    </div>
+    <div class="row justify-content-center">
+        <button class='btn-margin' mat-raised-button color="secondary" (click)='batchCreateRegions(100)'>Create 100 Regions</button>
     </div>
     <hr>
 

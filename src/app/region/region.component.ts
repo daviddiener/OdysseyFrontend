@@ -9,7 +9,6 @@ import { Region } from '../_models/region';
 })
 export class RegionComponent implements OnInit {
   regions: Region[] = [];
-  newRegion = new Region();
   currentPage = 1;
   pageLimit = 10;
 
@@ -31,7 +30,7 @@ export class RegionComponent implements OnInit {
   }
 
   createRegion() {
-    this.regionService.createRegion(this.newRegion).subscribe(() => {
+    this.regionService.createRegion().subscribe(() => {
       if (this.regions.length < this.pageLimit){
         this.ngOnInit();
       }

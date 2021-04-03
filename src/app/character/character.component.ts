@@ -55,7 +55,7 @@ export class CharacterComponent implements OnInit {
       if (error){
         if (error.code === 11000){
           alert('Name is already taken');
-        } else {
+        } else if (error._message) {
           alert(error._message);
         }
       }

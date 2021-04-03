@@ -59,8 +59,8 @@ export class RegionService {
     return request;
   }
 
-  public createRegion(newRegion: Region): Observable<any> {
-    return this.request('post', newRegion);
+  public createRegion(): Observable<any> {
+    return this.request('post');
   }
 
   public getAllRegions(): Observable<any> {
