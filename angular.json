@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "TBSFrontend": {
+    "OdysseyFrontend": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/TBSFrontend",
+            "outputPath": "dist/OdysseyFrontend",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -70,18 +70,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "TBSFrontend:build"
+            "browserTarget": "OdysseyFrontend:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "TBSFrontend:build:production"
+              "browserTarget": "OdysseyFrontend:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "TBSFrontend:build"
+            "browserTarget": "OdysseyFrontend:build"
           }
         },
         "test": {
@@ -120,16 +120,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "TBSFrontend:serve"
+            "devServerTarget": "OdysseyFrontend:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "TBSFrontend:serve:production"
+              "devServerTarget": "OdysseyFrontend:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "TBSFrontend"
+  "defaultProject": "OdysseyFrontend"
 }

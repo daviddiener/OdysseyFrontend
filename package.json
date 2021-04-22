@@ -1,18 +1,18 @@
 {
-  "name": "tbsfrontend",
+  "name": "odysseyfrontend",
   "version": "0.0.5",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0 --disableHostCheck",
     "start:prod": "ng serve --prod --host 0.0.0.0 --disableHostCheck",
-    "start:pwa": "ng build --prod --output-hashing none && http-server -p 4200 -c-1 dist/TBSFrontend",
+    "start:pwa": "ng build --prod --output-hashing none && http-server -p 4200 -c-1 dist/OdysseyFrontend",
     "build": "ng build --prod --output-hashing none && npm run purge && npm run copy",
-    "build:push": "npm run build && cd ..\\TBSBackend && npm run push",
+    "build:push": "npm run build && cd ..\\OdysseyBackend && npm run push",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "purge": "if exist ..\\TBSBackend\\public\\ del /q ..\\TBSBackend\\public\\TBSFrontend\\*",
-    "copy": "xcopy /R /S /Q /Y .\\dist ..\\TBSBackend\\public\\"
+    "purge": "if exist ..\\OdysseyBackend\\public\\ del /q ..\\OdysseyBackend\\public\\OdysseyFrontend\\*",
+    "copy": "xcopy /R /S /Q /Y .\\dist ..\\OdysseyBackend\\public\\"
   },
   "private": true,
   "dependencies": {
