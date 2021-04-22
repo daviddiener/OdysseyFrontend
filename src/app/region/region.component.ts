@@ -1,26 +1,34 @@
 import { Component, OnInit } from '@angular/core';
 import { RegionService } from '../services/region.service';
-import { ActivatedRoute } from '@angular/router';
-import { Region } from './region';
-
+import { Region, Type } from '../_models/region';
 
 @Component({
   selector: 'app-region',
   templateUrl: './region.component.html',
   styleUrls: ['./region.component.css']
 })
-export class RegionComponent implements OnInit {
-
+export class RegionComponent {
   regions: Region[] = [];
+  currentPage = 1;
+  pageLimit = 10;
 
-  constructor(private regionService: RegionService, private route: ActivatedRoute) { }
+  typeSelection: Type[] = [undefined, Type.grass, Type.mountain, Type.mountainpeak, Type.sand, Type.snow, Type.water];
 
-  ngOnInit() {
-    this.route.parent.paramMap.subscribe(params => {
-      this.regionService.getAllRegions(params.get('id')).subscribe((data: Region[]) => {
-          this.regions = data;
-      });
+  searchName: string;
+  searchType: Type;
+
+  constructor(private regionService: RegionService) {}
+
+  loadNextPage() {
+    this.regionService.getRegionByParams(this.currentPage, this.pageLimit, this.searchName, this.searchType).subscribe((data: Region[]) => {
+      this.regions = this.regions.concat(data);
     });
+    this.currentPage++;
   }
 
+  searchRegions() {
+    this.currentPage = 1;
+    this.regions = [];
+    this.loadNextPage();
+  }
 }

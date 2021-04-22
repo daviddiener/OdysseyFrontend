@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService, UserDetails } from '../services/authentication.service';
+import { AuthenticationService } from '../services/authentication.service';
+import { User } from '../_models/user' ;
 
 @Component({
   templateUrl: './profile.component.html'
 })
 export class ProfileComponent implements OnInit {
-  details: UserDetails;
+  details: User;
 
   constructor(private auth: AuthenticationService) {}
 

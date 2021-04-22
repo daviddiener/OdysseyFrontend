@@ -1,0 +1,13 @@
+<div class="container">
+    <mat-card *ngFor="let city of cities" style="margin-top:10px;">
+        <div class="row">
+            <mat-card-header>
+                <mat-card-title>Name: {{city.element.name}}</mat-card-title>
+                <mat-card-subtitle>Description: The {{city.element.description}}</mat-card-subtitle>
+                <mat-list-item *ngFor="let char of city.chars">
+                    <button mat-raised-button color="primary" [routerLink]="['/characters', char._id]">{{char.name}}</button>
+                </mat-list-item>
+            </mat-card-header>
+        </div>
+    </mat-card>
+</div>

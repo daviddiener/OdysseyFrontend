@@ -1,20 +1,18 @@
 import { Component } from '@angular/core';
-import { AuthenticationService, TokenPayload } from '../services/authentication.service';
+import { AuthenticationService } from '../services/authentication.service';
 import { Router } from '@angular/router';
 
 @Component({
   templateUrl: './login.component.html'
 })
 export class LoginComponent {
-  credentials: TokenPayload = {
-    email: '',
-    password: ''
-  };
+  email = '';
+  password = '';
 
   constructor(private auth: AuthenticationService, private router: Router) {}
 
   login() {
-    this.auth.login(this.credentials).subscribe(() => {
+    this.auth.login(this.email, this.password).subscribe(() => {
       this.router.navigateByUrl('/home');
     }, (err) => {
       console.error(err);

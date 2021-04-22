@@ -1,0 +1,62 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col my-auto">
+            <mat-form-field appearance="outline">
+                    <mat-label>Name</mat-label>
+                    <input matInput type="text" [(ngModel)]="newCharacter.name">                
+            </mat-form-field>
+        </div>
+        <div class="col my-auto">
+            <mat-radio-group aria-label="Gender" [(ngModel)]="newCharacter.gender">
+                <div class="row">
+                    <mat-radio-button value="0">Male</mat-radio-button>
+                </div>
+                <div class="row">
+                    <mat-radio-button value="1">Female</mat-radio-button>
+                </div>
+            </mat-radio-group>
+        </div>
+        <div class="col my-auto">
+            <mat-form-field appearance="outline">
+                    <mat-label>Region</mat-label>
+                    <mat-select [(ngModel)]="newCharacter.regionId" (selectionChange)="updateCities($event.value)">
+                        <mat-option *ngFor="let region of regions" [value]="region._id">
+                        {{ region.name }}
+                        </mat-option>
+                        <button mat-raised-button color="secondary" (click)='loadNextPage()'>Load more</button>
+                    </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col my-auto">
+            <mat-form-field appearance="outline">
+                <mat-label>City</mat-label>
+                <mat-select [(ngModel)]="newCharacter.cityId">
+                    <mat-option *ngFor="let city of cities" [value]="city._id">
+                    {{ city.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col my-auto">
+            <button mat-raised-button color="primary" mat-button (click)='createCharacter()'>Create New Character</button>
+        </div>
+    </div>
+
+    <mat-card *ngFor="let character of characters" style="margin-top:10px;">
+        <div class="row">
+            <div class="col my-auto">
+                <mat-card-title>Name: {{character.name}}</mat-card-title>
+            </div>
+            <div class="col-4 my-auto text-right">
+                <mat-card-actions>
+                    <button mat-raised-button color="primary" [routerLink]="['/characters', character._id]">Play</button>
+                    <button mat-icon-button	color="secondary" (click)='deleteCharacter(character._id)'>
+                        <fa-icon [icon]="faTrash" size="lg"></fa-icon>
+                    </button>
+                </mat-card-actions>
+            </div>
+        </div>
+    </mat-card>
+
+  
+</div>

@@ -1,13 +1,43 @@
-<mat-toolbar color="primary">
-  <h1>
-    RTS WebEnd 
-  </h1>
-  <button mat-button routerLink="/home">Home</button>
-  <button mat-button routerLink="/games">Games</button>
-  <button mat-button routerLink="/about">About</button>
-  <button mat-button *ngIf="!auth.isLoggedIn()" routerLink="/login">Sign in</button>
-  <button mat-button *ngIf="auth.isLoggedIn()" routerLink="/profile">{{ auth.getUserDetails()?.name }}</button>
-  <button mat-button *ngIf="auth.isLoggedIn()" (click)="auth.logout()">Logout</button>
-</mat-toolbar>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" routerLink="/home">Odyssey</a>
+  <button class="navbar-toggler btn btn-outline-primary" type="button" data-toggle="collapse" data-target="navbar"  aria-expanded="false" aria-label="Toggle navigation" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="navbarTogglerDemo02">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbar" [(ngbCollapse)]="isCollapsed" (click)="isCollapsed = !isCollapsed">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item">
+        <a class="nav-link" *ngIf="auth.isLoggedIn()" routerLink="/characters">Characters</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" *ngIf="auth.isLoggedIn()" routerLink="/regions">Regions</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" *ngIf="auth.isLoggedIn()" routerLink="/worldmap">Worldmap</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" *ngIf="auth.isLoggedIn()" routerLink="/profile">{{ auth.getUserDetails()?.name }}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" *ngIf="auth.isAdmin()" routerLink="/administration">Administration</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/about">About</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+      <span class="navbar-text">
+        Version: {{version}}
+      </span>
+      <li class="nav-item">
+        <a class="nav-link" *ngIf="!auth.isLoggedIn()" routerLink="/login">Sign in</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" *ngIf="auth.isLoggedIn()" (click)="auth.logout()">Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>
 
 <router-outlet></router-outlet>
+

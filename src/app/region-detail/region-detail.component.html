@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <h1 class="text-center"> Region: {{region?.name}}</h1>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-xs-6">
+            <mat-list role="list">
+                <mat-list-item role="listitem">ID: {{region?._id}}</mat-list-item>
+                <mat-list-item role="listitem">Seed: {{region?.seed}}</mat-list-item>
+                <mat-list-item role="listitem">Noise: {{region?.noise}} </mat-list-item>
+                <mat-list-item role="listitem">Type: {{region?.type}} </mat-list-item>
+                <mat-list-item role="listitem">X-Coordinate: {{region?.x}} </mat-list-item>
+                <mat-list-item role="listitem">Y-Coordinate: {{region?.y}} </mat-list-item>
+                <mat-list-item role="listitem">Create date: {{region?.createdDate}}</mat-list-item>   
+        </mat-list>    
+        </div>
+        <div class="col-xs-6 my-auto">
+            <button mat-raised-button color="primary" (click)="goToMap()">Show on Worldmap</button>
+    
+        </div>
+    </div>
+  
+    <hr>
+    <div class="row justify-content-center">
+        <button mat-raised-button color="primary" [routerLink]="['cities']" [style.display]="!showOutlet ? 'block' : 'none'">Show Cities</button>
+        <button mat-raised-button color="primary" [routerLink]="['.']" [style.display]="showOutlet ? 'block' : 'none'">Close Cities</button>
+    </div>
+    <div class="row justify-content-center" [hidden]="!showOutlet">
+        <router-outlet
+            (activate)="onActivate()"
+            (deactivate)="onDeactivate()"></router-outlet>
+    </div>
+</div>

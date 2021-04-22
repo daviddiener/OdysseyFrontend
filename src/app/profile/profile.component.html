@@ -1,10 +1,8 @@
-<div class="form-horizontal">
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Full name</label>
-      <p class="form-control-static">{{ details?.name }}</p>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Email</label>
-      <p class="form-control-static">{{ details?.email }}</p>
-    </div>
+<div class="container">
+  <div class="row justify-content-center"> 
+      <mat-list role="list">
+        <mat-list-item role="listitem">Name: {{ details?.name }}</mat-list-item>   
+        <mat-list-item role="listitem">Email: {{ details?.email }}</mat-list-item>
+      </mat-list>
   </div>
+</div>

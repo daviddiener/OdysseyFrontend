@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthenticationService } from './services/authentication.service';
+import { version } from '../../package.json';
+
 
 @Component({
   selector: 'app-root',
@@ -7,6 +9,7 @@ import { AuthenticationService } from './services/authentication.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'RTSFrontend';
+  public isCollapsed = true;
+  public version: string = version;
   constructor(public auth: AuthenticationService) {}
 }

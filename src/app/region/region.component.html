@@ -1,8 +1,43 @@
-<div>
+<div class="container">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-sm-3">
+            <mat-form-field appearance="outline">
+                    <mat-label>Name</mat-label>
+                    <input matInput type="text" [(ngModel)]="searchName">                
+            </mat-form-field>
+        </div>
+        <div class="col-sm-3">
+            <mat-form-field appearance="outline">
+                    <mat-label>Region Type</mat-label>
+                    <mat-select [(ngModel)]="searchType">
+                        <mat-option *ngFor="let type of typeSelection" [value]="type">
+                        {{ type }}
+                        </mat-option>
+                    </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-sm-6 ">
+            <button class="float-right" mat-raised-button color="primary" mat-button (click)='searchRegions()'>Search Regions</button>
+        </div>
+    </div>
+
     <mat-card *ngFor="let region of regions" style="margin-top:10px;">
-        <mat-card-header>
-            <mat-card-title>Name: {{region.name}}</mat-card-title>
-            <mat-card-subtitle>Description: The {{region.description}}</mat-card-subtitle>
-        </mat-card-header>
+        <div class="row">
+            <div class="col">
+                <mat-card-header>
+                    <mat-card-title>{{region.name}}</mat-card-title>
+                    <mat-card-subtitle>Seed: {{region.seed}}</mat-card-subtitle>
+                </mat-card-header>
+            </div>
+            <div class="col text-right">
+                <mat-card-actions>
+                    <button mat-raised-button color="primary" [routerLink]="['/regions', region._id]">Go to Region</button>
+                </mat-card-actions>
+            </div>
+        </div>
     </mat-card>
+
+    <div *ngIf="currentPage > 1" class="row justify-content-center">
+        <button class='btn-margin' mat-raised-button color="secondary" (click)='loadNextPage()'>Load more</button>
+    </div>
 </div>

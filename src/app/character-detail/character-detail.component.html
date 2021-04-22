@@ -1,0 +1,19 @@
+<div class="container">
+    <div class="row justify-content-center"> 
+        <h2>{{character?.name}}</h2>
+    </div>
+    <div class="row justify-content-center">    
+        <mat-list role="list">
+                <mat-list-item role="listitem">UserId: {{character?.userId}}</mat-list-item>   
+                <mat-list-item role="listitem">CharacterId: {{character?._id}}</mat-list-item>
+                <mat-list-item role="listitem">Gender: {{character?.gender}}</mat-list-item>
+                <mat-list-item role="listitem">Region Id: {{character?.regionId}} </mat-list-item>
+                <mat-list-item role="listitem">City Id: {{character?.cityId}} </mat-list-item>
+                <mat-list-item role="listitem">City name: {{city?.name}}</mat-list-item>   
+                <mat-list-item role="listitem">HP: {{character?.hp}}</mat-list-item>   
+                <mat-list-item role="listitem">Strength: {{character?.strength}}</mat-list-item>   
+                <mat-list-item role="listitem">Agility: {{character?.agility}}</mat-list-item>   
+                <mat-list-item role="listitem">Intelligence: {{character?.intelligence}}</mat-list-item>   
+        </mat-list>
+    </div>
+<router-outlet></router-outlet>

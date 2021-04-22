@@ -1,88 +1,92 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Injectable, Inject } from '@angular/core';
+import { HttpParams, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
-import { Region } from '../region/region';
-
-interface TokenResponse {
-  token: string;
-}
+import { Region, Type } from '../_models/region';
+import { AuthenticationService } from './authentication.service';
+import { WINDOW } from './window.provider';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class RegionService {
-  private token: string;
-  private REST_API_SERVER = environment.apiUrl;
+  private REST_API_SERVER = this.getURL();
 
-  constructor(private http: HttpClient, private router: Router) {}
-
-  private saveToken(token: string): void {
-    localStorage.setItem('mean-token', token);
-    this.token = token;
-  }
-
-  private getToken(): string {
-    if (!this.token) {
-      this.token = localStorage.getItem('mean-token');
+  private getURL(): string {
+    let port = '';
+    if (!environment.production) {
+      port = ':3000';
     }
-    return this.token;
+    return this.window.location.protocol + '//' + this.window.location.hostname + port + '/api/';
   }
 
-  private request(method: 'post'|'get'|'getById'|'put'|'delete', parentId: string, id?: string, region?: Region): Observable<any> {
-    let base;
+  constructor(private http: HttpClient,
+              private authenticationService: AuthenticationService,
+              @Inject(WINDOW) private window: Window) {}
 
-    if (method === 'post') {
-      base = this.http.post(this.REST_API_SERVER + 'games/' + parentId + 'regions/',
-      {name: region.name, description: region.description, gameId: region.gameId, type: region.type, owner: region.owner},
-      { headers: { Authorization: `Bearer ${this.getToken()}` }});
-    } else if (method === 'get') {
-      base = this.http.get(this.REST_API_SERVER + 'games/' + parentId + '/regions/',
-      { headers: { Authorization: `Bearer ${this.getToken()}` }});
-    } else if (method === 'getById') {
-      base = this.http.get(this.REST_API_SERVER + 'games/' + parentId + 'regions/' + id,
-      { headers: { Authorization: `Bearer ${this.getToken()}` }});
-    } else if (method === 'put') {
-      base = this.http.put(this.REST_API_SERVER + 'games/' + parentId + 'regions/' + id,
-      {name: region.name, description: region.description, gameId: region.gameId, type: region.type, owner: region.owner},
-      { headers: { Authorization: `Bearer ${this.getToken()}` }});
-    } else if (method === 'delete') {
-      base = this.http.delete(this.REST_API_SERVER + 'games/' + parentId + 'regions/' + id,
-      { headers: { Authorization: `Bearer ${this.getToken()}` }});
+  public createRegion(): Observable<any> {
+    return this.http.post(this.REST_API_SERVER + 'regions/', {}, { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
+  }
+
+  public getAllRegions(): Observable<any> {
+    return this.http.get(this.REST_API_SERVER + 'regions/',
+    { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
+  }
+
+  public getPartRegions(pageNum: number, pageLimit: number): Observable<any> {
+    return this.http.get(this.REST_API_SERVER + 'regions/', {
+      params: new HttpParams()
+      .append('pageNum', pageNum.toString())
+      .append('pageLimit', pageLimit.toString()),
+      headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
+  }
+
+  public getRegionChunk(x: number, y: number, range: number): Observable<any> {
+    return this.http.get(this.REST_API_SERVER + 'regions/', {
+      params: new HttpParams()
+      .append('x', x.toString())
+      .append('y', y.toString())
+      .append('range', range.toString()),
+      headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
+  }
+
+  public getRegionByParams(pageNum: number, pageLimit: number, regionName?: string, regionType?: Type): Observable<any> {
+    let params = new HttpParams()
+    .append('pageNum', pageNum.toString())
+    .append('pageLimit', pageLimit.toString());
+
+    if (regionName){
+      params = params.append('regionName', regionName.toString());
+    }
+    if (regionType){
+      params = params.append('regionType', regionType.toString());
     }
 
-    const request = base.pipe(
-      map((data: TokenResponse) => {
-        if (data.token) {
-          this.saveToken(data.token);
-        }
-        return data;
-      })
-    );
-
-    return request;
+    return this.http.get(this.REST_API_SERVER + 'regions/', {
+      params,
+      headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
   }
 
-  public createRegion(parentId: string, region: Region): Observable<any> {
-    return this.request('post', parentId, null, region);
+
+  public getRegionById(id: string): Observable<any> {
+    return this.http.get(this.REST_API_SERVER + 'regions/' + id,
+    { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
   }
 
-  public getAllRegions(parentId: string): Observable<any> {
-    return this.request('get', parentId);
+  public updateRegion(region: Region, id: string): Observable<any> {
+    return this.http.put(this.REST_API_SERVER + 'regions/' + id, {region},
+    { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
   }
 
-  public getRegionById(parentId: string, id: string): Observable<any> {
-    return this.request('getById', parentId, id);
+  public deleteRegion(id: string): Observable<any> {
+    return this.http.delete(this.REST_API_SERVER + 'regions/' + id,
+    { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
   }
 
-  public updateRegion(parentId: string, region: Region, id: string): Observable<any> {
-    return this.request('put', parentId, id, region);
+  public deleteAllRegions(): Observable<any> {
+    return this.http.delete(this.REST_API_SERVER + 'regions/',
+    { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
   }
 
-  public deleteRegion(parentId: string, id: string): Observable<any> {
-    return this.request('delete', parentId, id);
-  }
 }
