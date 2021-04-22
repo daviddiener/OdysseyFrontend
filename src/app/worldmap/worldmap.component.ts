@@ -111,14 +111,8 @@ class MainScene extends Phaser.Scene {
       this.cam.scrollY = y * this.tileSize - this.cam.height / 2;
     }
 
-    this.regionService.getRegionChunk(x, y, range).subscribe((data: Region[]) => {
-      this.sprites.forEach(element => {
-        element.destroy();
-      });
-
-      this.DrawMarkerBox(x * this.tileSize, y * this.tileSize);
-
-      data.forEach(element => {
+    this.regionService.streamRegionChunk(x, y, range).node('{_id type x y}',
+    (element: Region) => {
         let tileType: number;
         if (element.type === Type.water){
           tileType = 0;
@@ -156,9 +150,12 @@ class MainScene extends Phaser.Scene {
             tmpSprite.clearTint();
           });
         }
-
         this.sprites.push(tmpSprite);
-      });
+    });
+
+    this.DrawMarkerBox(x * this.tileSize, y * this.tileSize);
+    this.sprites.forEach(element => {
+      element.destroy();
     });
   }
 

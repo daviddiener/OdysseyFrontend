@@ -5,6 +5,9 @@ import { environment } from '../../environments/environment';
 import { Region, Type } from '../_models/region';
 import { AuthenticationService } from './authentication.service';
 import { WINDOW } from './window.provider';
+import { Oboe } from 'oboe';
+const oboe = require('oboe');
+
 
 @Injectable({
   providedIn: 'root'
@@ -50,6 +53,21 @@ export class RegionService {
       .append('range', range.toString()),
       headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
   }
+
+  public streamRegionChunk(x: number, y: number, range: number): Oboe {
+    return oboe({
+        url: this.REST_API_SERVER + 'regions?x=' + x.toString() + '&y=' + y.toString() + '&range=' + range.toString(),
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${this.authenticationService.getToken()}` }
+    })
+    .done(() => {
+      console.log('we got it');
+    })
+    .fail(() => {
+      console.log('fail!');
+    });
+    }
 
   public getRegionByParams(pageNum: number, pageLimit: number, regionName?: string, regionType?: Type): Observable<any> {
     let params = new HttpParams()
