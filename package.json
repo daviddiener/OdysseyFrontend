@@ -15,6 +15,8 @@
     "copy": "xcopy /R /S /Q /Y .\\dist ..\\OdysseyBackend\\public\\"
   },
   "private": true,
+  "author": "David Diener",
+  "license": "UNLICENSED",
   "dependencies": {
     "@angular/animations": "~11.2.7",
     "@angular/cdk": "~11.2.6",
