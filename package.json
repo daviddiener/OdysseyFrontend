@@ -7,7 +7,7 @@
     "start:prod": "ng serve -c production --host 0.0.0.0 --disableHostCheck",
     "start:pwa": "ng build -c production --output-hashing none && http-server -p 4200 -c-1 dist/OdysseyFrontend",
     "build": "ng build -c production --output-hashing none && npm run purge && npm run copy",
-    "build:push": "npm version patch && npm run build && cd ..\\OdysseyBackend && npm run push",
+    "build:push": "npm version patch --no-git-tag-version && npm run build && cd ..\\OdysseyBackend && npm run push",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
