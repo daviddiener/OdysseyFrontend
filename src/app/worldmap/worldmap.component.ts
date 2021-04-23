@@ -127,11 +127,11 @@ class MainScene extends Phaser.Scene {
         } else if (element.type === Type.grass) {
           tileType = 2;
         } else if (element.type === Type.snow) {
-          tileType = 3;
-        } else if (element.type === Type.mountain) {
-          tileType = 4;
-        } else if (element.type === Type.mountainpeak) {
           tileType = 5;
+        } else if (element.type === Type.mountain) {
+          tileType = 3;
+        } else if (element.type === Type.mountainpeak) {
+          tileType = 4;
         }
         const tmpSprite: Phaser.GameObjects.Sprite = this.add.sprite(element.x * this.tileSize,
                                                                     element.y * this.tileSize,
