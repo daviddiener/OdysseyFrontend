@@ -30,9 +30,15 @@ export class CharacterComponent implements OnInit {
   ngOnInit() {
     this.characterService.getAllCharactersByUserId(this.authenticationService.getUserDetails()._id).subscribe((data: Character[]) => {
       this.characters = data;
+    },
+    (err: Error) => {
+      alert(err.message);
     });
     this.regionService.getPartRegions(this.currentPage, this.pageLimit).subscribe((data: Region[]) => {
       this.regions = this.regions.concat(data);
+    },
+    (err: Error) => {
+      alert(err.message);
     });
     this.currentPage++;
   }
@@ -40,6 +46,9 @@ export class CharacterComponent implements OnInit {
   loadNextPage() {
     this.regionService.getPartRegions(this.currentPage, this.pageLimit).subscribe((data: Region[]) => {
       this.regions = this.regions.concat(data);
+    },
+    (err: Error) => {
+      alert(err.message);
     });
     this.currentPage++;
   }
@@ -47,7 +56,10 @@ export class CharacterComponent implements OnInit {
   updateCities(value) {
     this.cityService.getAllCities(value).subscribe((data: City[]) => {
       this.cities = data;
-  });
+    },
+    (err: Error) => {
+      alert(err.message);
+    });
   }
 
   createCharacter() {
@@ -63,14 +75,20 @@ export class CharacterComponent implements OnInit {
       this.characterService.getAllCharactersByUserId(this.authenticationService.getUserDetails()._id).subscribe((data: Character[]) => {
         this.characters = data;
       });
+    },
+    (err: Error) => {
+      alert(err.message);
     });
   }
 
-  deleteCharacter(value){
+  deleteCharacter(value) {
     this.characterService.deleteCharacter(value).subscribe(() => {
       this.characterService.getAllCharactersByUserId(this.authenticationService.getUserDetails()._id).subscribe((data: Character[]) => {
         this.characters = data;
       });
+    },
+    (err: Error) => {
+      alert(err.message);
     });
   }
 }

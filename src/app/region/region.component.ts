@@ -22,6 +22,9 @@ export class RegionComponent {
   loadNextPage() {
     this.regionService.getRegionByParams(this.currentPage, this.pageLimit, this.searchName, this.searchType).subscribe((data: Region[]) => {
       this.regions = this.regions.concat(data);
+    },
+    (err: Error) => {
+      alert(err.message);
     });
     this.currentPage++;
   }

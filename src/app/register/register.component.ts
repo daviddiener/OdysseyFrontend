@@ -16,8 +16,9 @@ export class RegisterComponent {
   register() {
     this.auth.register(this.user).subscribe(() => {
       this.router.navigateByUrl('/home');
-    }, (err) => {
-      console.error(err);
+    },
+    (err: Error) => {
+      alert(err.message);
     });
   }
 }

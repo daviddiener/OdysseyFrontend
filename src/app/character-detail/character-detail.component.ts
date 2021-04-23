@@ -18,13 +18,23 @@ export class CharacterDetailComponent implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      this.characterService.getCharacterById(params.get('id')).subscribe((c: Character) => {
+      this.characterService.getCharacterById(params.get('id')).subscribe(
+        (c: Character) => {
           this.character = c;
 
-          this.cityService.getCityById(this.character.regionId, this.character.cityId).subscribe((ci: City) => {
+          this.cityService.getCityById(this.character.regionId, this.character.cityId).subscribe(
+            (ci: City) => {
             this.city = ci;
-        });
-      });
+            },
+            (err: Error) => {
+              alert(err.message);
+            }
+            );
+      },
+      err => {
+        alert(err);
+      }
+      );
 
     });
   }

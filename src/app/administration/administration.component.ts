@@ -24,35 +24,53 @@ export class AdministrationComponent implements OnInit {
   ngOnInit() {
     this.userService.getAllUsers().subscribe((data: User[]) => {
       this.users = data;
+    },
+    (err: Error) => {
+      alert(err.message);
     });
     }
 
   deleteAllCharacters() {
     if (confirm('Are you sure to delete all characters?')) {
-      this.characterService.deleteAllCharacters().subscribe(() => {});
+      this.characterService.deleteAllCharacters().subscribe(() => {},
+      (err: Error) => {
+        alert(err.message);
+      });
     }
   }
 
   deleteAllRegions() {
     if (confirm('Are you sure to delete all regions?')) {
-      this.regionService.deleteAllRegions().subscribe(() => {});
+      this.regionService.deleteAllRegions().subscribe(() => {},
+      (err: Error) => {
+        alert(err.message);
+      });
     }
   }
 
   batchCreateRegions(value: number){
     for (let i = 0; i < value; ++i){
-      this.regionService.createRegion().subscribe(() => {});
+      this.regionService.createRegion().subscribe(() => {},
+      (err: Error) => {
+        alert(err.message);
+      });
     }
   }
 
   createRegion() {
-    this.regionService.createRegion().subscribe(() => {});
+    this.regionService.createRegion().subscribe(() => {},
+    (err: Error) => {
+      alert(err.message);
+    });
   }
 
   deleteAllUsers() {
     if (confirm('Are you sure to delete all users?')) {
       this.userService.deleteAllUsers().subscribe(() => {
         this.ngOnInit();
+      },
+      (err: Error) => {
+        alert(err.message);
       });
     }
   }
@@ -61,6 +79,9 @@ export class AdministrationComponent implements OnInit {
     this.userService.deleteUser(value).subscribe(() => {
       this.userService.getAllUsers().subscribe((data: User[]) => {
         this.users = data;
+      },
+      (err: Error) => {
+        alert(err.message);
       });
     });
   }
@@ -79,6 +100,9 @@ export class AdministrationComponent implements OnInit {
     this.userService.updateUser(newUser, newUser._id).subscribe(() => {
       this.userService.getAllUsers().subscribe((data: User[]) => {
         this.users = data;
+      },
+      (err: Error) => {
+        alert(err.message);
       });
     });
   }
@@ -89,6 +113,9 @@ export class AdministrationComponent implements OnInit {
     this.userService.updateUser(newUser, newUser._id).subscribe(() => {
       this.userService.getAllUsers().subscribe((data: User[]) => {
         this.users = data;
+      },
+      (err: Error) => {
+        alert(err.message);
       });
     });
   }

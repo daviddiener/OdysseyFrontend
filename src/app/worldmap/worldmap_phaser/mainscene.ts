@@ -102,6 +102,9 @@ export default class MainScene extends Phaser.Scene {
 
           this.sprites.push(tmpSprite);
         });
+      },
+      (err: Error) => {
+        alert(err.message);
       });
     }
 
@@ -167,6 +170,9 @@ export default class MainScene extends Phaser.Scene {
         );
         this.infoBackground.depth = 10;
         this.infoBackground.setOrigin(0);
+      },
+      (err: Error) => {
+        alert(err.message);
       });
     }
 

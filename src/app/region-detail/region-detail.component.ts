@@ -20,6 +20,9 @@ export class RegionDetailComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.regionService.getRegionById(params.get('id')).subscribe((c: Region) => {
           this.region = c;
+      },
+      (err: Error) => {
+        alert(err.message);
       });
     });
   }

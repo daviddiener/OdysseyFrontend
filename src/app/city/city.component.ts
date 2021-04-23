@@ -25,8 +25,14 @@ export class CityComponent implements OnInit {
           data.forEach(element => {
             this.characterService.getAllCharactersByCityId(element._id).subscribe((chars: Character[]) => {
               this.cities.push({element, chars});
+            },
+            (err: Error) => {
+              alert(err.message);
             });
           });
+      },
+      (err: Error) => {
+        alert(err.message);
       });
     });
   }
