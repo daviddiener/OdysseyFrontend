@@ -26,69 +26,45 @@ export class CharacterService {
               private authenticationService: AuthenticationService,
               @Inject(WINDOW) private window: Window) {}
 
-  private request(method: 'post'|'get'|'getById'|'getByCityId'|'getByUserId'|'put'|'delete'|'deleteById',
-                  character?: Character, id?: string, cityId?: string, userId?: string): Observable<any> {
-    let request;
-
-    if (method === 'post') {
-      request = this.http.post(this.REST_API_SERVER + 'characters/',
-      {name: character.name, gender: character.gender, regionId: character.regionId, cityId: character.cityId},
-      { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
-    } else if (method === 'get') {
-      request = this.http.get(this.REST_API_SERVER + 'characters/', { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
-    } else if (method === 'getById') {
-      request = this.http.get(this.REST_API_SERVER + 'characters/' + id, { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
-    }  else if (method === 'getByCityId') {
-      request = this.http.get(this.REST_API_SERVER + 'characters/', {
-        params: {cityId},
-        headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
-    }  else if (method === 'getByUserId') {
-      request = this.http.get(this.REST_API_SERVER + 'characters/', {
-        params: {userId},
-        headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
-    } else if (method === 'put') {
-      request = this.http.put(this.REST_API_SERVER + 'characters/' + id,
-      {name: character.name, gender: character.gender, regionId: character.regionId},
-      { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
-    } else if (method === 'deleteById') {
-      request = this.http.delete(this.REST_API_SERVER + 'characters/' + id, { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
-    } else if (method === 'delete') {
-      request = this.http.delete(this.REST_API_SERVER + 'characters/', { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
-    }
-
-    return request;
-  }
-
-  public createCharacter(newCharacter: Character): Observable<any> {
-    return this.request('post', newCharacter);
+  public createCharacter(character: Character): Observable<any> {
+    return this.http.post(this.REST_API_SERVER + 'characters/',
+    {name: character.name, gender: character.gender, regionId: character.regionId, cityId: character.cityId},
+    { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
   }
 
   public getAllCharacters(): Observable<any> {
-    return this.request('get');
+    return this.http.get(this.REST_API_SERVER + 'characters/',
+    { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
   }
 
   public getCharacterById(id: string): Observable<any> {
-    return this.request('getById', null, id);
+    return this.http.get(this.REST_API_SERVER + 'characters/' + id, { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
   }
 
-  public getAllCharactersByCityId(userId: string): Observable<any> {
-    return this.request('getByCityId', null, null, userId);
+  public getAllCharactersByCityId(cityId: string): Observable<any> {
+    return this.http.get(this.REST_API_SERVER + 'characters/', {
+        params: {cityId},
+        headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
   }
 
   public getAllCharactersByUserId(userId: string): Observable<any> {
-    return this.request('getByUserId', null, null, null, userId);
+    return this.http.get(this.REST_API_SERVER + 'characters/', {
+      params: {userId},
+      headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
   }
 
-  public updateCharacter(newCharacter: Character, id: string): Observable<any> {
-    return this.request('put', newCharacter, id);
+  public updateCharacter(character: Character, id: string): Observable<any> {
+    return this.http.put(this.REST_API_SERVER + 'characters/' + id,
+    {name: character.name, gender: character.gender, regionId: character.regionId},
+    { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
   }
 
   public deleteCharacter(id: string): Observable<any> {
-    return this.request('deleteById', null, id);
+    return this.http.delete(this.REST_API_SERVER + 'characters/' + id, { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
   }
 
   public deleteAllCharacters(): Observable<any> {
-    return this.request('delete');
+    return this.http.delete(this.REST_API_SERVER + 'characters/', { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }});
   }
 
 }
