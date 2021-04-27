@@ -102,11 +102,11 @@ export default function biomgenerator(x: number, y: number, biom: Type, allBiome
     if (neededSprites.length == 1)
     {
         var GIANTLIST = [ [[0], [10,11]], [[1], [8,11]], [[2], [8,9]], [[3], [9,10]] ];
-        for (var i = 0; i < 4; i++)
+        for (let i = 0; i < 4; i++)
         {
             if (JSON.stringify(neededSprites) == JSON.stringify(GIANTLIST[i][0]))
             {
-                for (var j = 0; j < 2; j++)
+                for (let j = 0; j < 2; j++)
                 {
                     if (biomAt(x + surrondings[ (GIANTLIST[i][1][j]-8)*2 ][0], y + surrondings[ (GIANTLIST[i][1][j]-8)*2 ][1]) !== biom)
                     {
@@ -122,7 +122,7 @@ export default function biomgenerator(x: number, y: number, biom: Type, allBiome
     if (neededSprites.length == 0)
     {
         var GIANTLISTII = [ 8, 9, 10, 11 ];
-        for (var i = 0; i < 4; i++)
+        for (let i = 0; i < 4; i++)
         {
             if (biomAt(x + surrondings[ (GIANTLISTII[i]-8)*2 ][0], y + surrondings[ (GIANTLISTII[i]-8)*2 ][1]) !== biom)
             {
