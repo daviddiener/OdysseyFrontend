@@ -2,6 +2,7 @@ import { Region, Type } from '../../_models/region';
 import Phaser, { Cameras } from 'phaser';
 import { RegionService } from '../../services/region.service';
 import { Router } from '@angular/router';
+import biomgenerator from './biome';
 
 export default class MainScene extends Phaser.Scene {
     sprites: Phaser.GameObjects.Sprite[] = [];
@@ -25,6 +26,7 @@ export default class MainScene extends Phaser.Scene {
 
     preload() {
       this.load.spritesheet('worldTiles', 'assets/tiles/world_spritesheet.png', { frameWidth: 32, frameHeight: 32, endFrame: 5 });
+      this.load.spritesheet('mountainPeakTiles', 'assets/tiles/mountain_peak.png', { frameWidth: 32, frameHeight: 32, endFrame: 12 });
     }
 
     create() {
@@ -63,6 +65,7 @@ export default class MainScene extends Phaser.Scene {
 
         data.forEach(element => {
           let tileType: number;
+          let transitionTiles: number[];
           if (element.type === Type.water){
             tileType = 0;
           } else if (element.type === Type.sand) {
@@ -75,19 +78,42 @@ export default class MainScene extends Phaser.Scene {
             tileType = 3;
           } else if (element.type === Type.mountainpeak) {
             tileType = 4;
+            transitionTiles = biomgenerator(element.x, element.y, Type.mountainpeak, data);
+            console.log('Für ', element.x, ' ', element.y, ' benutzt er ', transitionTiles);
           }
-          const tmpSprite: Phaser.GameObjects.Sprite = this.add.sprite(element.x * this.tileSize,
-                                                                      element.y * this.tileSize,
-                                                                      'worldTiles',
-                                                                      tileType);
+          // Draw Base Tiles
+          let tmpSprite: Phaser.GameObjects.Sprite;
+          if (tileType !== 4){
+            tmpSprite = this.add.sprite(element.x * this.tileSize,
+              - element.y * this.tileSize,
+              'worldTiles',
+              tileType);
+          } else {
+            tmpSprite = this.add.sprite(element.x * this.tileSize,
+              - element.y * this.tileSize,
+              'mountainPeakTiles',
+              12);
+
+            // Draw Transition Tiles
+            if (transitionTiles) {
+              transitionTiles.forEach(transition => {
+                const tmpTransitionSprite: Phaser.GameObjects.Sprite = this.add.sprite(element.x * this.tileSize,
+                  - element.y * this.tileSize,
+                  'mountainPeakTiles',
+                  transition);
+                tmpTransitionSprite.depth = 1;
+              });
+            }
+          }
+
           tmpSprite.setInteractive();
           tmpSprite.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
-            this.pointerDownCoordinates = new Phaser.Math.Vector2(pointer.x, pointer.y);
+            this.pointerDownCoordinates = new Phaser.Math.Vector2(pointer.x, - pointer.y);
           });
           tmpSprite.on('pointerup', (pointer) => {
-            if (this.pointerDownCoordinates.equals(new Phaser.Math.Vector2(pointer.x, pointer.y))){
+            if (this.pointerDownCoordinates.equals(new Phaser.Math.Vector2(pointer.x, - pointer.y))){
               this.DrawInfoBox(element, range);
-              this.DrawMarkerBox(element.x * this.tileSize, element.y * this.tileSize);
+              this.DrawMarkerBox(element.x * this.tileSize, - element.y * this.tileSize);
             }
           });
 
@@ -116,7 +142,7 @@ export default class MainScene extends Phaser.Scene {
       }
       this.infoBox = this.add.text(
         region.x * this.tileSize,
-        region.y * this.tileSize,
+        - region.y * this.tileSize,
         'Loading...',
         { font: '16px monospace' });
       this.infoBox.depth = 11;
