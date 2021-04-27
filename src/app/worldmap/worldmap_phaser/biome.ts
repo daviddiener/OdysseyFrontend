@@ -20,16 +20,13 @@ export default function biomgenerator(x: number, y: number, biom: Type, allBiome
         }
     }
 
-    // console.log(neededSprites)
-
-
     if (neededSprites.length > 2)
     {
         neededSprites.push(4, 5, 6, 7);
         if (neededSprites.length === 7)
         {
             const OnlyConected = 6 - (neededSprites[0] + neededSprites[1] + neededSprites[2]);
-            // console.log(OnlyConected);
+
             for (let i = 0; i < 3; i++)
             {
                 if (i === OnlyConected)
@@ -52,25 +49,22 @@ export default function biomgenerator(x: number, y: number, biom: Type, allBiome
             if (neededSprites[1] - neededSprites[0] === 2)
             {
                 return neededSprites;
-                console.log(neededSprites);
-                console.log('noChanges');
-
             }
 
             else
             {
                 if (JSON.stringify(neededSprites) === JSON.stringify([0, 1]))
                 {
-                    neededSprites.push(7);
-                    if (biomAt(x + surrondings[3][0], y + surrondings[3][1], allBiomes) !== biom)
+                    neededSprites.push(5);
+                    if (biomAt(x + surrondings[6][0], y + surrondings[6][1], allBiomes) !== biom)
                     {
                         neededSprites.push(11);
                     }
                 }
                 if (JSON.stringify(neededSprites) === JSON.stringify([1, 2]))
                 {
-                    neededSprites.push(4);
-                    if (biomAt(x + surrondings[5][0], y + surrondings[5][1], allBiomes) !== biom)
+                    neededSprites.push(6);
+                    if (biomAt(x + surrondings[0][0], y + surrondings[0][1], allBiomes) !== biom)
                     {
                         neededSprites.push(8);
                     }
@@ -78,16 +72,16 @@ export default function biomgenerator(x: number, y: number, biom: Type, allBiome
                 }
                 if (JSON.stringify(neededSprites) === JSON.stringify([2, 3]))
                 {
-                    neededSprites.push(5);
-                    if (biomAt(x + surrondings[7][0], y + surrondings[7][1], allBiomes) !== biom)
+                    neededSprites.push(7);
+                    if (biomAt(x + surrondings[2][0], y + surrondings[2][1], allBiomes) !== biom)
                     {
                         neededSprites.push(9);
                     }
                 }
                 if (JSON.stringify(neededSprites) === JSON.stringify([0, 3]))
                 {
-                    neededSprites.push(6);
-                    if (biomAt(x + surrondings[0][0], y + surrondings[0][1], allBiomes) !== biom)
+                    neededSprites.push(4);
+                    if (biomAt(x + surrondings[4][0], y + surrondings[4][1], allBiomes) !== biom)
                     {
                         neededSprites.push(10);
                     }
