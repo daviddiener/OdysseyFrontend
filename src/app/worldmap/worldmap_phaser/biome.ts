@@ -64,7 +64,7 @@ export default function biomgenerator(x: number, y: number, biom: Type, allBiome
                     neededSprites.push(7);
                     if (biomAt(x + surrondings[3][0], y + surrondings[3][1], allBiomes) !== biom)
                     {
-                        neededSprites.push(9);
+                        neededSprites.push(11);
                     }
                 }
                 if (JSON.stringify(neededSprites) === JSON.stringify([1, 2]))
@@ -72,15 +72,16 @@ export default function biomgenerator(x: number, y: number, biom: Type, allBiome
                     neededSprites.push(4);
                     if (biomAt(x + surrondings[5][0], y + surrondings[5][1], allBiomes) !== biom)
                     {
-                        neededSprites.push(10);
+                        neededSprites.push(8);
                     }
+
                 }
                 if (JSON.stringify(neededSprites) === JSON.stringify([2, 3]))
                 {
                     neededSprites.push(5);
                     if (biomAt(x + surrondings[7][0], y + surrondings[7][1], allBiomes) !== biom)
                     {
-                        neededSprites.push(11);
+                        neededSprites.push(9);
                     }
                 }
                 if (JSON.stringify(neededSprites) === JSON.stringify([0, 3]))
@@ -88,7 +89,7 @@ export default function biomgenerator(x: number, y: number, biom: Type, allBiome
                     neededSprites.push(6);
                     if (biomAt(x + surrondings[0][0], y + surrondings[0][1], allBiomes) !== biom)
                     {
-                        neededSprites.push(8);
+                        neededSprites.push(10);
                     }
                 }
                 return neededSprites;
