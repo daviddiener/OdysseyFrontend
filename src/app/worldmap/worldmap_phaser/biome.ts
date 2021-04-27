@@ -26,105 +26,102 @@ export default function biomgenerator(x: number, y: number, biom: Type, allBiome
             neededSprites.push(i);
         }
     }
-  
-  
-    if (neededSprites.length == 4)
+
+    if (neededSprites.length === 4)
     {
-        neededSprites.push(4,5,6,7);
+        neededSprites.push(4, 5 , 6, 7);
         return neededSprites;
     }
-    
-    if (neededSprites.length == 3)
+
+    if (neededSprites.length === 3)
     {
-        neededSprites.push(4,5,6,7);
-        OnlyConected = 6 - (neededSprites[0] + neededSprites[1] + neededSprites[2]);
-        //console.log(OnlyConected);
-        if (OnlyConected == 3) 
+        neededSprites.push(4, 5, 6, 7);
+        const OnlyConected = 6 - (neededSprites[0] + neededSprites[1] + neededSprites[2]);
+        if (OnlyConected === 3)
         {
             neededSprites.splice(OnlyConected, 1);
-            neededSprites.splice(OnlyConected+3, 1);
+            neededSprites.splice(OnlyConected + 2, 1);
         }
-        else 
-        {neededSprites.splice(OnlyConected+3, 2);}
+        else {
+            neededSprites.splice(OnlyConected + 3, 2);
+        }
 
         return neededSprites;
     }
 
-    if (neededSprites.length == 2)
+    if (neededSprites.length === 2)
     {
-        if (neededSprites[1]-neededSprites[0] == 2)
+        if (neededSprites[1] - neededSprites[0] === 2)
         {
-            return neededSprites
-            console.log(neededSprites);
-            console.log("noChanges");
-
+            return neededSprites;
         }
 
         else
         {
-            if (JSON.stringify(neededSprites) == JSON.stringify([0,1]))
+            if (JSON.stringify(neededSprites) === JSON.stringify([0, 1]))
             {
                 neededSprites.push(5);
-                if (biomAt(x + surrondings[6][0], y + surrondings[6][1]) !== biom)
+                if (biomAt(x + surrondings[6][0], y + surrondings[6][1], allBiomes) !== biom)
                 {
                     neededSprites.push(11);
                 }
             }
-            if (JSON.stringify(neededSprites) == JSON.stringify([1,2]))
+            if (JSON.stringify(neededSprites) === JSON.stringify([1, 2]))
             {
                 neededSprites.push(6);
-                if (biomAt(x + surrondings[0][0], y + surrondings[0][1]) !== biom)
+                if (biomAt(x + surrondings[0][0], y + surrondings[0][1], allBiomes) !== biom)
                 {
                     neededSprites.push(8);
                 }
-                
+
             }
-            if (JSON.stringify(neededSprites) == JSON.stringify([2,3]))
+            if (JSON.stringify(neededSprites) === JSON.stringify([2, 3]))
             {
                 neededSprites.push(7);
-                if (biomAt(x + surrondings[2][0], y + surrondings[2][1]) !== biom)
+                if (biomAt(x + surrondings[2][0], y + surrondings[2][1], allBiomes) !== biom)
                 {
                     neededSprites.push(9);
                 }
             }
-            if (JSON.stringify(neededSprites) == JSON.stringify([0,3]))
+            if (JSON.stringify(neededSprites) === JSON.stringify([0, 3]))
             {
                 neededSprites.push(4);
-                if (biomAt(x + surrondings[4][0], y + surrondings[4][1]) !== biom)
+                if (biomAt(x + surrondings[4][0], y + surrondings[4][1], allBiomes) !== biom)
                 {
                     neededSprites.push(10);
                 }
             }
-            return neededSprites
+            return neededSprites;
         }
     }
 
-    if (neededSprites.length == 1)
+    if (neededSprites.length === 1)
     {
-        var GIANTLIST = [ [[0], [10,11]], [[1], [8,11]], [[2], [8,9]], [[3], [9,10]] ];
+        const GIANTLIST = [ [[0], [10, 11]], [[1], [8, 11]], [[2], [8, 9]], [[3], [9, 10]] ];
         for (let i = 0; i < 4; i++)
         {
-            if (JSON.stringify(neededSprites) == JSON.stringify(GIANTLIST[i][0]))
+            if (JSON.stringify(neededSprites) === JSON.stringify(GIANTLIST[i][0]))
             {
                 for (let j = 0; j < 2; j++)
                 {
-                    if (biomAt(x + surrondings[ (GIANTLIST[i][1][j]-8)*2 ][0], y + surrondings[ (GIANTLIST[i][1][j]-8)*2 ][1]) !== biom)
+                    if (biomAt(x +  surrondings[(GIANTLIST[i][1][j] - 8) * 2 ][0], y +
+                                    surrondings[ (GIANTLIST[i][1][j] - 8) * 2 ][1], allBiomes) !== biom)
                     {
                         neededSprites.push(GIANTLIST[i][1][j]);
                     }
-                    
                 }
             }
         }
         return neededSprites;
     }
-    
-    if (neededSprites.length == 0)
+
+    if (neededSprites.length === 0)
     {
-        var GIANTLISTII = [ 8, 9, 10, 11 ];
+        const GIANTLISTII = [ 8, 9, 10, 11 ];
         for (let i = 0; i < 4; i++)
         {
-            if (biomAt(x + surrondings[ (GIANTLISTII[i]-8)*2 ][0], y + surrondings[ (GIANTLISTII[i]-8)*2 ][1]) !== biom)
+            if (biomAt(x +  surrondings[(GIANTLISTII[i] - 8) * 2][0], y +
+                            surrondings[(GIANTLISTII[i] - 8) * 2][1], allBiomes) !== biom)
             {
                 neededSprites.push(GIANTLISTII[i]);
             }
