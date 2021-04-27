@@ -53,7 +53,7 @@ export default class MainScene extends Phaser.Scene {
     FetchRegions(x: number, y: number, range: number, centerCamera: boolean){
       if (centerCamera){
         this.cam.scrollX = x * this.tileSize  - this.cam.width / 2;
-        this.cam.scrollY = y * this.tileSize - this.cam.height / 2;
+        this.cam.scrollY = - y * this.tileSize - this.cam.height / 2;
       }
 
       this.regionService.getRegionChunk(x, y, range).subscribe((data: Region[]) => {
@@ -79,7 +79,6 @@ export default class MainScene extends Phaser.Scene {
           } else if (element.type === Type.mountainpeak) {
             tileType = 4;
             transitionTiles = biomgenerator(element.x, element.y, Type.mountainpeak, data);
-            console.log('Für ', element.x, ' ', element.y, ' benutzt er ', transitionTiles);
           }
           // Draw Base Tiles
           let tmpSprite: Phaser.GameObjects.Sprite;
@@ -102,6 +101,7 @@ export default class MainScene extends Phaser.Scene {
                   'mountainPeakTiles',
                   transition);
                 tmpTransitionSprite.depth = 1;
+                this.sprites.push(tmpTransitionSprite);
               });
             }
           }
@@ -113,7 +113,7 @@ export default class MainScene extends Phaser.Scene {
           tmpSprite.on('pointerup', (pointer) => {
             if (this.pointerDownCoordinates.equals(new Phaser.Math.Vector2(pointer.x, - pointer.y))){
               this.DrawInfoBox(element, range);
-              this.DrawMarkerBox(element.x * this.tileSize, - element.y * this.tileSize);
+              this.DrawMarkerBox(element.x * this.tileSize, element.y * this.tileSize);
             }
           });
 
@@ -207,7 +207,7 @@ export default class MainScene extends Phaser.Scene {
         this.markerBox.destroy();
       }
 
-      this.markerBox = this.add.rectangle(x, y, this.tileSize, this.tileSize, 0xff0000);
+      this.markerBox = this.add.rectangle(x, -y, this.tileSize, this.tileSize, 0xff0000);
       this.markerBox.depth = 9;
     }
 }

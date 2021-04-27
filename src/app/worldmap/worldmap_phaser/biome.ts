@@ -2,8 +2,15 @@ import { Region, Type } from '../../_models/region';
 
 function biomAt(x: number, y: number, allBiomes: Region[]): Type
 {
-    return allBiomes.find(region => region.x === x &&
-        region.y === y).type;
+    const tmpRegion = allBiomes.find(region => region.x === x &&
+        region.y === y);
+
+    if (tmpRegion) {
+        return tmpRegion.type;
+    }
+    else {
+        return null;
+    }
 }
 
 export default function biomgenerator(x: number, y: number, biom: Type, allBiomes: Region[])
