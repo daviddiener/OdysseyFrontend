@@ -3,10 +3,7 @@
   "version": "0.0.17",
   "scripts": {
     "start": "ng serve -c development --host 0.0.0.0 --disable-host-check --poll 200",
-    "start:prod": "ng serve -c production --host 0.0.0.0 --disable-host-check --poll 200",
-    "build": "ng build -c production",
-    "dockerup": "docker-compose -f docker-compose-dev.yml up -d --build",
-    "dockerdown": "docker-compose -f docker-compose-dev.yml down"
+    "build": "ng build -c production"
   },
   "private": true,
   "author": "David Diener",
