@@ -2,17 +2,11 @@
   "name": "odysseyfrontend",
   "version": "0.0.14",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve -c development --host 0.0.0.0 --disableHostCheck",
-    "start:prod": "ng serve -c production --host 0.0.0.0 --disableHostCheck",
-    "start:pwa": "ng build -c production --output-hashing none && http-server -p 4200 -c-1 dist/OdysseyFrontend",
-    "build": "ng build -c production --output-hashing none && npm run purge && npm run copy",
-    "build:push": "npm version patch && npm run build && cd ..\\OdysseyBackend && npm run push",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e",
-    "purge": "if exist ..\\OdysseyBackend\\public\\ del /q ..\\OdysseyBackend\\public\\OdysseyFrontend\\*",
-    "copy": "xcopy /R /S /Q /Y .\\dist ..\\OdysseyBackend\\public\\"
+    "start": "ng serve -c development --host 0.0.0.0 --disable-host-check --poll 200",
+    "start:prod": "ng serve -c production --host 0.0.0.0 --disable-host-check --poll 200",
+    "build": "ng build -c production",
+    "dockerup": "docker-compose -f docker-compose-dev.yml up -d --build",
+    "dockerdown": "docker-compose -f docker-compose-dev.yml down"
   },
   "private": true,
   "author": "David Diener",
