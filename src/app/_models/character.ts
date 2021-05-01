@@ -10,4 +10,4 @@ export class Character {
     agility: number;
     intelligence: number;
     userId: string;
-  }
+}

@@ -1,4 +1,4 @@
-import { Role } from './role';
+import { Role } from './role'
 
 export class User {
     // tslint:disable-next-line:variable-name

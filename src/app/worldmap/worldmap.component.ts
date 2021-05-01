@@ -1,11 +1,11 @@
-import { Component, OnInit} from '@angular/core';
-import { RegionService } from '../services/region.service';
-import { Region } from '../_models/region';
-import Phaser from 'phaser';
-import { FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import MainScene from './worldmap_phaser/mainscene';
-import HudScene from './worldmap_phaser/hudscene';
+import { Component, OnInit } from '@angular/core'
+import { RegionService } from '../services/region.service'
+import { Region } from '../_models/region'
+import Phaser from 'phaser'
+import { FormControl, Validators } from '@angular/forms'
+import { ActivatedRoute, Router } from '@angular/router'
+import MainScene from './worldmap_phaser/mainscene'
+import HudScene from './worldmap_phaser/hudscene'
 
 @Component({
   selector: 'app-worldmap',
@@ -22,7 +22,7 @@ export class WorldmapComponent implements OnInit {
   msc: MainScene;
   hud: HudScene;
 
-  constructor(private regionService: RegionService, private route: ActivatedRoute, private router: Router) {
+  constructor (private regionService: RegionService, private route: ActivatedRoute, private router: Router) {
     this.config = {
       type: Phaser.AUTO,
       pixelArt: true,
@@ -38,25 +38,25 @@ export class WorldmapComponent implements OnInit {
         autoCenter: Phaser.Scale.CENTER_BOTH,
         width: 800,
         height: 600
+      }
     }
-    };
   }
 
-  ngOnInit() {
+  ngOnInit () {
     this.route.queryParams.subscribe(data => {
-      this.msc = new MainScene(this.regionService, this.router, data.id, this.range.value);
-      this.hud = new HudScene(this.msc);
-      this.config.scene = [this.msc, this.hud];
-      this.phaserGame = new Phaser.Game(this.config);
-    });
+      this.msc = new MainScene(this.regionService, this.router, data.id, this.range.value)
+      this.hud = new HudScene(this.msc)
+      this.config.scene = [this.msc, this.hud]
+      this.phaserGame = new Phaser.Game(this.config)
+    })
   }
 
-  goToRegionRangeTrigger(){
+  goToRegionRangeTrigger () {
     if (!this.range.invalid) {
-      if (this.msc.currentRegion){
-        this.msc.FetchRegions(this.msc.currentRegion.x, this.msc.currentRegion.y, this.range.value, false);
+      if (this.msc.currentRegion) {
+        this.msc.FetchRegions(this.msc.currentRegion.x, this.msc.currentRegion.y, this.range.value, false)
       } else {
-        this.msc.FetchRegions(0, 0, this.range.value, false);
+        this.msc.FetchRegions(0, 0, this.range.value, false)
       }
     }
   }

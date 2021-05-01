@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { RegionService } from '../services/region.service';
-import { CharacterService } from '../services/character.service';
-import { UserService } from '../services/user.service';
-import { User } from '../_models/user';
-import { Role } from '../_models/role';
-import { faTrash, faUserTie, faUser, faArrowAltCircleUp, faArrowAltCircleDown } from '@fortawesome/free-solid-svg-icons/';
+import { Component, OnInit } from '@angular/core'
+import { RegionService } from '../services/region.service'
+import { CharacterService } from '../services/character.service'
+import { UserService } from '../services/user.service'
+import { User } from '../_models/user'
+import { Role } from '../_models/role'
+import { faTrash, faUserTie, faUser, faArrowAltCircleUp, faArrowAltCircleDown } from '@fortawesome/free-solid-svg-icons/'
 
 @Component({
   selector: 'app-administration',
@@ -19,104 +19,104 @@ export class AdministrationComponent implements OnInit {
   faArrowAltCircleUp = faArrowAltCircleUp;
   faArrowAltCircleDown = faArrowAltCircleDown;
 
-  constructor(private characterService: CharacterService, private userService: UserService, private regionService: RegionService) { }
+  constructor (private characterService: CharacterService, private userService: UserService, private regionService: RegionService) { }
 
-  ngOnInit() {
+  ngOnInit () {
     this.userService.getAllUsers().subscribe((data: User[]) => {
-      this.users = data;
+      this.users = data
     },
     (err: Error) => {
-      alert(err.message);
-    });
-    }
+      alert(err.message)
+    })
+  }
 
-  deleteAllCharacters() {
+  deleteAllCharacters () {
     if (confirm('Are you sure to delete all characters?')) {
       this.characterService.deleteAllCharacters().subscribe(() => {},
-      (err: Error) => {
-        alert(err.message);
-      });
+        (err: Error) => {
+          alert(err.message)
+        })
     }
   }
 
-  deleteAllRegions() {
+  deleteAllRegions () {
     if (confirm('Are you sure to delete all regions?')) {
       this.regionService.deleteAllRegions().subscribe(() => {},
-      (err: Error) => {
-        alert(err.message);
-      });
+        (err: Error) => {
+          alert(err.message)
+        })
     }
   }
 
-  batchCreateRegions(value: number){
-    for (let i = 0; i < value; ++i){
+  batchCreateRegions (value: number) {
+    for (let i = 0; i < value; ++i) {
       this.regionService.createRegion().subscribe(() => {},
-      (err: Error) => {
-        alert(err.message);
-      });
+        (err: Error) => {
+          alert(err.message)
+        })
     }
   }
 
-  createRegion() {
+  createRegion () {
     this.regionService.createRegion().subscribe(() => {},
-    (err: Error) => {
-      alert(err.message);
-    });
+      (err: Error) => {
+        alert(err.message)
+      })
   }
 
-  deleteAllUsers() {
+  deleteAllUsers () {
     if (confirm('Are you sure to delete all users?')) {
       this.userService.deleteAllUsers().subscribe(() => {
-        this.ngOnInit();
+        this.ngOnInit()
       },
       (err: Error) => {
-        alert(err.message);
-      });
+        alert(err.message)
+      })
     }
   }
 
-  deleteUser(value){
+  deleteUser (value) {
     this.userService.deleteUser(value).subscribe(() => {
       this.userService.getAllUsers().subscribe((data: User[]) => {
-        this.users = data;
+        this.users = data
       },
       (err: Error) => {
-        alert(err.message);
-      });
-    });
+        alert(err.message)
+      })
+    })
   }
 
-  isAdmin(role){
+  isAdmin (role) {
     if (role === Role.Admin) {
-      return true;
-    } else{
-      return false;
+      return true
+    } else {
+      return false
     }
   }
 
-  opUser(value){
-    const newUser: User = value;
-    newUser.role = Role.Admin;
+  opUser (value) {
+    const newUser: User = value
+    newUser.role = Role.Admin
     this.userService.updateUser(newUser, newUser._id).subscribe(() => {
       this.userService.getAllUsers().subscribe((data: User[]) => {
-        this.users = data;
+        this.users = data
       },
       (err: Error) => {
-        alert(err.message);
-      });
-    });
+        alert(err.message)
+      })
+    })
   }
 
-  deopUser(value){
-    const newUser: User = value;
-    newUser.role = Role.Basic;
+  deopUser (value) {
+    const newUser: User = value
+    newUser.role = Role.Basic
     this.userService.updateUser(newUser, newUser._id).subscribe(() => {
       this.userService.getAllUsers().subscribe((data: User[]) => {
-        this.users = data;
+        this.users = data
       },
       (err: Error) => {
-        alert(err.message);
-      });
-    });
+        alert(err.message)
+      })
+    })
   }
 }

@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { AuthenticationService } from '../services/authentication.service';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core'
+import { AuthenticationService } from '../services/authentication.service'
+import { Router } from '@angular/router'
 
 @Component({
   templateUrl: './login.component.html'
@@ -9,14 +9,14 @@ export class LoginComponent {
   email = '';
   password = '';
 
-  constructor(private auth: AuthenticationService, private router: Router) {}
+  constructor (private auth: AuthenticationService, private router: Router) {}
 
-  login() {
+  login () {
     this.auth.login(this.email, this.password).subscribe(() => {
-      this.router.navigateByUrl('/home');
+      this.router.navigateByUrl('/home')
     },
     (err: Error) => {
-      alert(err.message);
-    });
+      alert(err.message)
+    })
   }
 }

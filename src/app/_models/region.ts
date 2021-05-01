@@ -1,3 +1,4 @@
+/* eslint no-unused-vars: 0 */
 export enum Type {
   water = 'water',
   sand = 'sand',
@@ -17,4 +18,4 @@ export class Region {
     noise: number;
     type: Type;
     createdDate: Date;
-  }
+}

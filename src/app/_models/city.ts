@@ -7,4 +7,4 @@ export class City {
     type: string;
     owner: string;
     date: Date;
-  }
+}

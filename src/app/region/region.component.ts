@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { RegionService } from '../services/region.service';
-import { Region, Type } from '../_models/region';
+import { Component } from '@angular/core'
+import { RegionService } from '../services/region.service'
+import { Region, Type } from '../_models/region'
 
 @Component({
   selector: 'app-region',
@@ -17,21 +17,21 @@ export class RegionComponent {
   searchName: string;
   searchType: Type;
 
-  constructor(private regionService: RegionService) {}
+  constructor (private regionService: RegionService) {}
 
-  loadNextPage() {
+  loadNextPage () {
     this.regionService.getRegionByParams(this.currentPage, this.pageLimit, this.searchName, this.searchType).subscribe((data: Region[]) => {
-      this.regions = this.regions.concat(data);
+      this.regions = this.regions.concat(data)
     },
     (err: Error) => {
-      alert(err.message);
-    });
-    this.currentPage++;
+      alert(err.message)
+    })
+    this.currentPage++
   }
 
-  searchRegions() {
-    this.currentPage = 1;
-    this.regions = [];
-    this.loadNextPage();
+  searchRegions () {
+    this.currentPage = 1
+    this.regions = []
+    this.loadNextPage()
   }
 }

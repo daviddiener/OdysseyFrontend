@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { RegionService } from '../services/region.service';
-import { Region } from '../_models/region';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons/faArrowLeft';
+import { Component, OnInit } from '@angular/core'
+import { ActivatedRoute, Router } from '@angular/router'
+import { RegionService } from '../services/region.service'
+import { Region } from '../_models/region'
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons/faArrowLeft'
 
 @Component({
   selector: 'app-region',
@@ -14,29 +14,28 @@ export class RegionDetailComponent implements OnInit {
   region: Region;
   showOutlet = false;
 
-  constructor(private regionService: RegionService, private route: ActivatedRoute, private router: Router) {}
+  constructor (private regionService: RegionService, private route: ActivatedRoute, private router: Router) {}
 
-  ngOnInit() {
+  ngOnInit () {
     this.route.paramMap.subscribe(params => {
       this.regionService.getRegionById(params.get('id')).subscribe((c: Region) => {
-          this.region = c;
+        this.region = c
       },
       (err: Error) => {
-        alert(err.message);
-      });
-    });
+        alert(err.message)
+      })
+    })
   }
 
-  onActivate() {
-    this.showOutlet = true;
+  onActivate () {
+    this.showOutlet = true
   }
 
-  onDeactivate() {
-    this.showOutlet = false;
+  onDeactivate () {
+    this.showOutlet = false
   }
 
-  goToMap() {
-    this.router.navigate(['/worldmap'], {queryParams: {id: this.region._id}});
+  goToMap () {
+    this.router.navigate(['/worldmap'], { queryParams: { id: this.region._id } })
   }
-
 }
