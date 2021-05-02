@@ -1,6 +1,6 @@
 {
   "name": "odysseyfrontend",
-  "version": "0.0.20",
+  "version": "0.1.0",
   "scripts": {
     "start": "ng serve -c development --host 0.0.0.0 --disable-host-check --poll 200",
     "build": "ng build -c production",
