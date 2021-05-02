@@ -36,9 +36,11 @@ import { CharacterComponent } from './character/character.component'
 import { CharacterDetailComponent } from './character-detail/character-detail.component'
 import { ServiceWorkerModule } from '@angular/service-worker'
 import { environment } from '../environments/environment'
-import { WINDOW_PROVIDERS } from './services/window.provider'
 import { WorldmapComponent } from './worldmap/worldmap.component'
 import { AdministrationComponent } from './administration/administration.component'
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io'
+
+const config: SocketIoConfig = { url: environment.wsEndpoint, options: { transports: ['polling'] } }
 
 @NgModule({
   declarations: [
@@ -76,12 +78,12 @@ import { AdministrationComponent } from './administration/administration.compone
     FontAwesomeModule,
     MatRadioModule,
     NgbModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    SocketIoModule.forRoot(config)
   ],
   providers: [
     AuthenticationService,
-    AuthGuardService,
-    WINDOW_PROVIDERS
+    AuthGuardService
   ],
   bootstrap: [AppComponent]
 })

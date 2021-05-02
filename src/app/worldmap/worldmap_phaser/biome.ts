@@ -12,7 +12,7 @@ function biomAt (x: number, y: number, allBiomes: Region[]): Type {
 }
 
 export default function biomgenerator (x: number, y: number, biom: Type, allBiomes: Region[]) {
-  const surrondings = [[-1, 1], [0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0]]
+  const surrondings = [[-1, -1], [0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0]]
   const neededSprites = []
 
   // goes in 4 times for every location conected to the given one

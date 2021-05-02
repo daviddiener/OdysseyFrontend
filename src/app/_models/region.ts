@@ -1,4 +1,6 @@
 /* eslint no-unused-vars: 0 */
+import { City } from '../_models/city'
+
 export enum Type {
   water = 'water',
   sand = 'sand',
@@ -17,5 +19,6 @@ export class Region {
     y: number;
     noise: number;
     type: Type;
+    cities: [City];
     createdDate: Date;
 }

@@ -53,7 +53,7 @@ export default class MainScene extends Phaser.Scene {
     FetchRegions (x: number, y: number, range: number, centerCamera: boolean) {
       if (centerCamera) {
         this.cam.scrollX = x * this.tileSize - this.cam.width / 2
-        this.cam.scrollY = -y * this.tileSize - this.cam.height / 2
+        this.cam.scrollY = y * this.tileSize - this.cam.height / 2
       }
 
       this.regionService.getRegionChunk(x, y, range).subscribe((data: Region[]) => {
@@ -84,12 +84,12 @@ export default class MainScene extends Phaser.Scene {
           let tmpSprite: Phaser.GameObjects.Sprite
           if (tileType !== 4) {
             tmpSprite = this.add.sprite(element.x * this.tileSize,
-              -element.y * this.tileSize,
+              element.y * this.tileSize,
               'worldTiles',
               tileType)
           } else {
             tmpSprite = this.add.sprite(element.x * this.tileSize,
-              -element.y * this.tileSize,
+              element.y * this.tileSize,
               'mountainPeakTiles',
               12)
 
@@ -97,7 +97,7 @@ export default class MainScene extends Phaser.Scene {
             if (transitionTiles) {
               transitionTiles.forEach(transition => {
                 const tmpTransitionSprite: Phaser.GameObjects.Sprite = this.add.sprite(element.x * this.tileSize,
-                  -element.y * this.tileSize,
+                  element.y * this.tileSize,
                   'mountainPeakTiles',
                   transition)
                 tmpTransitionSprite.depth = 1
@@ -108,10 +108,10 @@ export default class MainScene extends Phaser.Scene {
 
           tmpSprite.setInteractive()
           tmpSprite.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
-            this.pointerDownCoordinates = new Phaser.Math.Vector2(pointer.x, -pointer.y)
+            this.pointerDownCoordinates = new Phaser.Math.Vector2(pointer.x, pointer.y)
           })
           tmpSprite.on('pointerup', (pointer) => {
-            if (this.pointerDownCoordinates.equals(new Phaser.Math.Vector2(pointer.x, -pointer.y))) {
+            if (this.pointerDownCoordinates.equals(new Phaser.Math.Vector2(pointer.x, pointer.y))) {
               this.DrawInfoBox(element, range)
               this.DrawMarkerBox(element.x * this.tileSize, element.y * this.tileSize)
             }
@@ -142,7 +142,7 @@ export default class MainScene extends Phaser.Scene {
       }
       this.infoBox = this.add.text(
         region.x * this.tileSize,
-        -region.y * this.tileSize,
+        region.y * this.tileSize,
         'Loading...',
         { font: '16px monospace' })
       this.infoBox.depth = 11
@@ -207,7 +207,7 @@ export default class MainScene extends Phaser.Scene {
         this.markerBox.destroy()
       }
 
-      this.markerBox = this.add.rectangle(x, -y, this.tileSize, this.tileSize, 0xff0000)
+      this.markerBox = this.add.rectangle(x, y, this.tileSize, this.tileSize, 0xff0000)
       this.markerBox.depth = 9
     }
 }

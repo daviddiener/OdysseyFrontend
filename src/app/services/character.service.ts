@@ -1,30 +1,23 @@
-import { Injectable, Inject } from '@angular/core'
+import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
-import { environment } from '../../environments/environment'
 import { Character } from '../_models/character'
 import { AuthenticationService } from './authentication.service'
-import { WINDOW } from './window.provider'
+import { environment } from '../../environments/environment'
+import { Socket } from 'ngx-socket-io'
 
-@Injectable({
-  providedIn: 'root'
-})
-
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CharacterService {
-  private REST_API_SERVER = this.getURL();
-
-  private getURL (): string {
-    let port = ''
-    if (!environment.production) {
-      port = ':3000'
-    }
-    return this.window.location.protocol + '//' + this.window.location.hostname + port + '/api/'
-  }
+  private REST_API_SERVER = environment.apiEndpoint
+  currentStation = this.socket.fromEvent<string>('stations')
 
   constructor (private http: HttpClient,
               private authenticationService: AuthenticationService,
-              @Inject(WINDOW) private window: Window) {}
+              private socket: Socket) {
+    this.socket.on('askForUserId', () => {
+      this.socket.emit('userIdReceived', authenticationService.currentUserValue._id)
+    })
+  }
 
   public createCharacter (character: Character): Observable<any> {
     return this.http.post(this.REST_API_SERVER + 'characters/',
@@ -55,14 +48,20 @@ export class CharacterService {
     })
   }
 
-  public updateCharacter (character: Character, id: string): Observable<any> {
-    return this.http.put(this.REST_API_SERVER + 'characters/' + id,
+  public updateCharacter (character: Character, characterId: string): Observable<any> {
+    return this.http.put(this.REST_API_SERVER + 'characters/' + characterId,
       { name: character.name, gender: character.gender, regionId: character.regionId },
       { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` } })
   }
 
-  public deleteCharacter (id: string): Observable<any> {
-    return this.http.delete(this.REST_API_SERVER + 'characters/' + id, { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` } })
+  public moveCharacterToCity (city: String, characterId: string): Observable<any> {
+    return this.http.put(this.REST_API_SERVER + 'characters/' + characterId,
+      { cityId: city },
+      { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` } })
+  }
+
+  public deleteCharacter (characterId: string): Observable<any> {
+    return this.http.delete(this.REST_API_SERVER + 'characters/' + characterId, { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` } })
   }
 
   public deleteAllCharacters (): Observable<any> {

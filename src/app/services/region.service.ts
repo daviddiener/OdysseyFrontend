@@ -1,29 +1,15 @@
-import { Injectable, Inject } from '@angular/core'
+import { Injectable } from '@angular/core'
 import { HttpParams, HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
-import { environment } from '../../environments/environment'
 import { Region, Type } from '../_models/region'
 import { AuthenticationService } from './authentication.service'
-import { WINDOW } from './window.provider'
+import { environment } from '../../environments/environment'
 
-@Injectable({
-  providedIn: 'root'
-})
-
+@Injectable({ providedIn: 'root' })
 export class RegionService {
-  private REST_API_SERVER = this.getURL();
-
-  private getURL (): string {
-    let port = ''
-    if (!environment.production) {
-      port = ':3000'
-    }
-    return this.window.location.protocol + '//' + this.window.location.hostname + port + '/api/'
-  }
-
+  private REST_API_SERVER = environment.apiEndpoint
   constructor (private http: HttpClient,
-              private authenticationService: AuthenticationService,
-              @Inject(WINDOW) private window: Window) {}
+              private authenticationService: AuthenticationService) {}
 
   public createRegion (): Observable<any> {
     return this.http.post(this.REST_API_SERVER + 'regions/', {}, { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` } })
@@ -53,7 +39,7 @@ export class RegionService {
     })
   }
 
-  public getRegionByParams (pageNum: number, pageLimit: number, regionName?: string, regionType?: Type): Observable<any> {
+  public getRegionByParams (pageNum: number, pageLimit: number, regionName?: string, regionType?: Type, enableCities?: boolean): Observable<any> {
     let params = new HttpParams()
       .append('pageNum', pageNum.toString())
       .append('pageLimit', pageLimit.toString())
@@ -63,6 +49,9 @@ export class RegionService {
     }
     if (regionType) {
       params = params.append('regionType', regionType.toString())
+    }
+    if (enableCities) {
+      params = params.append('enableCities', enableCities.toString())
     }
 
     return this.http.get(this.REST_API_SERVER + 'regions/', {

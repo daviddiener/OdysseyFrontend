@@ -1,30 +1,16 @@
-import { Injectable, Inject } from '@angular/core'
+import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
-import { environment } from '../../environments/environment'
 import { User } from '../_models/user'
 import { AuthenticationService } from './authentication.service'
-import { WINDOW } from './window.provider'
+import { environment } from '../../environments/environment'
 
-@Injectable({
-  providedIn: 'root'
-})
-
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class UserService {
-  private REST_API_SERVER = this.getURL();
-
-  private getURL (): string {
-    let port = ''
-    if (!environment.production) {
-      port = ':3000'
-    }
-    return this.window.location.protocol + '//' + this.window.location.hostname + port + '/api/'
-  }
+  private REST_API_SERVER = environment.apiEndpoint
 
   constructor (private http: HttpClient,
-              private authenticationService: AuthenticationService,
-              @Inject(WINDOW) private window: Window) {}
+              private authenticationService: AuthenticationService) {}
 
   public getAllUsers (): Observable<any> {
     return this.http.get(this.REST_API_SERVER + 'users/',

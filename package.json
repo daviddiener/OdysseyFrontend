@@ -1,15 +1,12 @@
 {
   "name": "odysseyfrontend",
-  "version": "0.0.18",
+  "version": "0.0.20",
   "scripts": {
     "start": "ng serve -c development --host 0.0.0.0 --disable-host-check --poll 200",
     "build": "ng build -c production",
     "eslint": "npx eslint . --ext .ts",
     "pretest": "npm install",
-    "test": "npm run eslint",
-    "preversion": "npm run test",
-    "version": "",
-    "postversion": "git push"
+    "test": "npm run eslint"
   },
   "private": true,
   "author": "David Diener",
@@ -34,6 +31,7 @@
     "@ng-bootstrap/ng-bootstrap": "^9.0.0",
     "bootstrap": "^4.6.0",
     "jquery": "^3.5.1",
+    "ngx-socket-io": "^4.0.0",
     "phaser": "^3.54.0",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",

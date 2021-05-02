@@ -1,10 +1,9 @@
-import { Injectable, Inject } from '@angular/core'
+import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { BehaviorSubject, Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { Router } from '@angular/router'
 import { environment } from '../../environments/environment'
-import { WINDOW } from './window.provider'
 import { User } from '../_models/user'
 import { Role } from '../_models/role'
 
@@ -14,24 +13,15 @@ export interface RegistrationPayload{
   password: string;
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AuthenticationService {
   private token: string;
-  private REST_API_SERVER = this.getURL();
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
-
-  private getURL (): string {
-    let port = ''
-    if (!environment.production) {
-      port = ':3000'
-    }
-    return this.window.location.protocol + '//' + this.window.location.hostname + port + '/api/'
-  }
+  private REST_API_SERVER = environment.apiEndpoint
 
   constructor (private http: HttpClient,
-              private router: Router,
-              @Inject(WINDOW) private window: Window) {
+              private router: Router) {
     this.currentUserSubject = new BehaviorSubject<User>(this.getUserDetails())
     this.currentUser = this.currentUserSubject.asObservable()
   }
