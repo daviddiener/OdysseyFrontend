@@ -1,11 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { CharacterService } from '../services/character.service'
 import { CityService } from '../services/city.service'
 import { Character } from '../_models/character'
 import { City } from '../_models/city'
 import { Subscription } from 'rxjs'
-import { Socket } from 'ngx-socket-io'
 import { RegionService } from '../services/region.service'
 import { Region, Type } from '../_models/region'
 
@@ -18,9 +17,10 @@ export class CharacterDetailComponent implements OnInit, OnDestroy {
   // Character information
   character: Character;
   city: City;
+  region: Region;
 
   // Pathfinding stream
-  stations: string[] = [];
+  regionStream: Region[] = [];
   currentStatus: string = 'IDLE';
   private _charSub: Subscription;
 
@@ -32,14 +32,37 @@ export class CharacterDetailComponent implements OnInit, OnDestroy {
   searchName: string;
   searchType: Type;
 
-  constructor (private characterService: CharacterService, private cityService: CityService, private route: ActivatedRoute, private socket: Socket, private regionService: RegionService) { }
+  constructor (private characterService: CharacterService,
+    private cityService: CityService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private regionService: RegionService) { }
 
   ngOnInit () {
-    this._charSub = this.characterService.currentStation.subscribe(c => {
-      this.stations.unshift(c)
-    })
-
     this.route.paramMap.subscribe(params => {
+      this._charSub = this.characterService.setSocketRoom(params.get('id')).subscribe(c => {
+        console.log('received smth')
+        this.character = c
+        this.city = null
+  
+        this.regionService.getRegionById(c.regionId).subscribe((region) => {
+          this.regionStream.unshift(region)
+          this.region = region
+        })
+  
+        if (c.cityId !== '-'){
+          this.currentStatus = 'IDLE'
+          this.cityService.getCityById(this.character.regionId, this.character.cityId).subscribe(
+            (ci: City) => {
+              this.city = ci
+            },
+            (err: Error) => {
+              alert(err.message)
+            }
+          )
+        }
+      })
+
       this.characterService.getCharacterById(params.get('id')).subscribe(
         (c: Character) => {
           this.character = c
@@ -47,6 +70,15 @@ export class CharacterDetailComponent implements OnInit, OnDestroy {
           this.cityService.getCityById(this.character.regionId, this.character.cityId).subscribe(
             (ci: City) => {
               this.city = ci
+            },
+            (err: Error) => {
+              alert(err.message)
+            }
+          )
+
+          this.regionService.getRegionById(this.character.regionId).subscribe(
+            (re: Region) => {
+              this.region = re
             },
             (err: Error) => {
               alert(err.message)
@@ -62,6 +94,7 @@ export class CharacterDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy () {
     this._charSub.unsubscribe()
+    this.characterService.disconnectSocket();
   }
 
   loadNextPage () {
@@ -81,11 +114,15 @@ export class CharacterDetailComponent implements OnInit, OnDestroy {
   }
 
   moveToCity (cityId: string) {
-    this.characterService.moveCharacterToCity(cityId, this.character._id).subscribe(() => {
-      this.currentStatus = 'Traveling'
+    this.characterService.moveCharacterToCity(cityId, this.character._id).subscribe(c => {
+      this.currentStatus = c.message
     },
     (err: Error) => {
       alert(err.message)
     })
+  }
+
+  goToMap (id: String) {
+    this.router.navigate(['/worldmap'], { queryParams: { id: id } })
   }
 }

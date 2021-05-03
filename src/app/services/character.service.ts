@@ -9,15 +9,11 @@ import { Socket } from 'ngx-socket-io'
 @Injectable({ providedIn: 'root' })
 export class CharacterService {
   private REST_API_SERVER = environment.apiEndpoint
-  currentStation = this.socket.fromEvent<string>('stations')
 
   constructor (private http: HttpClient,
               private authenticationService: AuthenticationService,
-              private socket: Socket) {
-    this.socket.on('askForUserId', () => {
-      this.socket.emit('userIdReceived', authenticationService.currentUserValue._id)
-    })
-  }
+              private socket: Socket
+              ) {}
 
   public createCharacter (character: Character): Observable<any> {
     return this.http.post(this.REST_API_SERVER + 'characters/',
@@ -66,5 +62,17 @@ export class CharacterService {
 
   public deleteAllCharacters (): Observable<any> {
     return this.http.delete(this.REST_API_SERVER + 'characters/', { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` } })
+  }
+
+  public setSocketRoom(id: string): Observable<Character>{
+    this.socket.connect()
+    this.socket.on('askForCharacterId', () => {
+      this.socket.emit('characterIdReceived', id)
+    })
+    return this.socket.fromEvent<Character>('characterStream')
+  }
+
+  public disconnectSocket(){
+    this.socket.disconnect()
   }
 }

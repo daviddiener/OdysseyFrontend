@@ -8,6 +8,11 @@
                 <mat-list-item role="listitem">CharacterId: {{character?._id}}</mat-list-item>
                 <mat-list-item role="listitem">Gender: {{character?.gender}}</mat-list-item>
                 <mat-list-item role="listitem">Region Id: {{character?.regionId}} </mat-list-item>
+                <mat-list-item role="listitem">
+                    Region name: {{region?.name}} 
+                    <button mat-raised-button color="primary" [routerLink]="['/regions', character?.regionId]">Overview</button>
+                    <button mat-raised-button color="primary" (click)="goToMap(character?.regionId)">Show on Worldmap</button>
+                </mat-list-item>
                 <mat-list-item role="listitem">City Id: {{character?.cityId}} </mat-list-item>
                 <mat-list-item role="listitem">City name: {{city?.name}}</mat-list-item>   
                 <mat-list-item role="listitem">HP: {{character?.hp}}</mat-list-item>   
@@ -19,13 +24,13 @@
     <div class="row"> 
         <div class="col justify-content-center">
             <div class="row justify-content-center align-items-center">
-                <div class="col-sm-3">
+                <div class="col">
                     <mat-form-field appearance="outline">
                             <mat-label>Name</mat-label>
                             <input matInput type="text" [(ngModel)]="searchName">                
                     </mat-form-field>
                 </div>
-                <div class="col-sm-3">
+                <div class="col">
                     <mat-form-field appearance="outline">
                             <mat-label>Region Type</mat-label>
                             <mat-select [(ngModel)]="searchType">
@@ -35,7 +40,7 @@
                             </mat-select>
                     </mat-form-field>
                 </div>
-                <div class="col-sm-6 ">
+                <div class="col">
                     <button class="float-right" mat-raised-button color="primary" mat-button (click)='searchRegions()'>Search Regions</button>
                 </div>
             </div>
@@ -61,11 +66,11 @@
             </div>
         </div>
         <div class="col">
-            <p>Currently Status: {{currentStatus}}</p>
-            <mat-card *ngFor="let station of stations" style="margin-top:10px;">
+            <p>Current Status: {{currentStatus}}</p>
+            <mat-card *ngFor="let region of regionStream" style="margin-top:10px;">
                 <div class="row">
                     <div class="col my-auto">
-                        <mat-card-title>Station: {{station}}</mat-card-title>
+                        <mat-card-title>Region: {{region.name}}</mat-card-title>
                     </div>
                 </div>
             </mat-card>
