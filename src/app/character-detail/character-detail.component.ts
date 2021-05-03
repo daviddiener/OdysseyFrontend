@@ -7,6 +7,7 @@ import { City } from '../_models/city'
 import { Subscription } from 'rxjs'
 import { RegionService } from '../services/region.service'
 import { Region, Type } from '../_models/region'
+import { HttpErrorResponse } from '@angular/common/http'
 
 @Component({
   selector: 'app-character',
@@ -41,7 +42,6 @@ export class CharacterDetailComponent implements OnInit, OnDestroy {
   ngOnInit () {
     this.route.paramMap.subscribe(params => {
       this._charSub = this.characterService.setSocketRoom(params.get('id')).subscribe(c => {
-        console.log('received smth')
         this.character = c
         this.city = null
   
@@ -117,8 +117,8 @@ export class CharacterDetailComponent implements OnInit, OnDestroy {
     this.characterService.moveCharacterToCity(cityId, this.character._id).subscribe(c => {
       this.currentStatus = c.message
     },
-    (err: Error) => {
-      alert(err.message)
+    (err: HttpErrorResponse) => {
+      alert(err.error)
     })
   }
 
