@@ -77,7 +77,7 @@ import { SocketIoModule } from 'ngx-socket-io'
     MatRadioModule,
     NgbModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    SocketIoModule.forRoot({ url: environment.wsEndpoint , options: { transports: ['polling'], path: '/ws/socket.io' } })
+    SocketIoModule.forRoot({ url: environment.wsEndpoint , options: { transports: ['polling'], path: '/ws/socket.io', autoConnect : false } })
   ],
   providers: [
     AuthenticationService,
