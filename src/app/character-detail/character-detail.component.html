@@ -65,16 +65,6 @@
                 <button class='btn-margin' mat-raised-button color="secondary" (click)='loadNextPage()'>Load more</button>
             </div>
         </div>
-        <div class="col">
-            <p>Current Status: {{currentStatus}}</p>
-            <mat-card *ngFor="let region of regionStream" style="margin-top:10px;">
-                <div class="row">
-                    <div class="col my-auto">
-                        <mat-card-title>Region: {{region.name}}</mat-card-title>
-                    </div>
-                </div>
-            </mat-card>
-        </div>
     </div>
 </div>
 

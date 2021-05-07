@@ -38,7 +38,6 @@ import { ServiceWorkerModule } from '@angular/service-worker'
 import { environment } from '../environments/environment'
 import { WorldmapComponent } from './worldmap/worldmap.component'
 import { AdministrationComponent } from './administration/administration.component'
-import { SocketIoModule } from 'ngx-socket-io'
 
 @NgModule({
   declarations: [
@@ -76,8 +75,7 @@ import { SocketIoModule } from 'ngx-socket-io'
     FontAwesomeModule,
     MatRadioModule,
     NgbModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    SocketIoModule.forRoot({ url: environment.wsEndpoint , options: { transports: ['polling'], path: '/ws/socket.io', autoConnect : false } })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     AuthenticationService,

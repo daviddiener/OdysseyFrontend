@@ -4,15 +4,13 @@ import { Observable } from 'rxjs'
 import { Character } from '../_models/character'
 import { AuthenticationService } from './authentication.service'
 import { environment } from '../../environments/environment'
-import { Socket } from 'ngx-socket-io'
 
 @Injectable({ providedIn: 'root' })
 export class CharacterService {
   private REST_API_SERVER = environment.apiEndpoint
 
   constructor (private http: HttpClient,
-              private authenticationService: AuthenticationService,
-              private socket: Socket
+              private authenticationService: AuthenticationService
               ) {}
 
   public createCharacter (character: Character): Observable<any> {
@@ -62,17 +60,5 @@ export class CharacterService {
 
   public deleteAllCharacters (): Observable<any> {
     return this.http.delete(this.REST_API_SERVER + 'characters/', { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` } })
-  }
-
-  public setSocketRoom(id: string): Observable<Character>{
-    this.socket.connect()
-    this.socket.on('askForCharacterId', () => {
-      this.socket.emit('characterIdReceived', id)
-    })
-    return this.socket.fromEvent<Character>('characterStream')
-  }
-
-  public disconnectSocket(){
-    this.socket.disconnect()
   }
 }
