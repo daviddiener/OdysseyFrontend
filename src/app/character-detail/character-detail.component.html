@@ -1,9 +1,13 @@
 <div class="container">
     <div class="row justify-content-center"> 
         <h2>{{character?.name}}</h2>
+        <button mat-icon-button	color="secondary" (click)='ngOnInit()'>
+            <fa-icon [icon]="faSync" size="lg"></fa-icon>
+        </button>
     </div>
     <div class="row justify-content-center">    
         <mat-list role="list">
+                <mat-list-item role="listitem">STATUS: {{statusText}}</mat-list-item>   
                 <mat-list-item role="listitem">UserId: {{character?.userId}}</mat-list-item>   
                 <mat-list-item role="listitem">CharacterId: {{character?._id}}</mat-list-item>
                 <mat-list-item role="listitem">Gender: {{character?.gender}}</mat-list-item>

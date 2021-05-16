@@ -7,6 +7,7 @@ import { City } from '../_models/city'
 import { RegionService } from '../services/region.service'
 import { Region, Type } from '../_models/region'
 import { HttpErrorResponse } from '@angular/common/http'
+import { faSync } from '@fortawesome/free-solid-svg-icons/'
 
 @Component({
   selector: 'app-character',
@@ -18,6 +19,7 @@ export class CharacterDetailComponent implements OnInit {
   character: Character;
   city: City;
   region: Region;
+  faSync = faSync;
 
   // Region selection
   regions: Region[] = [];
@@ -26,6 +28,9 @@ export class CharacterDetailComponent implements OnInit {
   typeSelection: Type[] = [undefined, Type.grass, Type.mountain, Type.mountainpeak, Type.sand, Type.snow, Type.water];
   searchName: string;
   searchType: Type;
+
+  // Station stream
+  statusText = "Idle"
 
   constructor (private characterService: CharacterService,
     private cityService: CityService,
@@ -39,15 +44,18 @@ export class CharacterDetailComponent implements OnInit {
         (c: Character) => {
           this.character = c
 
-          this.cityService.getCityById(this.character.regionId, this.character.cityId).subscribe(
-            (ci: City) => {
-              this.city = ci
-            },
-            (err: Error) => {
-              alert(err.message)
-            }
-          )
-
+          if(this.character.cityId != '-'){
+            this.cityService.getCityById(this.character.regionId, this.character.cityId).subscribe(
+              (ci: City) => {
+                this.city = ci
+                this.statusText = "Idle"
+              },
+              (err: Error) => {
+                alert(err.message)
+              }
+            )
+          }
+         
           this.regionService.getRegionById(this.character.regionId).subscribe(
             (re: Region) => {
               this.region = re
@@ -65,12 +73,13 @@ export class CharacterDetailComponent implements OnInit {
   }
 
   loadNextPage () {
-    this.regionService.getRegionByParams(this.currentPage, this.pageLimit, this.searchName, this.searchType, true).subscribe((data: Region[]) => {
+    this.regionService.getRegionByParams(this.currentPage, this.pageLimit, this.searchName, this.searchType, true).subscribe(
+      (data: Region[]) => {
       this.regions = this.regions.concat(data)
-    },
-    (err: Error) => {
-      alert(err.message)
-    })
+      },
+      (err: Error) => {
+        alert(err.message)
+      })
     this.currentPage++
   }
 
@@ -81,12 +90,14 @@ export class CharacterDetailComponent implements OnInit {
   }
 
   moveToCity (cityId: string) {
-    this.characterService.moveCharacterToCity(cityId, this.character._id).subscribe(c => {
-      // this.currentStatus = c.message
-    },
-    (err: HttpErrorResponse) => {
-      alert(err.error)
-    })
+    this.characterService.moveCharacterToCity(cityId, this.character._id).subscribe(
+      (c) => {
+        this.statusText = c.message
+      },
+      (err: Error) => {
+        alert(err.message)
+      }
+    );
   }
 
   goToMap (id: String) {
