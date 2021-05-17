@@ -11,7 +11,7 @@ export class CharacterService {
 
   constructor (private http: HttpClient,
               private authenticationService: AuthenticationService
-              ) {}
+  ) {}
 
   public createCharacter (character: Character): Observable<any> {
     return this.http.post(this.REST_API_SERVER + 'characters/',

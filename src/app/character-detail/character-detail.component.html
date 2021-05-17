@@ -6,7 +6,8 @@
         </button>
     </div>
     <div class="row justify-content-center">    
-        <mat-list role="list">
+        <div class="col">    
+            <mat-list role="list">
                 <mat-list-item role="listitem">STATUS: {{statusText}}</mat-list-item>   
                 <mat-list-item role="listitem">UserId: {{character?.userId}}</mat-list-item>   
                 <mat-list-item role="listitem">CharacterId: {{character?._id}}</mat-list-item>
@@ -23,7 +24,24 @@
                 <mat-list-item role="listitem">Strength: {{character?.strength}}</mat-list-item>   
                 <mat-list-item role="listitem">Agility: {{character?.agility}}</mat-list-item>   
                 <mat-list-item role="listitem">Intelligence: {{character?.intelligence}}</mat-list-item>   
-        </mat-list>
+            </mat-list>
+        </div>
+        <div class="col">    
+            <mat-card *ngFor="let log of logs" style="margin-top:10px;">
+                <div class="row">
+                    <div class="col">
+                        <mat-card-header>
+                            <mat-card-title>{{log.action}}</mat-card-title>
+                            <mat-card-subtitle>{{log.objectId}}</mat-card-subtitle>
+                        </mat-card-header>
+                    </div>
+                </div>
+            </mat-card>
+            
+            <div *ngIf="logsCurrentPage > 1" class="row justify-content-center">
+                <button class='btn-margin' mat-raised-button color="secondary" (click)='loadNextLogPage()'>Load more</button>
+            </div>
+        </div>
     </div>
     <div class="row"> 
         <div class="col justify-content-center">
@@ -66,7 +84,7 @@
             </mat-card>
             
             <div *ngIf="currentPage > 1" class="row justify-content-center">
-                <button class='btn-margin' mat-raised-button color="secondary" (click)='loadNextPage()'>Load more</button>
+                <button class='btn-margin' mat-raised-button color="secondary" (click)='loadNextRegionPage()'>Load more</button>
             </div>
         </div>
     </div>

@@ -5,8 +5,9 @@ import { CityService } from '../services/city.service'
 import { Character } from '../_models/character'
 import { City } from '../_models/city'
 import { RegionService } from '../services/region.service'
+import { LogService } from '../services/log.service'
 import { Region, Type } from '../_models/region'
-import { HttpErrorResponse } from '@angular/common/http'
+import { Log } from '../_models/log'
 import { faSync } from '@fortawesome/free-solid-svg-icons/'
 
 @Component({
@@ -30,10 +31,16 @@ export class CharacterDetailComponent implements OnInit {
   searchType: Type;
 
   // Station stream
-  statusText = "Idle"
+  statusText = 'Idle'
+
+  // Logs
+  logs: Log[] = []
+  logsCurrentPage = 1;
+  logsPageLimit = 10;
 
   constructor (private characterService: CharacterService,
     private cityService: CityService,
+    private logService: LogService,
     private route: ActivatedRoute,
     private router: Router,
     private regionService: RegionService) { }
@@ -44,18 +51,18 @@ export class CharacterDetailComponent implements OnInit {
         (c: Character) => {
           this.character = c
 
-          if(this.character.cityId != '-'){
+          if (this.character.cityId !== '-') {
             this.cityService.getCityById(this.character.regionId, this.character.cityId).subscribe(
               (ci: City) => {
                 this.city = ci
-                this.statusText = "Idle"
+                this.statusText = 'Idle'
               },
               (err: Error) => {
                 alert(err.message)
               }
             )
           }
-         
+
           this.regionService.getRegionById(this.character.regionId).subscribe(
             (re: Region) => {
               this.region = re
@@ -64,6 +71,10 @@ export class CharacterDetailComponent implements OnInit {
               alert(err.message)
             }
           )
+
+          this.logsCurrentPage = 1
+          this.logs = []
+          this.loadNextLogPage()
         },
         err => {
           alert(err)
@@ -72,21 +83,34 @@ export class CharacterDetailComponent implements OnInit {
     })
   }
 
-  loadNextPage () {
+  loadNextRegionPage () {
     this.regionService.getRegionByParams(this.currentPage, this.pageLimit, this.searchName, this.searchType, true).subscribe(
       (data: Region[]) => {
-      this.regions = this.regions.concat(data)
+        this.regions = this.regions.concat(data)
       },
       (err: Error) => {
         alert(err.message)
-      })
+      }
+    )
     this.currentPage++
+  }
+
+  loadNextLogPage () {
+    this.logService.getAllLogs(this.character._id, this.logsCurrentPage, this.logsPageLimit).subscribe(
+      (l: Log[]) => {
+        this.logs = this.logs.concat(l)
+      },
+      (err: Error) => {
+        alert(err.message)
+      }
+    )
+    this.logsCurrentPage++
   }
 
   searchRegions () {
     this.currentPage = 1
     this.regions = []
-    this.loadNextPage()
+    this.loadNextRegionPage()
   }
 
   moveToCity (cityId: string) {
@@ -97,7 +121,7 @@ export class CharacterDetailComponent implements OnInit {
       (err: Error) => {
         alert(err.message)
       }
-    );
+    )
   }
 
   goToMap (id: String) {
