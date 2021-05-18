@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, ElementRef, ViewChild} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router'
 import { CharacterService } from '../services/character.service'
 import { CityService } from '../services/city.service'
@@ -15,12 +15,17 @@ import { faSync } from '@fortawesome/free-solid-svg-icons/'
   templateUrl: './character-detail.component.html',
   styleUrls: ['./character-detail.component.css']
 })
-export class CharacterDetailComponent implements OnInit {
+export class CharacterDetailComponent {
+  // HTML
+  @ViewChild('leftCol') leftCol: ElementRef;
+  @ViewChild('rightCol') rightCol: ElementRef;
+
   // Character information
   character: Character;
   city: City;
   region: Region;
   faSync = faSync;
+  statusText = 'Idle'
 
   // Region selection
   regions: Region[] = [];
@@ -29,9 +34,6 @@ export class CharacterDetailComponent implements OnInit {
   typeSelection: Type[] = [undefined, Type.grass, Type.mountain, Type.mountainpeak, Type.sand, Type.snow, Type.water];
   searchName: string;
   searchType: Type;
-
-  // Station stream
-  statusText = 'Idle'
 
   // Logs
   logs: Log[] = []
@@ -45,7 +47,9 @@ export class CharacterDetailComponent implements OnInit {
     private router: Router,
     private regionService: RegionService) { }
 
-  ngOnInit () {
+  ngAfterViewInit () {
+    this.rightCol.nativeElement.style.height = this.leftCol.nativeElement.offsetHeight + 'px';
+
     this.route.paramMap.subscribe(params => {
       this.characterService.getCharacterById(params.get('id')).subscribe(
         (c: Character) => {

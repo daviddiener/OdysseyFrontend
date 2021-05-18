@@ -1,12 +1,12 @@
 <div class="container">
     <div class="row justify-content-center"> 
         <h2>{{character?.name}}</h2>
-        <button mat-icon-button	color="secondary" (click)='ngOnInit()'>
+        <button mat-icon-button	color="secondary" (click)='ngAfterViewInit()'>
             <fa-icon [icon]="faSync" size="lg"></fa-icon>
         </button>
     </div>
     <div class="row justify-content-center">    
-        <div class="col">    
+        <div class="col" #leftCol id="leftCol">    
             <mat-list role="list">
                 <mat-list-item role="listitem">STATUS: {{statusText}}</mat-list-item>   
                 <mat-list-item role="listitem">UserId: {{character?.userId}}</mat-list-item>   
@@ -26,18 +26,17 @@
                 <mat-list-item role="listitem">Intelligence: {{character?.intelligence}}</mat-list-item>   
             </mat-list>
         </div>
-        <div class="col">    
-            <mat-card *ngFor="let log of logs" style="margin-top:10px;">
-                <div class="row">
-                    <div class="col">
-                        <mat-card-header>
-                            <mat-card-title>{{log.action}}</mat-card-title>
-                            <mat-card-subtitle>{{log.objectId}}</mat-card-subtitle>
-                        </mat-card-header>
+        <div class="col" #rightCol id="rightCol"> 
+            <div class="row">
+                <mat-card *ngFor="let log of logs" style="margin-top:10px; width:100%">
+                    <div class="row">
+                            <mat-card-header>
+                                <mat-card-title>{{log.action}}</mat-card-title>
+                                <mat-card-subtitle>{{log.objectId}}</mat-card-subtitle>
+                            </mat-card-header>
                     </div>
-                </div>
-            </mat-card>
-            
+                </mat-card>
+            </div>
             <div *ngIf="logsCurrentPage > 1" class="row justify-content-center">
                 <button class='btn-margin' mat-raised-button color="secondary" (click)='loadNextLogPage()'>Load more</button>
             </div>
