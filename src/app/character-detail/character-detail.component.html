@@ -6,7 +6,7 @@
         </button>
     </div>
     <div class="row justify-content-center">    
-        <div class="col" #leftCol id="leftCol">    
+        <div class="col-sm-6" #leftCol id="leftCol">    
             <mat-list role="list">
                 <mat-list-item role="listitem">STATUS: {{statusText}}</mat-list-item>   
                 <mat-list-item role="listitem">UserId: {{character?.userId}}</mat-list-item>   
@@ -26,14 +26,16 @@
                 <mat-list-item role="listitem">Intelligence: {{character?.intelligence}}</mat-list-item>   
             </mat-list>
         </div>
-        <div class="col" #rightCol id="rightCol"> 
+        <div class="col-sm-6" #rightCol id="rightCol"> 
             <div class="row">
                 <mat-card *ngFor="let log of logs" style="margin-top:10px; width:100%">
                     <div class="row">
+                        <div class="col">
                             <mat-card-header>
                                 <mat-card-title>{{log.action}}</mat-card-title>
                                 <mat-card-subtitle>{{log.objectId}}</mat-card-subtitle>
                             </mat-card-header>
+                        </div>
                     </div>
                 </mat-card>
             </div>
