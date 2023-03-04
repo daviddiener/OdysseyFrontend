@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiEndpoint: 'https://odyssey.bitnight.net/api/'
+  apiEndpoint: 'https://odyssey.daviddiener.de/api/'
 }
