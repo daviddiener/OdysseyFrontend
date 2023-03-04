@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiEndpoint: 'https://odyssey.daviddiener.de/api/'
+  apiEndpoint: 'https://api.daviddiener.de/api/'
 }
