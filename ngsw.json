@@ -1,0 +1,97 @@
+{
+  "configVersion": 1,
+  "timestamp": 1678068941428,
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/favicon.ico",
+        "/index.html",
+        "/main-es2015.f53d0a9291c897ce673d.js",
+        "/main-es5.f53d0a9291c897ce673d.js",
+        "/manifest.webmanifest",
+        "/polyfills-es2015.c1c1b7bc746343f36319.js",
+        "/polyfills-es5.f6fb2c5faf4d9440b23e.js",
+        "/runtime-es2015.a4dadbc03350107420a4.js",
+        "/runtime-es5.a4dadbc03350107420a4.js",
+        "/scripts.db787dd392bf60f7eeae.js",
+        "/styles.0017ac0b96688de266d6.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/assets/devBanner.png",
+        "/assets/icons/logo128.png",
+        "/assets/icons/logo144.png",
+        "/assets/icons/logo152.png",
+        "/assets/icons/logo192.png",
+        "/assets/icons/logo384.png",
+        "/assets/icons/logo512.png",
+        "/assets/icons/logo72.png",
+        "/assets/icons/logo96.png",
+        "/assets/olympus_studios_logo.png",
+        "/assets/tiles/mountain_peak.png",
+        "/assets/tiles/world_spritesheet.png"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/assets/devBanner.png": "d625523f8b25cc3c56758fd34fe6912c4e99757d",
+    "/assets/icons/logo128.png": "48495781928bf3c13803254bdcf568f3a8187654",
+    "/assets/icons/logo144.png": "4610bc60ca8af2db7df1cc7cf26266b82cd54f5d",
+    "/assets/icons/logo152.png": "f7d3660b252b5b91080500ccee112d04046afd0a",
+    "/assets/icons/logo192.png": "0619c73dc840eb67441c9be76e843029dfb07f6f",
+    "/assets/icons/logo384.png": "1c088ca7336e614c19f24c12ca7955ff3ca69bda",
+    "/assets/icons/logo512.png": "21bf9b34c650685d68c501770c3726c15667d79b",
+    "/assets/icons/logo72.png": "822572c6442af31cb1c4fc8df97fafb213e8b290",
+    "/assets/icons/logo96.png": "3815e9f2edd4a6d38e6b16455c3d9f826c9ec9d0",
+    "/assets/olympus_studios_logo.png": "2515326e0e940d18d0296a3d83717cc3e968f946",
+    "/assets/tiles/mountain_peak.png": "bde7b4862fae5d68be963dceee51f48e08845d17",
+    "/assets/tiles/world_spritesheet.png": "bb4adffa54a8e5aa4963eb71ee2e8e9166c12052",
+    "/favicon.ico": "fa3e58fe4d17b29f67b9d258e384f2dd50de63f3",
+    "/index.html": "7cd479088662e1e0245ffc853cf910ad94a56fa4",
+    "/main-es2015.f53d0a9291c897ce673d.js": "81e12320632ae6017f89e684714ba40480f1cbb4",
+    "/main-es5.f53d0a9291c897ce673d.js": "199362c0f58b8ce858542cc2dcd2005e1564aa4e",
+    "/manifest.webmanifest": "db91b3c32382d5c4598aa6d6f19877c32aa40f66",
+    "/polyfills-es2015.c1c1b7bc746343f36319.js": "4d60363e8e793e3de8afb5f43b53658e5c9b711d",
+    "/polyfills-es5.f6fb2c5faf4d9440b23e.js": "1207d1b82b2e64ba59f7690d3e3f0013b2ee5dde",
+    "/runtime-es2015.a4dadbc03350107420a4.js": "a9aafcf49f49145093fc831efd9b8e2f6c71bb9c",
+    "/runtime-es5.a4dadbc03350107420a4.js": "a9aafcf49f49145093fc831efd9b8e2f6c71bb9c",
+    "/scripts.db787dd392bf60f7eeae.js": "778fc0bf4fcfa3bb14c925c675ad99d7f9dc28a5",
+    "/styles.0017ac0b96688de266d6.css": "98c41955e82f93a8c5477e30eb69fbb18cfc7a42"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}
