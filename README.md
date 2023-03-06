@@ -1,5 +1,5 @@
 # OdysseyFrontend
-This is the Odyssey Frontend Application. The project is deployed on render.com as a docker container. To access it visit [https://odyssey.daviddiener.de/home](https://odyssey.daviddiener.de/home).
+This is the Odyssey Frontend Application. The project is deployed GithubPages. To access it visit [https://odyssey.daviddiener.de/home](https://odyssey.daviddiener.de/home).
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.5.
 
