@@ -1,12 +1,12 @@
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col my-auto">
+    <div class="row">
+        <div class="col-md-3">
             <mat-form-field appearance="outline">
                     <mat-label>Name</mat-label>
                     <input matInput type="text" [(ngModel)]="newCharacter.name">                
             </mat-form-field>
         </div>
-        <div class="col my-auto">
+        <div class="col-md-3">
             <mat-radio-group aria-label="Gender" [(ngModel)]="newCharacter.gender">
                 <div class="row">
                     <mat-radio-button value="0">Male</mat-radio-button>
@@ -16,7 +16,7 @@
                 </div>
             </mat-radio-group>
         </div>
-        <div class="col my-auto">
+        <div class="col-md-3">
             <mat-form-field appearance="outline">
                     <mat-label>Region</mat-label>
                     <mat-select [(ngModel)]="newCharacter.regionId" (selectionChange)="updateCities($event.value)">
@@ -27,7 +27,7 @@
                     </mat-select>
             </mat-form-field>
         </div>
-        <div class="col my-auto">
+        <div class="col-md-3">
             <mat-form-field appearance="outline">
                 <mat-label>City</mat-label>
                 <mat-select [(ngModel)]="newCharacter.cityId">
@@ -37,10 +37,12 @@
                 </mat-select>
             </mat-form-field>
         </div>
-        <div class="col my-auto">
-            <button mat-raised-button color="primary" mat-button (click)='createCharacter()'>Create New Character</button>
-        </div>
     </div>
+    <div class="row">
+		<div class="col-md-12 text-center">
+            <button mat-raised-button color="primary" mat-button (click)='createCharacter()'>Create New Character</button>
+		</div>
+	</div>
 
     <mat-card *ngFor="let character of characters" style="margin-top:10px;">
         <div class="row">

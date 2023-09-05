@@ -8,7 +8,7 @@ import { RegionService } from '../services/region.service'
 import { LogService } from '../services/log.service'
 import { Region, Type } from '../_models/region'
 import { Log } from '../_models/log'
-import { faSync } from '@fortawesome/free-solid-svg-icons/'
+import { faSync } from '@fortawesome/free-solid-svg-icons'
 
 @Component({
   selector: 'app-character',

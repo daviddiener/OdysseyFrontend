@@ -160,5 +160,7 @@
       }
     }
   },
-  "defaultProject": "OdysseyFrontend"
+  "cli": {
+    "analytics": false
+  }
 }

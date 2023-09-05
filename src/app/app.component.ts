@@ -1,6 +1,7 @@
 import { Component } from '@angular/core'
 import { AuthenticationService } from './services/authentication.service'
-import { version } from '../../package.json'
+import packageInfo from '../../package.json';
+
 import { environment } from '../environments/environment'
 
 @Component({
@@ -10,7 +11,7 @@ import { environment } from '../environments/environment'
 })
 export class AppComponent {
   public isCollapsed = true;
-  public version: string = version;
+  public version: string = packageInfo.version;
   public isProd = environment.production;
   constructor (public auth: AuthenticationService) {}
 }

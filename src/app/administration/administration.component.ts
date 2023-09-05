@@ -4,7 +4,7 @@ import { CharacterService } from '../services/character.service'
 import { UserService } from '../services/user.service'
 import { User } from '../_models/user'
 import { Role } from '../_models/role'
-import { faTrash, faUserTie, faUser, faArrowAltCircleUp, faArrowAltCircleDown } from '@fortawesome/free-solid-svg-icons/'
+import { faTrash, faUserTie, faUser, faArrowAltCircleUp, faArrowAltCircleDown } from '@fortawesome/free-solid-svg-icons'
 
 @Component({
   selector: 'app-administration',

@@ -1,12 +1,12 @@
 <div class="container">
     <div class="row justify-content-center align-items-center">
-        <div class="col-sm-3">
+        <div class="col-sm-6">
             <mat-form-field appearance="outline">
                     <mat-label>Name</mat-label>
                     <input matInput type="text" [(ngModel)]="searchName">                
             </mat-form-field>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-6">
             <mat-form-field appearance="outline">
                     <mat-label>Region Type</mat-label>
                     <mat-select [(ngModel)]="searchType">
@@ -16,10 +16,12 @@
                     </mat-select>
             </mat-form-field>
         </div>
-        <div class="col-sm-6 ">
-            <button class="float-right" mat-raised-button color="primary" mat-button (click)='searchRegions()'>Search Regions</button>
-        </div>
     </div>
+    <div class="row">
+		<div class="col-md-12 text-center">
+            <button class="float-right" mat-raised-button color="primary" mat-button (click)='searchRegions()'>Search Regions</button>
+		</div>
+	</div>
 
     <mat-card *ngFor="let region of regions" style="margin-top:10px;">
         <div class="row">

@@ -3,12 +3,12 @@
   <img *ngIf="!isProd" src="assets\devBanner.png">
   <a class="navbar-brand" routerLink="/home">Odyssey</a>
 
-  <button class="navbar-toggler btn btn-outline-primary" type="button" data-toggle="collapse" data-target="navbar"  aria-expanded="false" aria-label="Toggle navigation" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="navbarTogglerDemo02">
+  <button class="navbar-toggler btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="navbar"  aria-expanded="false" aria-label="Toggle navigation" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="navbarTogglerDemo02">
     <span class="navbar-toggler-icon"></span>
   </button>
 
   <div class="collapse navbar-collapse" id="navbar" [(ngbCollapse)]="isCollapsed" (click)="isCollapsed = !isCollapsed">
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+    <ul class="navbar-nav me-auto" float="left">
       <li class="nav-item">
         <a class="nav-link" *ngIf="auth.isLoggedIn()" routerLink="/characters">Characters</a>
       </li>
@@ -24,11 +24,11 @@
       <li class="nav-item">
         <a class="nav-link" *ngIf="auth.isAdmin()" routerLink="/administration">Administration</a>
       </li>
+    </ul>
+    <ul class="navbar-nav ms-auto" float="right">
       <li class="nav-item">
         <a class="nav-link" routerLink="/about">About</a>
       </li>
-    </ul>
-    <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
       <span class="navbar-text">
         Version: {{version}}
       </span>
