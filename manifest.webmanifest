@@ -8,7 +8,7 @@
   "start_url": "./",
   "icons": [
     {
-      "src": "assets/icons/icon72.png",
+      "src": "assets/icons/logo72.png",
       "sizes": "72x72",
       "type": "image/png",
       "purpose": "maskable any"

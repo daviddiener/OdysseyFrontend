@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1678112981903,
+  "timestamp": 1693954476674,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -13,15 +13,12 @@
       "urls": [
         "/favicon.ico",
         "/index.html",
-        "/main-es2015.f53d0a9291c897ce673d.js",
-        "/main-es5.f53d0a9291c897ce673d.js",
+        "/main.4961448ad1e9a071.js",
         "/manifest.webmanifest",
-        "/polyfills-es2015.c1c1b7bc746343f36319.js",
-        "/polyfills-es5.f6fb2c5faf4d9440b23e.js",
-        "/runtime-es2015.a4dadbc03350107420a4.js",
-        "/runtime-es5.a4dadbc03350107420a4.js",
-        "/scripts.db787dd392bf60f7eeae.js",
-        "/styles.0017ac0b96688de266d6.css"
+        "/polyfills.374946a673daf968.js",
+        "/runtime.0ca5dfb19048baaa.js",
+        "/scripts.6c25d9dd97afbfa5.js",
+        "/styles.28c21285ca81114c.css"
       ],
       "patterns": []
     },
@@ -64,16 +61,13 @@
     "/assets/tiles/mountain_peak.png": "bde7b4862fae5d68be963dceee51f48e08845d17",
     "/assets/tiles/world_spritesheet.png": "bb4adffa54a8e5aa4963eb71ee2e8e9166c12052",
     "/favicon.ico": "fa3e58fe4d17b29f67b9d258e384f2dd50de63f3",
-    "/index.html": "7cd479088662e1e0245ffc853cf910ad94a56fa4",
-    "/main-es2015.f53d0a9291c897ce673d.js": "81e12320632ae6017f89e684714ba40480f1cbb4",
-    "/main-es5.f53d0a9291c897ce673d.js": "199362c0f58b8ce858542cc2dcd2005e1564aa4e",
-    "/manifest.webmanifest": "db91b3c32382d5c4598aa6d6f19877c32aa40f66",
-    "/polyfills-es2015.c1c1b7bc746343f36319.js": "4d60363e8e793e3de8afb5f43b53658e5c9b711d",
-    "/polyfills-es5.f6fb2c5faf4d9440b23e.js": "1207d1b82b2e64ba59f7690d3e3f0013b2ee5dde",
-    "/runtime-es2015.a4dadbc03350107420a4.js": "a9aafcf49f49145093fc831efd9b8e2f6c71bb9c",
-    "/runtime-es5.a4dadbc03350107420a4.js": "a9aafcf49f49145093fc831efd9b8e2f6c71bb9c",
-    "/scripts.db787dd392bf60f7eeae.js": "778fc0bf4fcfa3bb14c925c675ad99d7f9dc28a5",
-    "/styles.0017ac0b96688de266d6.css": "98c41955e82f93a8c5477e30eb69fbb18cfc7a42"
+    "/index.html": "ce643c5b0741849a3357d0116e91f1565a14765f",
+    "/main.4961448ad1e9a071.js": "3096d69f2205c1b911bbc147f86f97f699bbba11",
+    "/manifest.webmanifest": "f328d2a6c9f843b7d6aa991b916a9ffe96d80eb9",
+    "/polyfills.374946a673daf968.js": "00fc96e427e3b322811e5a8858249527cd0fb23b",
+    "/runtime.0ca5dfb19048baaa.js": "dcdeaa0c17c1c49c1399ea69eb4f47edc988bfd8",
+    "/scripts.6c25d9dd97afbfa5.js": "fea4723e9aff413ce9aba657b3ea64ab5736de93",
+    "/styles.28c21285ca81114c.css": "c0d814f3aa4349735f854c7f4268998bb36b9191"
   },
   "navigationUrls": [
     {
