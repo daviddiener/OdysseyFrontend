@@ -1,8 +1,8 @@
 {
   "name": "odysseyfrontend",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "scripts": {
-    "start": "ng serve -c development --host 0.0.0.0 --disable-host-check --poll 200",
+    "dev": "ng serve -c development --host 0.0.0.0 --disable-host-check --poll 200",
     "build": "ng build -c production",
     "eslint": "npx eslint . --ext .ts",
     "pretest": "npm install",

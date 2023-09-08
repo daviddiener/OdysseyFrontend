@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { BehaviorSubject, Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { Router } from '@angular/router'
@@ -19,6 +19,8 @@ export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
   private REST_API_SERVER = environment.apiEndpoint
+  headers = new HttpHeaders()
+  .set('Authorization', `Bearer ${this.getToken()}`);
 
   constructor (private http: HttpClient,
               private router: Router) {
@@ -68,11 +70,11 @@ export class AuthenticationService {
   }
 
   public profile (): Observable<any> {
-    return this.http.get(this.REST_API_SERVER + '/profile', { headers: { Authorization: `Bearer ${this.getToken()}` } })
+    return this.http.get(this.REST_API_SERVER + 'profile', { headers: this.headers })
   }
 
   public register (user: RegistrationPayload): Observable<any> {
-    return this.http.post<any>(this.REST_API_SERVER + '/register', user)
+    return this.http.post<any>(this.REST_API_SERVER + 'register', user)
       .pipe(map(data => {
         // login successful if there's a jwt token in the response
         if (data.token) {
@@ -87,7 +89,7 @@ export class AuthenticationService {
   }
 
   public login (email: string, password: string) {
-    return this.http.post<any>(this.REST_API_SERVER + '/login', { email, password })
+    return this.http.post<any>(this.REST_API_SERVER + 'login', { email, password })
       .pipe(map(data => {
         // login successful if there's a jwt token in the response
         if (data.token) {

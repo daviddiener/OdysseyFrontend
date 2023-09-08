@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { HttpParams, HttpClient } from '@angular/common/http'
+import { HttpParams, HttpClient, HttpHeaders } from '@angular/common/http'
 import { Observable } from 'rxjs'
 import { Region, Type } from '../_models/region'
 import { AuthenticationService } from './authentication.service'
@@ -11,13 +11,16 @@ export class RegionService {
   constructor (private http: HttpClient,
               private authenticationService: AuthenticationService) {}
 
+  headers = new HttpHeaders()
+  .set('Authorization', `Bearer ${this.authenticationService.getToken()}`); 
+  
+
   public createRegion (): Observable<any> {
-    return this.http.post(this.REST_API_SERVER + 'regions/', {}, { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` } })
+    return this.http.post(this.REST_API_SERVER + 'regions/', {}, { headers: this.headers })
   }
 
   public getAllRegions (): Observable<any> {
-    return this.http.get(this.REST_API_SERVER + 'regions/',
-      { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` } })
+    return this.http.get(this.REST_API_SERVER + 'regions/', { headers: this.headers })
   }
 
   public getPartRegions (pageNum: number, pageLimit: number): Observable<any> {
@@ -25,7 +28,7 @@ export class RegionService {
       params: new HttpParams()
         .append('pageNum', pageNum.toString())
         .append('pageLimit', pageLimit.toString()),
-      headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }
+      headers: this.headers
     })
   }
 
@@ -35,7 +38,7 @@ export class RegionService {
         .append('x', x.toString())
         .append('y', y.toString())
         .append('range', range.toString()),
-      headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }
+      headers: this.headers 
     })
   }
 
@@ -54,29 +57,22 @@ export class RegionService {
       params = params.append('enableCities', enableCities.toString())
     }
 
-    return this.http.get(this.REST_API_SERVER + 'regions/', {
-      params,
-      headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` }
-    })
+    return this.http.get(this.REST_API_SERVER + 'regions/', { params, headers: this.headers })
   }
 
   public getRegionById (id: string): Observable<any> {
-    return this.http.get(this.REST_API_SERVER + 'regions/' + id,
-      { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` } })
+    return this.http.get(this.REST_API_SERVER + 'regions/' + id, { headers: this.headers })
   }
 
   public updateRegion (region: Region, id: string): Observable<any> {
-    return this.http.put(this.REST_API_SERVER + 'regions/' + id, { region },
-      { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` } })
+    return this.http.put(this.REST_API_SERVER + 'regions/' + id, { region }, { headers: this.headers })
   }
 
   public deleteRegion (id: string): Observable<any> {
-    return this.http.delete(this.REST_API_SERVER + 'regions/' + id,
-      { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` } })
+    return this.http.delete(this.REST_API_SERVER + 'regions/' + id, { headers: this.headers })
   }
 
   public deleteAllRegions (): Observable<any> {
-    return this.http.delete(this.REST_API_SERVER + 'regions/',
-      { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` } })
+    return this.http.delete(this.REST_API_SERVER + 'regions/', { headers: this.headers })
   }
 }
