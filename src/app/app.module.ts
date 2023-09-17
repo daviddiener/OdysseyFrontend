@@ -37,7 +37,8 @@ import { CharacterDetailComponent } from './character-detail/character-detail.co
 import { ServiceWorkerModule } from '@angular/service-worker'
 import { environment } from '../environments/environment'
 import { WorldmapComponent } from './worldmap/worldmap.component'
-import { AdministrationComponent } from './administration/administration.component'
+import { AdministrationComponent } from './administration/administration.component';
+import { LoadingOverlayComponent } from './loading-overlay/loadingoverlay.component'
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { AdministrationComponent } from './administration/administration.compone
     CharacterComponent,
     CharacterDetailComponent,
     WorldmapComponent,
-    AdministrationComponent
+    AdministrationComponent,
+    LoadingOverlayComponent
   ],
   imports: [
     NgbModule,

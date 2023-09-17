@@ -23,6 +23,10 @@ export class UserService {
     return this.http.get(this.REST_API_SERVER + 'users/' + id, { headers: this.headers })
   }
 
+  public profile (): Observable<any> {
+    return this.http.get(this.REST_API_SERVER + 'profile/', { headers: this.headers })
+  }
+
   public updateUser (user: User, id: string): Observable<any> {
     return this.http.put(this.REST_API_SERVER + 'users/' + id, user, { headers: this.headers })
   }

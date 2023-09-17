@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { AuthenticationService } from '../services/authentication.service'
+import { UserService } from '../services/user.service'
 import { User } from '../_models/user'
 
 @Component({
@@ -8,7 +8,7 @@ import { User } from '../_models/user'
 export class ProfileComponent implements OnInit {
   details: User;
 
-  constructor (private auth: AuthenticationService) {}
+  constructor (private auth: UserService) {}
 
   ngOnInit () {
     this.auth.profile().subscribe(user => {

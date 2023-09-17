@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http'
 import { BehaviorSubject, Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { Router } from '@angular/router'
@@ -25,8 +25,6 @@ export class AuthenticationService {
     this.currentUserSubject = new BehaviorSubject<User>(this.getUserDetails())
     this.currentUser = this.currentUserSubject.asObservable()
   }
-
-  headers = new HttpHeaders().set('Authorization', `Bearer ${this.getToken()}`);
 
   public get currentUserValue (): User {
     return this.currentUserSubject.value
@@ -67,10 +65,6 @@ export class AuthenticationService {
     } else {
       return false
     }
-  }
-
-  public profile (): Observable<any> {
-    return this.http.get(this.REST_API_SERVER + 'profile', { headers: this.headers })
   }
 
   public register (user: RegistrationPayload): Observable<any> {

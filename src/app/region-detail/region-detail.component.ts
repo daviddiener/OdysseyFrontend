@@ -5,7 +5,7 @@ import { Region } from '../_models/region'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons/faArrowLeft'
 
 @Component({
-  selector: 'app-region',
+  selector: 'app-region-detail',
   templateUrl: './region-detail.component.html',
   styleUrls: ['./region-detail.component.css']
 })
