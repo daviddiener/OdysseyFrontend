@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1694214290487,
+  "timestamp": 1694910593118,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -13,7 +13,7 @@
       "urls": [
         "/favicon.ico",
         "/index.html",
-        "/main.19c6c22625092308.js",
+        "/main.bb753adc9a1e6138.js",
         "/manifest.webmanifest",
         "/polyfills.374946a673daf968.js",
         "/runtime.0ca5dfb19048baaa.js",
@@ -61,8 +61,8 @@
     "/assets/tiles/mountain_peak.png": "bde7b4862fae5d68be963dceee51f48e08845d17",
     "/assets/tiles/world_spritesheet.png": "bb4adffa54a8e5aa4963eb71ee2e8e9166c12052",
     "/favicon.ico": "fa3e58fe4d17b29f67b9d258e384f2dd50de63f3",
-    "/index.html": "412f5e721c47e44b7981b6c408efc0763401fc9a",
-    "/main.19c6c22625092308.js": "a3e473fd87a3e5d01d1c057e8dd62c792cf835ed",
+    "/index.html": "846ec2198787480dfa72885a708f69cf02043f92",
+    "/main.bb753adc9a1e6138.js": "4ead31ee8e684704499d733c43f5ca7756275b02",
     "/manifest.webmanifest": "f328d2a6c9f843b7d6aa991b916a9ffe96d80eb9",
     "/polyfills.374946a673daf968.js": "00fc96e427e3b322811e5a8858249527cd0fb23b",
     "/runtime.0ca5dfb19048baaa.js": "dcdeaa0c17c1c49c1399ea69eb4f47edc988bfd8",
