@@ -19,14 +19,14 @@ export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
   private REST_API_SERVER = environment.apiEndpoint
-  headers = new HttpHeaders()
-  .set('Authorization', `Bearer ${this.getToken()}`);
 
   constructor (private http: HttpClient,
               private router: Router) {
     this.currentUserSubject = new BehaviorSubject<User>(this.getUserDetails())
     this.currentUser = this.currentUserSubject.asObservable()
   }
+
+  headers = new HttpHeaders().set('Authorization', `Bearer ${this.getToken()}`);
 
   public get currentUserValue (): User {
     return this.currentUserSubject.value
