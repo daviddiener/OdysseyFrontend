@@ -12,8 +12,7 @@ import { interval, Subscription } from 'rxjs';
 export class LoadingOverlayComponent implements OnDestroy {
   public isLoading = false;
   loadingTexts: string[] = [
-    'Summoning Unicorns',
-    'Baking Cookies',
+    'Spinning up Servers',
     'Counting to Infinity',
     'Chasing Fireflies',
     'Finding Atlantis',
@@ -22,7 +21,6 @@ export class LoadingOverlayComponent implements OnDestroy {
     'Transmitting Thoughts',
     'Mixing Magic Potions',
     'Wrestling with Robots',
-    'Inventing Time Travel',
     'Hunting for Buried Treasure',
     'Convincing Cats to Dance',
     'Brewing a Storm in a Teacup',
@@ -33,6 +31,7 @@ export class LoadingOverlayComponent implements OnDestroy {
     'Building a Sandcastle',
     'Making a Wish',
     'Catching a Shooting Star',
+    'Inventing Time Travel',
   ];
   currentLoadingTextIndex: number = 0;
 
