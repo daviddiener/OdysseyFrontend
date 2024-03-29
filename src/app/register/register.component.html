@@ -1,19 +1,31 @@
 <div class="container">
   <div class="row justify-content-center">
-    <form (submit)="register()">
+    <form (ngSubmit)="register()" #registerForm="ngForm">
         <div class="form-group">
-          <label for="name">Full name</label>
-          <input type="text" class="form-control" name="name" placeholder="Enter your name" [(ngModel)]="user.name">
+          <label for="name">Username</label>
+          <input type="text" class="form-control" name="name" placeholder="Enter your username" [(ngModel)]="user.name" #name="ngModel" required pattern="^[A-Za-z][A-Za-z0-9_]{3,29}$">
+          <div *ngIf="name.invalid && name.touched" class="text-danger">
+            Invalid username format.
+          </div>
         </div>
         <div class="form-group">
           <label for="email">Email address</label>
-          <input type="email" class="form-control" name="email" placeholder="Enter email" [(ngModel)]="user.email">
+          <input type="email" class="form-control" name="email" placeholder="Enter email" [(ngModel)]="user.email" #email="ngModel" required email pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$">
+          <div *ngIf="email.invalid && email.touched" class="text-danger">
+            Invalid email format.
+          </div>
         </div>
         <div class="form-group">
           <label for="password">Password</label>
-          <input type="password" class="form-control" name="password" placeholder="Password" [(ngModel)]="user.password">
+          <input type="password" class="form-control" name="password" placeholder="Password" [(ngModel)]="user.password" #password="ngModel" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])(.{8,})$">
+          <div *ngIf="password.invalid && password.touched" class="text-danger">
+            Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.
+          </div>
         </div>
-        <button mat-raised-button color="primary" type="submit" class="btn btn-default">Register!</button>
+        <button mat-raised-button color="primary" type="submit" class="btn btn-default" [disabled]="registerForm.invalid">Register!</button>
     </form>
+    <div *ngIf="errorMessage" class="text-danger">
+      {{ errorMessage }}
+    </div>
   </div>
 </div>

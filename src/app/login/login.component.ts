@@ -9,24 +9,26 @@ import { LoadingOverlayComponent } from '../loading-overlay/loadingoverlay.compo
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  email = '';
-  password = '';
+  user = {
+    email: '',
+    password: ''
+  };
 
   constructor(
     private auth: AuthenticationService,
     private router: Router,
-    private loadingoverlay: LoadingOverlayComponent
+    private loadingOverlay: LoadingOverlayComponent
   ) {}
 
   login () {
-    this.loadingoverlay.showLoading()
+    this.loadingOverlay.showLoading()
 
-    this.auth.login(this.email, this.password).subscribe(() => {
-      this.loadingoverlay.hideLoading()
+    this.auth.login(this.user.email, this.user.password).subscribe(() => {
+      this.loadingOverlay.hideLoading()
       this.router.navigateByUrl('/home')
     },
     (err: Error) => {
-      this.loadingoverlay.hideLoading()
+      this.loadingOverlay.hideLoading()
       alert(err.message)
     })
   }
