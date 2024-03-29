@@ -9,6 +9,7 @@ import { LogService } from '../services/log.service'
 import { Region, Type } from '../_models/region'
 import { Log } from '../_models/log'
 import { faSync } from '@fortawesome/free-solid-svg-icons'
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-character',
@@ -122,8 +123,8 @@ export class CharacterDetailComponent {
       (c) => {
         this.statusText = c.message
       },
-      (err: Error) => {
-        alert(err.message)
+      (err: HttpErrorResponse) => {
+        alert(err.message);
       }
     )
   }

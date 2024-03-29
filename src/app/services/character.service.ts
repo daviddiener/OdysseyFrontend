@@ -52,7 +52,7 @@ export class CharacterService {
   }
 
   public moveCharacterToCity (city: String, characterId: string): Observable<any> {
-    return this.http.put(this.REST_API_SERVER + 'characters/' + characterId,
+    return this.http.put(this.REST_API_SERVER + 'characters/' + characterId + '/move',
       { cityId: city },
       { headers: { Authorization: `Bearer ${this.authenticationService.getToken()}` } })
   }
