@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ViewChild } from '@angular/core'
 import { CharacterService } from '../services/character.service'
 import { RegionService } from '../services/region.service'
 import { CityService } from '../services/city.service'
@@ -7,6 +7,7 @@ import { Region } from '../_models/region'
 import { City } from '../_models/city'
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
 import { AuthenticationService } from '../services/authentication.service'
+import { NgForm } from '@angular/forms'
 
 @Component({
   selector: 'app-character',
@@ -14,6 +15,8 @@ import { AuthenticationService } from '../services/authentication.service'
   styleUrls: ['./character.component.css']
 })
 export class CharacterComponent implements OnInit {
+  @ViewChild('characterForm') characterForm!: NgForm; // Define characterForm using ViewChild
+
   faTrash = faTrash;
   characters: Character[] = [];
   regions: Region[] = [];
@@ -21,6 +24,7 @@ export class CharacterComponent implements OnInit {
   newCharacter = new Character();
   currentPage = 1;
   pageLimit = 10;
+  backendErrorMessage: string;
 
   constructor (private characterService: CharacterService,
               private regionService: RegionService,
@@ -63,22 +67,24 @@ export class CharacterComponent implements OnInit {
   }
 
   createCharacter () {
-    this.characterService.createCharacter(this.newCharacter).subscribe((error) => {
-      if (error) {
-        if (error.code === 11000) {
-          alert('Name is already taken')
-        } else if (error._message) {
-          alert(error._message)
-        }
-      }
+    if (!this.characterForm.valid) {
+      return;
+    }
 
-      this.characterService.getAllCharactersByUserId(this.authenticationService.getUserDetails()._id).subscribe((data: Character[]) => {
-        this.characters = data
-      })
-    },
-    (err: Error) => {
-      alert(err.message)
-    })
+    this.characterService.createCharacter(this.newCharacter).subscribe({
+      next: () => {
+        // On success, clear the error message
+        this.backendErrorMessage = '';
+        
+        this.characterService.getAllCharactersByUserId(this.authenticationService.getUserDetails()._id).subscribe((data: Character[]) => {
+          this.characters = data
+        });
+      },
+      error: (error) => {
+        // Handle backend validation error
+        this.backendErrorMessage = error.error.message || 'An unexpected error occurred.';
+      }
+    });
   }
 
   deleteCharacter (value) {

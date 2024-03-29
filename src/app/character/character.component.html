@@ -1,48 +1,67 @@
 <div class="container">
-    <div class="row">
-        <div class="col-md-3">
-            <mat-form-field appearance="outline">
+    <form #characterForm="ngForm" (ngSubmit)="createCharacter()">
+        <div class="row">
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
                     <mat-label>Name</mat-label>
-                    <input matInput type="text" [(ngModel)]="newCharacter.name">                
-            </mat-form-field>
-        </div>
-        <div class="col-md-3">
-            <mat-radio-group aria-label="Gender" [(ngModel)]="newCharacter.gender">
-                <div class="row">
-                    <mat-radio-button value="0">Male</mat-radio-button>
-                </div>
-                <div class="row">
-                    <mat-radio-button value="1">Female</mat-radio-button>
-                </div>
-            </mat-radio-group>
-        </div>
-        <div class="col-md-3">
-            <mat-form-field appearance="outline">
-                    <mat-label>Region</mat-label>
-                    <mat-select [(ngModel)]="newCharacter.regionId" (selectionChange)="updateCities($event.value)">
-                        <mat-option *ngFor="let region of regions" [value]="region._id">
-                        {{ region.name }}
-                        </mat-option>
-                        <button mat-raised-button color="secondary" (click)='loadNextPage()'>Load more</button>
+                    <input matInput type="text" name="name" [(ngModel)]="newCharacter.name" pattern="^(?:[A-Za-z]+(?:\s+[A-Za-z]+){0,3})$" minlength="1" maxlength="30" #nameField="ngModel" required>
+                    <!-- Validation Errors -->
+                    <mat-error *ngIf="nameField.errors?.['required']">Name is required.</mat-error>
+                    <mat-error *ngIf="nameField.errors?.['pattern']">Invalid name format: Name must contain only letters, up to 4 words.</mat-error>
+                    <mat-error *ngIf="nameField.errors?.['maxlength']">Name cannot be longer than 30 characters.</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <!-- Gender Field -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Gender</mat-label>
+                    <mat-select name="gender" [(ngModel)]="newCharacter.gender" #genderField="ngModel" required>
+                        <mat-option value="0">Male</mat-option>
+                        <mat-option value="1">Female</mat-option>
                     </mat-select>
-            </mat-form-field>
+                </mat-form-field>
+                <!-- Gender Validation Error -->
+                <mat-error *ngIf="genderField.errors?.['required'] && genderField.touched">Gender is required.</mat-error>
+            </div>
+            <div class="col-md-3">
+                <!-- Region Field -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Region</mat-label>
+                    <mat-select name="region" [(ngModel)]="newCharacter.regionId" (selectionChange)="updateCities($event.value)" #regionField="ngModel" required>
+                        <mat-option *ngFor="let region of regions" [value]="region._id">
+                            {{ region.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <!-- Region Validation Error -->
+                <mat-error *ngIf="regionField.errors?.['required'] && regionField.touched">Region is required.</mat-error>
+            </div>
+            <div class="col-md-3">
+                <!-- City Field -->
+                <mat-form-field appearance="outline">
+                    <mat-label>City</mat-label>
+                    <mat-select name="city" [(ngModel)]="newCharacter.cityId" #cityField="ngModel" required>
+                        <mat-option *ngFor="let city of cities" [value]="city._id">
+                            {{ city.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <!-- City Validation Error -->
+                <mat-error *ngIf="cityField.errors?.['required'] && cityField.touched">City is required.</mat-error>
+            </div>
         </div>
-        <div class="col-md-3">
-            <mat-form-field appearance="outline">
-                <mat-label>City</mat-label>
-                <mat-select [(ngModel)]="newCharacter.cityId">
-                    <mat-option *ngFor="let city of cities" [value]="city._id">
-                    {{ city.name }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <button mat-raised-button color="primary" mat-button type="submit" [disabled]="!characterForm.valid">Create New Character</button>
+            </div>
         </div>
+    </form>
+
+   
+    <!-- Backend Error Message -->
+    <div *ngIf="backendErrorMessage" class="alert alert-danger">
+        {{ backendErrorMessage }}
     </div>
-    <div class="row">
-		<div class="col-md-12 text-center">
-            <button mat-raised-button color="primary" mat-button (click)='createCharacter()'>Create New Character</button>
-		</div>
-	</div>
 
     <mat-card *ngFor="let character of characters" style="margin-top:10px;">
         <div class="row">
