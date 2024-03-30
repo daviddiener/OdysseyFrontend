@@ -19,9 +19,10 @@
                         <mat-option value="0">Male</mat-option>
                         <mat-option value="1">Female</mat-option>
                     </mat-select>
+                    <!-- Validation Errors -->
+                    <mat-error *ngIf="genderField.errors?.['required'] && genderField.touched">Gender is required.</mat-error>
                 </mat-form-field>
-                <!-- Gender Validation Error -->
-                <mat-error *ngIf="genderField.errors?.['required'] && genderField.touched">Gender is required.</mat-error>
+               
             </div>
             <div class="col-md-3">
                 <!-- Region Field -->
@@ -32,9 +33,10 @@
                             {{ region.name }}
                         </mat-option>
                     </mat-select>
+                    <!-- Validation Errors -->
+                    <mat-error *ngIf="regionField.errors?.['required'] && regionField.touched">Region is required.</mat-error>
                 </mat-form-field>
-                <!-- Region Validation Error -->
-                <mat-error *ngIf="regionField.errors?.['required'] && regionField.touched">Region is required.</mat-error>
+                
             </div>
             <div class="col-md-3">
                 <!-- City Field -->
@@ -45,9 +47,10 @@
                             {{ city.name }}
                         </mat-option>
                     </mat-select>
+                    <!-- Validation Errors -->
+                    <mat-error *ngIf="cityField.errors?.['required'] && cityField.touched">City is required.</mat-error>
                 </mat-form-field>
-                <!-- City Validation Error -->
-                <mat-error *ngIf="cityField.errors?.['required'] && cityField.touched">City is required.</mat-error>
+                
             </div>
         </div>
         <div class="row">
